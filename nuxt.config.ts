@@ -9,4 +9,11 @@ export default defineNuxtConfig({
     }
   },
   css: ['@/assets/styles/main.scss'],
+  app:{
+    pageTransition: { name: 'page', mode: 'out-in' },
+  },
+  routeRules:{
+    '/**': { swr: 600 },
+    '/backstage/**': { ssr: false },
+  },
 })
