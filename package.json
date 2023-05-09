@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxtjs/i18n": "^8.0.0-beta.10",
+    "@nuxtjs/tailwindcss": "^6.6.4",
+    "@types/jsonwebtoken": "^9.0.1",
+    "google-auth-library": "^8.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "nuxt": "^3.3.1",
+    "prisma": "^4.11.0",
+    "sass": "^1.59.3",
+    "sass-loader": "^13.2.1",
+    "vue3-google-login": "^2.0.15"
+  },
+  "dependencies": {
+    "gsap": "^3.11.5"
+  }
+}
