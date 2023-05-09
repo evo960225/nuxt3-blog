@@ -2,13 +2,22 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
+    'nuxt-quasar-ui',
     '@nuxtjs/i18n',
   ],
   runtimeConfig: {
     public: {
     }
   },
-  css: ['@/assets/styles/main.scss'],
+  css: [
+    
+    //'quasar/fonts',
+    'quasar/animations',
+    'quasar/icons',
+    'quasar/css',
+    'quasar/brand',
+    '@/assets/styles/main.scss',
+  ],
   app:{
     pageTransition: { name: 'page', mode: 'out-in' },
   },
@@ -16,4 +25,26 @@ export default defineNuxtConfig({
     '/**': { swr: 600 },
     '/backstage/**': { ssr: false },
   },
+  quasar: {
+    plugins: [
+      'BottomSheet',
+      'Dialog',
+      'Loading',
+      'LoadingBar',
+      'Notify',
+      'Dark',
+    ],
+    extras: {
+      fontIcons: [
+        'material-icons',
+        //'fontawesome-v6'
+      ],
+      svgIcons: [
+        'material-icons',
+        //'fontawesome-v6'
+      ]
+    },
+    iconSet: 'material-icons',
+  }
+
 })
