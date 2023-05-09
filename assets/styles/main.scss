@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Noto Sans Traditional Chinese'; 
+    font-family: 'Noto Sans TC'; 
     src: url('/assets/font/NotoSansTC-Regular.otf') format("opentype");
   }
   @font-face {
@@ -8,7 +8,7 @@
   }
   
   * {
-    font-family: 'Noto Sans Traditional Chinese', "Nunito", sans-serif !important;
+    font-family: 'Noto Sans TC', "Nunito", sans-serif !important;
   }
   body {
     width: 100%;
