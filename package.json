@@ -15,6 +15,13 @@
     "jsonwebtoken": "^9.0.0",
     "nuxt": "^3.3.1",
     "prisma": "^4.11.0",
+    "rehype-sanitize": "^5.0.1",
+    "rehype-stringify": "^9.0.3",
+    "remark": "^14.0.2",
+    "remark-frontmatter": "^4.0.1",
+    "remark-gfm": "^3.0.1",
+    "remark-html": "^15.0.2",
+    "remark-rehype": "^10.1.0",
     "sass": "^1.59.3",
     "sass-loader": "^13.2.1",
     "vue3-google-login": "^2.0.15"
