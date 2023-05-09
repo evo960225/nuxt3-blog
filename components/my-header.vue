@@ -1,8 +1,25 @@
 <template>
-  <div class="w-full bg-[#bbb]">
-    
+  <div class="flex justify-center items-center w-full bg-[#bbb] h-12">
+    <div class="grid grid-cols-6 max-w-[1280px] w-full">
+
+      <div class="grid col-span-1 text-lg text-white tracking-widest">
+        孤獨的邊緣宅
+      </div>
+      
+      <div class="flex justify-end col-span-4">
+        <ul class="flex justify-center gap-x-12">
+          <NuxtLink to="/"><li>Home</li></NuxtLink>
+          <NuxtLink to="/blog"><li>Blog</li></NuxtLink>
+          <NuxtLink to="/about"><li>About</li></NuxtLink>
+        </ul>
+      </div>
+      <div class="flex justify-end col-span-1">
+        @
+      </div>
+    </div>
   </div>
 </template>
+
 <script setup lang="ts">
 
 
