@@ -1,17 +1,20 @@
 <template>
   <div>
-    <div class="carrousel w-full h-30">
-      <div>{{mdData?.title}}</div>
-      <div>{{mdData?.date}}</div>
-      <div>{{mdData?.category}}</div>
-      <div>{{mdData?.content}}</div>
-    </div>
+    <blogListTable></blogListTable>
   </div>
   <q-input v-model="text" :dense="true" />
-  
+  <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="toggleLeftDrawer"
+        />
 </template>
 
 <script setup lang="ts">
+import blogListTable from './@components/blog-list-table.vue'
 const text = ref()
 const { data:mdData } = useFetch(`/api/blog/2023-05/1/md`, {
   key: `mdData-${hashByTime(60*10)}`,
