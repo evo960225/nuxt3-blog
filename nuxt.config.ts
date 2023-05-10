@@ -10,13 +10,12 @@ export default defineNuxtConfig({
     }
   },
   css: [
-    
-    //'quasar/fonts',
+    '@/assets/styles/main.scss',
     'quasar/animations',
     'quasar/icons',
     'quasar/css',
     'quasar/brand',
-    '@/assets/styles/main.scss',
+    
   ],
   app:{
     pageTransition: { name: 'page', mode: 'out-in' },
@@ -37,11 +36,11 @@ export default defineNuxtConfig({
     extras: {
       fontIcons: [
         'material-icons',
-        //'fontawesome-v6'
+        'fontawesome-v6'
       ],
       svgIcons: [
         'material-icons',
-        //'fontawesome-v6'
+        'fontawesome-v6'
       ]
     },
     iconSet: 'material-icons',

@@ -29,9 +29,11 @@
               <q-item-label>首頁編輯</q-item-label>
               <q-menu v-model="showing">
                 <q-list style="min-width: 100px">
-                  <q-item clickable v-close-popup>
-                    <q-item-section>輪播</q-item-section>
-                  </q-item>
+                  <NuxtLink to="/backstage/home">
+                   <q-item clickable v-close-popup>
+                      <q-item-section>輪播</q-item-section>
+                    </q-item>
+                  </NuxtLink>
                   <q-item clickable v-close-popup>
                     <q-item-section>圖示</q-item-section>
                   </q-item>
@@ -46,12 +48,16 @@
               <q-item-label>文章</q-item-label>
               <q-menu v-model="showing">
                 <q-list style="min-width: 100px">
-                  <q-item clickable v-close-popup>
-                    <q-item-section>新增</q-item-section>
-                  </q-item>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>文章清單</q-item-section>
-                  </q-item>
+                  <NuxtLink to="/backstage/blog/create">
+                    <q-item clickable v-close-popup>
+                      <q-item-section>新增</q-item-section>
+                    </q-item>
+                  </NuxtLink>
+                  <NuxtLink to="/backstage/blog/list">
+                    <q-item clickable v-close-popup>
+                      <q-item-section>文章清單</q-item-section>
+                    </q-item>
+                  </NuxtLink>
                   <q-separator />
                 </q-list>
               </q-menu>
