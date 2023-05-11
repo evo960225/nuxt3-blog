@@ -10,10 +10,11 @@
           aria-label="Menu"
           :icon="matMenu"
         />
-
-        <q-toolbar-title>
-          邊緣宅後面
-        </q-toolbar-title>
+        <NuxtLink to="/backstage">
+          <q-toolbar-title>
+            邊緣宅後面
+          </q-toolbar-title>
+        </NuxtLink>
       </q-toolbar>
     </q-header>
 

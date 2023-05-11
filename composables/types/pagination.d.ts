@@ -8,11 +8,13 @@ interface IApiPageResult<T> {
 }
 
 type IBlogInfo = {
-  id: string,
   title: string,
   date: string,
   category: string,
 };
 
-  
+interface IBlog extends IBlogInfo {
+  content?: string,
+};
+
 

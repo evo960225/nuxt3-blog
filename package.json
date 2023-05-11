@@ -2,8 +2,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "npx nuxi dev",
-    "dev1": "npx nuxi dev --dotenv .env.local",
+    "dev": "npx nuxi dev --dotenv .env.local",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"

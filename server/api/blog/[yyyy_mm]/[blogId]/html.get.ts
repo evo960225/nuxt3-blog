@@ -2,11 +2,16 @@ import fs from 'fs'
 import util from 'util';
 import path from 'path';
 import matter from 'gray-matter';
+import {unified} from 'unified'
+import remarkParse from 'remark-parse'
+import rehypeSanitize from 'rehype-sanitize'
+import remarkRehype from 'remark-rehype'
+import rehypeStringify from 'rehype-stringify'
 import { z } from 'zod';
 
 
 
-async function getMarkDownContent(dirPath: string, fileName: string) {
+async function getHtmlContent(dirPath: string, fileName: string) {
   const directory = path.join(process.cwd(), dirPath)
   const fullPath = path.join(directory, fileName)
   const readFile = util.promisify(fs.readFile);
@@ -18,18 +23,27 @@ async function getMarkDownContent(dirPath: string, fileName: string) {
   if(!fileContents) { return null }
 
   const { data, content } = matter(fileContents);
-  
-  const BlogSchema = z.object({
+  const processedContent = await unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeSanitize)
+    .use(rehypeStringify)
+    .process(content)
+
+
+  const contentHtml = processedContent.toString();
+
+  const BlogHtmlSchema = z.object({
     title: z.string(),
     date: zodDateStringSchema(),
     category: z.string(),
-    content: z.string(),
+    contentHtml: z.string(),
   });
   
-  type BlogSchema = z.infer<typeof BlogSchema>;
-  const result = BlogSchema.parse({ 
+  type BlogSchema = z.infer<typeof BlogHtmlSchema>;
+  const result = BlogHtmlSchema.parse({ 
     ...data,
-    content,
+    contentHtml,
   })
 
   if(!result) { return null }
@@ -39,12 +53,6 @@ async function getMarkDownContent(dirPath: string, fileName: string) {
 
 export default defineEventHandler(async(event) => {
   
-  // if (!event.context.authBackstage) {
-  //   return createError({
-  //     statusCode: 401,
-  //     message: 'You don\'t have the rights to access this resource',
-  //   })
-  // }
 
   const blogDir = process.env.BLOG_DIR
   const yyyy_mm = event.context.params?.yyyy_mm
@@ -56,7 +64,7 @@ export default defineEventHandler(async(event) => {
       statusMessage: 'Prarameters are not valid.'
     })
   }
-  const blogData = await getMarkDownContent(`${blogDir}/${yyyy_mm}/`, `${blogId}.md`)
+  const blogData = await getHtmlContent(`${blogDir}/${yyyy_mm}/`, `${blogId}.md`)
 
   
   if (!blogData) {

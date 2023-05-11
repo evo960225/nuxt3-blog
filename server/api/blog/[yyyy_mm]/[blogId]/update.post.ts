@@ -9,37 +9,36 @@ import rehypeStringify from 'rehype-stringify'
 const contentDirectory = path.join(process.cwd(), 'content');
 
 
-async function getMarkDownContent(dirPath: string, fileName: string) {
-  const directory = path.join(contentDirectory, dirPath)
-  const fullPath = path.join(directory, fileName)
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-  const { data, content } = matter(fileContents);
-
-  return {
-    ...data,
-    content,
-  };
+async function modifyMarkDownContent(filePath:string, field: IBlogInfo, content: string) {
+  const newContent = matter.stringify(content, field);
+  fs.writeFileSync(filePath, newContent);
+  return newContent;
 }
 
-export default defineEventHandler(async(event) => {
+export default defineEventHandler(async (event) => {
   
-  if (!event.context.authBackstage) {
-    return createError({
-      statusCode: 401,
-      message: 'You don\'t have the rights to access this resource',
-    })
-  }
+  // if (!event.context.authBackstage) {
+  //   return createError({
+  //     statusCode: 401,
+  //     message: 'You don\'t have the rights to access this resource',
+  //   })
+  // }
+  const blogDir = process.env.BLOG_DIR
+  const body:IBlog = await readBody(event)
+
   const yyyy_mm = event.context.params?.yyyy_mm
   const blogId = event.context.params?.blogId
-  
+  const blogContent = body.content || ''
+  delete body.content
 
+  const filePath = `${process.cwd()}/${blogDir}/${yyyy_mm}/${blogId}.md`
+  const modifiedContent = modifyMarkDownContent(filePath, body, blogContent) 
 
-  if (!record) {
+  if (!modifiedContent) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Could not find product.'
     })
   }
-  return {}
+  return modifiedContent
 })
