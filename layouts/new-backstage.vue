@@ -27,7 +27,7 @@
           <q-item clickable>
             <q-item-section>
               <q-item-label>首頁編輯</q-item-label>
-              <q-menu v-model="showing">
+              <q-menu v-model="showingMenuHome">
                 <q-list style="min-width: 100px">
                   <NuxtLink to="/backstage/home">
                    <q-item clickable v-close-popup>
@@ -46,7 +46,7 @@
           <q-item clickable>
             <q-item-section>
               <q-item-label>文章</q-item-label>
-              <q-menu v-model="showing">
+              <q-menu v-model="showingMenuBlog">
                 <q-list style="min-width: 100px">
                   <NuxtLink to="/backstage/blog/create">
                     <q-item clickable v-close-popup>
@@ -67,7 +67,7 @@
           <q-item clickable>
             <q-item-section>
               <q-item-label>成員管理</q-item-label>
-              <q-menu v-model="showing">
+              <q-menu v-model="showingMenuAdmin">
                 <q-list style="min-width: 100px">
                   <q-item clickable v-close-popup>
                     <q-item-section>新增</q-item-section>
@@ -84,7 +84,7 @@
           <q-item clickable>
             <q-item-section>
               <q-item-label>會員管理</q-item-label>
-              <q-menu v-model="showing">
+              <q-menu v-model="showingMenuMember">
                 <q-list style="min-width: 100px">
                   <q-item clickable v-close-popup>
                     <q-item-section>會員清單</q-item-section>
@@ -98,7 +98,7 @@
           <q-item clickable>
             <q-item-section>
               <q-item-label>帳號</q-item-label>
-              <q-menu v-model="showing">
+              <q-menu v-model="showingMenuAccount">
                 <q-list style="min-width: 100px">
                   <q-item clickable v-close-popup>
                     <q-item-section>登出</q-item-section>
@@ -129,6 +129,13 @@ export default {
 
   setup () {
     const leftDrawerOpen = ref(false)
+    const showingMenuHome = ref(false)
+    const showingMenuBlog = ref(false)
+    const showingMenuAdmin = ref(false)
+    const showingMenuMember = ref(false)
+    const showingMenuAccount = ref(false)
+
+
 
     function toggleLeftDrawer () {
       leftDrawerOpen.value = !leftDrawerOpen.value
@@ -136,7 +143,12 @@ export default {
 
     return {
       leftDrawerOpen,
-      toggleLeftDrawer
+      toggleLeftDrawer,
+      showingMenuHome,
+      showingMenuBlog,
+      showingMenuAdmin,
+      showingMenuMember,
+      showingMenuAccount,
     }
   }
 }
