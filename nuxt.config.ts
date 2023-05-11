@@ -18,8 +18,8 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
   },
   routeRules:{
-    '/**': { swr: 600 },
-    '/backstage/**': { ssr: false },
+    '/**': { swr: process.env.NODE_ENV === 'development' ? 1 : 600 },
+    '/backstage/**': { ssr: false, swr: 1 },
   },
   quasar: {
     plugins: [
