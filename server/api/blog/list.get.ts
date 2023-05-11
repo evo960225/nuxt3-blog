@@ -35,7 +35,7 @@ export default defineEventHandler(async(event) => {
   const BlogSchema = z.object({
     id: z.string(),
     title: z.string(),
-    date: z.string(),
+    date: zodDateStringSchema(),
     category: z.string(),
     content: z.string(),
   })

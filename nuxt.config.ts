@@ -18,8 +18,8 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
   },
   routeRules:{
-    '/**': { swr: process.env.NODE_ENV === 'development' ? 1 : 600 },
-    '/backstage/**': { ssr: false, swr: 1 },
+    '/**': { },
+    '/backstage/**': { ssr: false },
   },
   quasar: {
     plugins: [
@@ -30,6 +30,11 @@ export default defineNuxtConfig({
       'Notify',
       'Dark',
     ],
+    config: {
+      notify: { 
+       
+      }
+    },
     extras: {
       fontIcons: [
         'material-icons',

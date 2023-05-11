@@ -22,7 +22,7 @@
           <q-td key="date" :props="props">{{ props.row.date }}</q-td>
           <q-td key="category" :props="props">{{ props.row.category }}</q-td>
           <q-td key="button" :props="props">
-            <NuxtLink :to="`/backstage/blog/${props.row.date.split('-').slice(0,2).join('_')}/${props.row.id}`">
+            <NuxtLink :to="`/backstage/blog/${props.row.date.split('-').slice(0,2).join('-')}/${props.row.id}`">
               <q-btn color="primary" text-color="white" label="編輯" size="sm" />
             </NuxtLink>
           </q-td>
