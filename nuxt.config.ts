@@ -4,6 +4,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-quasar-ui',
     '@nuxtjs/i18n',
+    // 'formidable'
   ],
   runtimeConfig: {
     public: {
