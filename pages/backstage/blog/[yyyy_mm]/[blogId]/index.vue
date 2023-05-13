@@ -34,7 +34,7 @@ const $q = useQuasar()
 const route = useRoute()
 const { yyyy_mm, blogId } = route.params
 const isLoading = ref(false)
-route.fullPath
+
 const { data: mdData } = await useFetch(`/api/blog/${yyyy_mm}/${blogId}/md`, {
   key: `mdData-${hashByTime(60*10)}`,
   method: 'GET',

@@ -34,6 +34,7 @@ async function getHtmlContent(dirPath: string, fileName: string) {
   const contentHtml = processedContent.toString();
 
   const BlogHtmlSchema = z.object({
+    id: z.string(),
     title: z.string(),
     date: zodDateStringSchema(),
     category: z.string(),
@@ -42,6 +43,7 @@ async function getHtmlContent(dirPath: string, fileName: string) {
   
   type BlogSchema = z.infer<typeof BlogHtmlSchema>;
   const result = BlogHtmlSchema.parse({ 
+    id: fileName.replace('.md', ''),
     ...data,
     contentHtml,
   })
