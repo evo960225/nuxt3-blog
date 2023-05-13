@@ -32,6 +32,7 @@
     "@quasar/extras": "^1.15.11",
     "gsap": "^3.11.5",
     "quasar": "^2.11.7",
+    "remark-breaks": "^3.0.3",
     "zod": "^3.21.4"
   }
 }

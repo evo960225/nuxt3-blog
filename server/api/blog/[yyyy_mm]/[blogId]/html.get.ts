@@ -4,6 +4,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import {unified} from 'unified'
 import remarkParse from 'remark-parse'
+import remarkBreaks from 'remark-breaks'
 import rehypeSanitize from 'rehype-sanitize'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
@@ -25,6 +26,7 @@ async function getHtmlContent(dirPath: string, fileName: string) {
   const { data, content } = matter(fileContents);
   const processedContent = await unified()
     .use(remarkParse)
+    .use(remarkBreaks)
     .use(remarkRehype)
     .use(rehypeSanitize)
     .use(rehypeStringify)
