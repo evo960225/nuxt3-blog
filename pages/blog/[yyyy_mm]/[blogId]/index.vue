@@ -7,7 +7,6 @@
       <p>{{ blogData?.category }}</p>
       <hr class="my-2 border-b border-gray-300">
       <p v-html="blogData?.contentHtml"></p>
-
     </div>
   </div>
 </template>
@@ -28,6 +27,9 @@ const { data: blogData } = await useFetch(`/api/blog/${yyyy_mm}/${blogId}/html`,
 .blog {
   & h1 {
     @apply text-3xl font-bold;
+  }
+  & p {
+    @apply text-base text-gray-600;
   }
 
 }

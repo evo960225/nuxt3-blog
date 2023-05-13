@@ -17,6 +17,13 @@
             <q-input v-model="mdData.content" color="teal" bg-color="white" dense outlined  type="textarea" label="內容" />
           </div>
         </div>
+        <div>
+          <q-uploader
+            :url="`${blogApiUrl}/upload-image`"
+            auto-upload
+            style="max-width: 300px"
+          />
+        </div>
       </div>
       <q-inner-loading :showing="isLoading">
         <q-spinner-audio
@@ -35,7 +42,9 @@ const route = useRoute()
 const { yyyy_mm, blogId } = route.params
 const isLoading = ref(false)
 
-const { data: mdData } = await useFetch(`/api/blog/${yyyy_mm}/${blogId}/md`, {
+
+const blogApiUrl = `/api/blog/${yyyy_mm}/${blogId}`
+const { data: mdData } = await useFetch(`${blogApiUrl}/md`, {
   key: `mdData-${hashByTime(60*10)}`,
   method: 'GET',
 })
@@ -44,10 +53,10 @@ const { data: mdData } = await useFetch(`/api/blog/${yyyy_mm}/${blogId}/md`, {
 async function updateContent() {
   isLoading.value = true
 
-  const { data, error } = await useFetch(`/api/blog/${yyyy_mm}/${blogId}/update`, {
+  const { data, error } = await useFetch(`${blogApiUrl}/update`, {
     key: `mdData.post-${hashByTime(60*10)}`,
     method: 'POST',
-    body: mdData.value
+    body: mdData.value || {},
   })
 
   if (error.value) {
