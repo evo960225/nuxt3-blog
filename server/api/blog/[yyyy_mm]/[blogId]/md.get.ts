@@ -28,6 +28,7 @@ async function getMarkDownContent(dirPath: string, fileName: string) {
   
   type BlogSchema = z.infer<typeof BlogSchema>;
   const result = BlogSchema.parse({ 
+    id: fileName.replace('.md', ''),
     ...data,
     content,
   })
