@@ -17,11 +17,25 @@
             <q-input v-model="mdData.content" color="teal" bg-color="white" dense outlined  type="textarea" label="內容" />
           </div>
         </div>
+        <div v-for="imageUrl in imagesUrlData" :key="imageUrl">
+          <q-img
+            :src="imageUrl"
+            class="w-1/3"
+          >
+            <div class="absolute-bottom text-subtitle1 text-center">
+              <q-btn @click="copyMdImageUrl(imageUrl)" label="MD" icon="file_copy" />
+              {{ imageUrl }}
+            </div>
+            
+          </q-img>
+        </div>
         <div>
           <q-uploader
             :url="`${blogApiUrl}/upload-image`"
             auto-upload
+            accept="image/*"
             style="max-width: 300px"
+            @uploaded="onUploaded"
           />
         </div>
       </div>
@@ -44,10 +58,24 @@ const isLoading = ref(false)
 
 
 const blogApiUrl = `/api/blog/${yyyy_mm}/${blogId}`
-const { data: mdData } = await useFetch(`${blogApiUrl}/md`, {
-  key: `mdData-${hashByTime(60*10)}`,
-  method: 'GET',
-})
+
+
+// get data
+const getMd = async() => {
+  const { data: mdData } = await useFetch(`${blogApiUrl}/md`, {
+    key: `mdData-${hashByTime(60*1)}`,
+    method: 'GET',
+  })
+  return mdData
+}
+const getImages = async() => {
+  const { data: imagesUrlData } = await useFetch(`${blogApiUrl}/images`, {
+    key: `imageData-${hashByTime(60*1)}`,
+    method: 'GET',
+  })
+  return imagesUrlData
+}
+const [mdData, imagesUrlData] = (await Promise.all([getMd(), getImages()]))
 
 
 async function updateContent() {
@@ -81,6 +109,20 @@ async function updateContent() {
   isLoading.value = false
 }
 
+async function copyMdImageUrl(url: string) {
+  try {
+    const mdImage = `![w-100%](${url})`
+    await navigator.clipboard.writeText(mdImage);
+    $q.notify('連結已複製');
+  } catch (err) {
+    $q.notify('Failed to copy text');
+  }
+}
+
+async function onUploaded() {
+  $q.notify('上傳成功')
+  mdData.value = await getImages()
+}
 
 </script>
 

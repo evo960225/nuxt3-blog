@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
+      imageUrlBase: '/api/image'
     }
   },
   css: [

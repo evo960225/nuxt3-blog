@@ -4,10 +4,13 @@ import path from 'path';
 import matter from 'gray-matter';
 import {unified} from 'unified'
 import remarkParse from 'remark-parse'
+import remarkImages from 'remark-images'
 import remarkBreaks from 'remark-breaks'
 import rehypeSanitize from 'rehype-sanitize'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
+import remarkGfm from 'remark-gfm';
+import remarkInlineLinks from 'remark-inline-links'
 import { z } from 'zod';
 
 
@@ -26,6 +29,9 @@ async function getHtmlContent(dirPath: string, fileName: string) {
   const { data, content } = matter(fileContents);
   const processedContent = await unified()
     .use(remarkParse)
+    .use(remarkInlineLinks)
+    .use(remarkGfm)
+    .use(remarkImages)
     .use(remarkBreaks)
     .use(remarkRehype)
     .use(rehypeSanitize)
