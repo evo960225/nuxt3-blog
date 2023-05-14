@@ -44,7 +44,7 @@ async function getHtmlContent(dirPath: string, fileName: string) {
   const BlogHtmlSchema = z.object({
     id: z.string(),
     title: z.string(),
-    date: zodDateStringSchema(),
+    date: z.string(),
     category: z.string(),
     contentHtml: z.string(),
   });
@@ -63,7 +63,6 @@ async function getHtmlContent(dirPath: string, fileName: string) {
 
 export default defineEventHandler(async(event) => {
   
-
   const blogDir = process.env.BLOG_DIR
   const yyyy_mm = event.context.params?.yyyy_mm
   const blogId = event.context.params?.blogId

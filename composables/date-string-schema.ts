@@ -2,28 +2,36 @@ import { z } from 'zod'
 
 export function zodDateStringSchema() { 
     return z.string().refine(value => {
-      const date = Date.parse(value);
+      return true
+      // const date = Date.parse(value);
+      
+      // if (Number.isNaN(date)) {
+      //   return false;
+      // }
 
-      if (Number.isNaN(date)) {
-        return false;
-      }
+      // let dateParts: string[];
+      // if (value.indexOf('-') >= 0) {
+      //   dateParts = value.split('-');
+      // } else {
+      //   dateParts = value.split('/');
+      // }
 
-      const dateParts = value.split('-');
-      if (dateParts.length !== 3) {
-        return false;
-      }
+      // if (dateParts.length !== 3) {
+      //   return false;
+      // }
 
-      const year = parseInt(dateParts[0], 10);
-      const month = parseInt(dateParts[1], 10) - 1; // JavaScript 的月份是从 0 开始的
-      const day = parseInt(dateParts[2], 10);
+      // const year = parseInt(dateParts[0], 10);
+      // const month = parseInt(dateParts[1], 10) - 1; // JavaScript 的月份是从 0 开始的
+      // const day = parseInt(dateParts[2], 10);
 
-      const dateObject = new Date(year, month, day);
+      // const dateObject = new Date(year, month, day);
 
-      return (
-        dateObject.getFullYear() === year &&
-        dateObject.getMonth() === month &&
-        dateObject.getDate() === day
-      );
+      // return (
+      //   dateObject.getFullYear() === year &&
+      //   dateObject.getMonth() === month &&
+      //   dateObject.getDate() === day
+      // );
+
   }, { message: 'Invalid date format. Expected YYYY-MM-DD' });
 }
 

@@ -3,8 +3,8 @@ import mime from 'mime-types'
 import path from 'path'
 
 export default defineEventHandler(async (event) => {
+
     const fileDir = event.context.params?.slug
-    
     const storageDir = process.env.STORAGE_DIR || ''
     const folder = path.join(process.cwd() , storageDir)
     const filePath = `${folder}/images/${fileDir}`
@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
     }
 
     event.node.res.setHeader('Content-Type', mime.lookup(filePath) || 'text/plain')
+    
 
     try {
       const files = fs.readFileSync(filePath);

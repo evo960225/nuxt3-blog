@@ -3,11 +3,13 @@
     <div class="grid grid-cols-6 max-w-[1280px] w-full">
 
       <div class="grid col-span-1 text-lg text-white tracking-widest">
-        孤獨的邊緣宅
+        <NuxtLink to="/">
+          孤獨的邊緣宅
+        </NuxtLink>
       </div>
       
       <div class="flex justify-end col-span-4">
-        <ul class="flex justify-center gap-x-12">
+        <ul class="flex justify-center gap-x-12 text-white">
           <NuxtLink to="/"><li>Home</li></NuxtLink>
           <NuxtLink to="/blog"><li>Blog</li></NuxtLink>
           <NuxtLink to="/about"><li>About</li></NuxtLink>

@@ -1,12 +1,14 @@
 <template>
-  <div class="text-gray-700 m-4">
-    <div class="grid grid-cols-3 gap-5 ">
+  <div class="flex justify-center ">
+    <div class="grid grid-cols-3 gap-5 m-4 w-[1280px]">
       <div v-for="blog in blogListData" :key="blog.title">
         <NuxtLink :to="`/blog/${blog.date.split('-').slice(0,2).join('-')}/${blog.id}`">
-          <div class="rounded-xl shadow-lg bg-white p-3">
-            <p>{{ blog.title }}</p>
-            <p>{{ blog.date }}</p>
-            <p>{{ blog.category }}</p>
+          <div class="rounded-xl shadow-lg bg-white p-5 h-[200px]">
+            <p class="text-lg">{{ blog.title }}</p>
+            <div class="py-1">
+              <p class="text-gray-400">{{ blog.date }}</p>
+              <p class="text-gray-400">{{ blog.category }}</p>
+            </div>
           </div>
         </NuxtLink>
       </div>
