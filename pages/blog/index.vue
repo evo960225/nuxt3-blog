@@ -28,4 +28,6 @@ const blogListData = ref(blogTableData.value?.data || [])
 </script>
 
 <style>
+
+
 </style>

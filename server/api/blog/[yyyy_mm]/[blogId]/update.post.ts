@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import {unified} from 'unified'
 import remarkParse from 'remark-parse'
+import remarkImages from 'remark-images'
 import rehypeSanitize from 'rehype-sanitize'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'

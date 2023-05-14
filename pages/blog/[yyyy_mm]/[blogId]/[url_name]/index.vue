@@ -16,7 +16,7 @@
 const route = useRoute()
 const { yyyy_mm, blogId } = route.params
 const { data: blogData } = await useFetch(`/api/blog/${yyyy_mm}/${blogId}/html`, {
-  key: `mdData-${hashByTime(60*10)}`,
+  key: `blogData-${hashByTime(60*10)}`,
   method: 'GET',
 })
 
