@@ -10,9 +10,12 @@
   "devDependencies": {
     "@nuxtjs/i18n": "^8.0.0-beta.10",
     "@nuxtjs/tailwindcss": "^6.6.4",
+    "@prisma/client": "^4.14.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/formidable": "^2.0.6",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/mime-types": "^2.1.1",
+    "bcrypt": "^5.1.0",
     "formidable": "^2.1.1",
     "google-auth-library": "^8.7.0",
     "gray-matter": "^4.0.3",
@@ -23,6 +26,7 @@
     "rehype-sanitize": "^5.0.1",
     "rehype-stringify": "^9.0.3",
     "remark": "^14.0.2",
+    "remark-breaks": "^3.0.3",
     "remark-frontmatter": "^4.0.1",
     "remark-gfm": "^3.0.1",
     "remark-html": "^15.0.2",
@@ -35,11 +39,15 @@
     "vue3-google-login": "^2.0.15"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.4.10",
     "@quasar/extras": "^1.15.11",
     "gsap": "^3.11.5",
     "mime-types": "^2.1.35",
+    "pinia": "^2.0.36",
     "quasar": "^2.11.7",
-    "remark-breaks": "^3.0.3",
     "zod": "^3.21.4"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

@@ -6,8 +6,11 @@
 </template>
 
 <script setup lang="ts">
-
+import { useAdminStore } from '@/stores/admin' 
+const adminStore = useAdminStore()
 const route = useRoute()
+
+
 const title = computed(() => route.meta.title? `${route.meta.title} - ` : '')
 useHead({
   titleTemplate: (titleChunk) => {
