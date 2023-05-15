@@ -8,9 +8,11 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     jwtSignSecretbackstage: process.env.JWT_SIGN_SECRET_BACKSTAGE,
+    recaptchaSecretKey: process.env.RECAPTCHA_SECRET_KEY,
     public: {
       imageUrlBase: '/api/image',
       loginCookieMaxAge: 60 * 60 * 24 * 7,
+      recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY 
     }
   },
   css: [
@@ -25,6 +27,7 @@ export default defineNuxtConfig({
     '/**': { },
     '/backstage/**': { ssr: false },
   },
+
   quasar: {
     plugins: [
       'BottomSheet',

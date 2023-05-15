@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware(async(to, from)  => {
     if (ls_dir[1] === 'backstage') {
 
       const cookie = useCookie('access_token_backstage')
-      console.log('cookie', cookie.value);
+
       const adminStore = useAdminStore()
 
       // 有cookie但沒有profile，則驗證登入是否還有效
@@ -24,7 +24,6 @@ export default defineNuxtRouteMiddleware(async(to, from)  => {
       // 前往後台但未登入
       else {
         if (!adminStore.profile || !adminStore.profile.id) {
-          console.log('to login', adminStore.profile);
           return await navigateTo('/backstage/login') 
         } 
         // if (!cookie.value) {
