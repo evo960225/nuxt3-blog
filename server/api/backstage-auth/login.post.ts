@@ -6,6 +6,20 @@ const runtimeConfig = useRuntimeConfig()
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
+  const { recaptchaSecretKey } = runtimeConfig
+
+  // 驗證 recaptcha
+  const recaptchaResult = await $fetch(
+    `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${body.recaptchaToken}`
+  );
+
+  console.log('recaptchaResult', recaptchaResult);
+  
+  if (!(<any>recaptchaResult).success) throw createError({
+    statusCode: 400,
+    statusMessage: 'recaptcha not success!'
+  })
+
 
   const adminData = await admin.login(body.email, body.password)
 

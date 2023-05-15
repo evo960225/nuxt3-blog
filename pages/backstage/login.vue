@@ -30,21 +30,26 @@ const $q = useQuasar()
 const rememberMail = ref()
 const email = ref('')
 const password = ref('')
+const recaptchaToken = ref('')
 const accessTokenBackstage = useCookie('access_token_backstage', {
   watch: true,
 })
 
-onMounted(() => { 
+onMounted(async() => { 
   email.value = localStorage.getItem('remember-backstage-mail') || ''
   rememberMail.value = !!localStorage.getItem('remember-backstage-mail')
+  recaptchaToken.value = await useVueRecaptcha()
 })
 async function login() {
+
+
   const { data, error } = await useFetch(`/api/backstage-auth/login`, {
     key: 'login' + Date.now().toString(),
     method: 'POST',
     body: {
       email: email.value,
       password: password.value,
+      recaptchaToken: recaptchaToken.value
     },
   })
 
