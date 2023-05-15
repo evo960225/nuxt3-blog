@@ -18,7 +18,7 @@ async function getMarkDownContent(dirPath: string, fileName: string) {
   if(!fileContents) { return null }
 
   const { data, content } = matter(fileContents);
-  console.log(data.date);
+
   
   const BlogSchema = z.object({
     title: z.string(),

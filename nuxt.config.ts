@@ -4,11 +4,13 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-quasar-ui',
     '@nuxtjs/i18n',
-    // 'formidable'
+    '@pinia/nuxt',
   ],
   runtimeConfig: {
+    jwtSignSecretbackstage: process.env.JWT_SIGN_SECRET_BACKSTAGE,
     public: {
-      imageUrlBase: '/api/image'
+      imageUrlBase: '/api/image',
+      loginCookieMaxAge: 60 * 60 * 24 * 7,
     }
   },
   css: [
@@ -32,11 +34,7 @@ export default defineNuxtConfig({
       'Notify',
       'Dark',
     ],
-    config: {
-      notify: { 
-       
-      }
-    },
+
     extras: {
       fontIcons: [
         'material-icons',
@@ -48,6 +46,13 @@ export default defineNuxtConfig({
       ]
     },
     iconSet: 'material-icons',
-  }
+  },
+  pinia: {
+    autoImports: [
+      // automatically imports `defineStore`
+      'defineStore', // import { defineStore } from 'pinia'
+      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
+  },
 
 })

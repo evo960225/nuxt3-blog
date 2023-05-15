@@ -102,7 +102,7 @@
               <q-menu v-model="showingMenuAccount">
                 <q-list style="min-width: 100px">
                   <q-item clickable v-close-popup>
-                    <q-item-section>登出</q-item-section>
+                    <q-item-section @click="logout">登出</q-item-section>
                   </q-item>
                   <q-separator />
                 </q-list>
@@ -121,36 +121,49 @@
   </q-layout>
 </template>
 
-<script>
-import { ref } from 'vue'
-import { matMenu, matSchool } from '@quasar/extras/material-icons'
+<script setup lang="ts">
+import { useQuasar } from 'quasar'
+import { useAdminStore } from '~/stores/admin'
+const $q = useQuasar()
+const adminStroe = useAdminStore()
 
-export default {
-  name: 'MyLayout',
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-    const showingMenuHome = ref(false)
-    const showingMenuBlog = ref(false)
-    const showingMenuAdmin = ref(false)
-    const showingMenuMember = ref(false)
-    const showingMenuAccount = ref(false)
+const leftDrawerOpen = ref(false)
+const showingMenuHome = ref(false)
+const showingMenuBlog = ref(false)
+const showingMenuAdmin = ref(false)
+const showingMenuMember = ref(false)
+const showingMenuAccount = ref(false)
 
 
 
-    function toggleLeftDrawer () {
-      leftDrawerOpen.value = !leftDrawerOpen.value
-    }
+function toggleLeftDrawer () {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
 
-    return {
-      leftDrawerOpen,
-      toggleLeftDrawer,
-      showingMenuHome,
-      showingMenuBlog,
-      showingMenuAdmin,
-      showingMenuMember,
-      showingMenuAccount,
-    }
+ 
+async function logout () {
+  const { data , error } = await useFetch('/api/backstage-auth/logout', {
+    key: 'logout' + Date.now(),
+    method: 'POST'
+  })
+
+  if (error.value) {
+    $q.notify({
+      color: 'negative',
+      type: 'negative',
+      position: 'top',
+      message: '登出失敗'
+    })
+  } else {
+    $q.notify({
+      color: 'positive',
+      type: 'positive',
+      position: 'top',
+      message: '登出成功'
+    })
+
+    adminStroe.clearUserProfile()
+    await navigateTo('/backstage/login')
   }
 }
 
