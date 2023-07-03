@@ -1,0 +1,1 @@
+scp -C -r ./.output hoshi@hoshi:/var/www/html/blog

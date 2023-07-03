@@ -18,7 +18,11 @@
           <q-td auto-width>
             <q-checkbox v-model="props.selected" dense size="sm" />
           </q-td>
-          <q-td key="title" :props="props">{{ props.row.title }}</q-td>
+          <q-td key="title" :props="props">
+            <NuxtLink :to="`/backstage/blog/${props.row.date.split('-').slice(0,2).join('-')}/${props.row.id}`">
+              {{ props.row.title }}
+            </NuxtLink>
+          </q-td>
           <q-td key="date" :props="props">{{ props.row.date }}</q-td>
           <q-td key="category" :props="props">{{ props.row.category }}</q-td>
           <q-td key="button" :props="props">

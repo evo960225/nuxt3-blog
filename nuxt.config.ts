@@ -9,6 +9,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     jwtSignSecretbackstage: process.env.JWT_SIGN_SECRET_BACKSTAGE,
     recaptchaSecretKey: process.env.RECAPTCHA_SECRET_KEY,
+    firebaseImagesDest: process.env.FIREBASE_IMAGES_DEST,
     public: {
       imageUrlBase: '/api/image',
       loginCookieMaxAge: 60 * 60 * 24 * 7,

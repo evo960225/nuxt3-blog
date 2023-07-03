@@ -2,7 +2,6 @@ import admin from '@/server/db/admin'
 
 export default defineEventHandler(async (event) => {
 
-  console.log('authBackstage', event.context?.authBackstage);
   
   const adminProfile = event.context?.authBackstage?.admin
   
@@ -19,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
   if (!adminData) {
     throw createError({
-      statusCode: 400,
+      statusCode: 204,
       statusMessage: 'Could not find manager.'
     })
   }
