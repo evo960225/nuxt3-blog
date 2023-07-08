@@ -29,24 +29,14 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const storageDir = process.env.STORAGE_DIR || ''
-  const fullStorageDir = path.join(process.cwd() , storageDir)
-  const imagesfolder = path.join(fullStorageDir, 'images')
-  const imagesYMFolder = path.join(imagesfolder , yyyy_mm)
-  const imagesIdFolder = path.join(imagesYMFolder , blogId)
+
+  const firebaseAdmin = useFirebaseAdmin()
+  const bucket = firebaseAdmin.storage().bucket();
+  const [urlResponse] = await bucket.getFiles({
+    prefix: getFirebaseBlogDest(yyyy_mm, blogId)
+  })
+  const imagesUrl = urlResponse.map(x => x.metadata.mediaLink)
   
-  
-  if (!fs.existsSync(imagesIdFolder)) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Could not find images.'
-    })
-  }
-
-
-  const baseUrl = `${runtimeConfig.public.imageUrlBase}/${yyyy_mm}/${blogId}`
-  const imagesUrl = getImagesUrlFromDir(imagesIdFolder, baseUrl);
-
   if (!imagesUrl) {
     throw createError({
       statusCode: 400,
@@ -55,4 +45,31 @@ export default defineEventHandler(async (event) => {
   }
 
   return imagesUrl
+
+  // const storageDir = process.env.STORAGE_DIR || ''
+  // const fullStorageDir = path.join(process.cwd() , storageDir)
+  // const imagesfolder = path.join(fullStorageDir, 'images')
+  // const imagesYMFolder = path.join(imagesfolder , yyyy_mm)
+  // const imagesIdFolder = path.join(imagesYMFolder , blogId)
+  
+  
+  // if (!fs.existsSync(imagesIdFolder)) {
+  //   throw createError({
+  //     statusCode: 400,
+  //     statusMessage: 'Could not find images.'
+  //   })
+  // }
+
+
+  // const baseUrl = `${runtimeConfig.public.imageUrlBase}/${yyyy_mm}/${blogId}`
+  // const imagesUrl = getImagesUrlFromDir(imagesIdFolder, baseUrl);
+
+  // if (!imagesUrl) {
+  //   throw createError({
+  //     statusCode: 400,
+  //     statusMessage: 'Could not find images.'
+  //   })
+  // }
+
+  // return imagesUrl
 })

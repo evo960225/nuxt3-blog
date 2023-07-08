@@ -32,13 +32,13 @@
             />
           </div>
         </div>
+        <!-- image list -->
         <div class="flex">
           <div v-for="(imageUrl, index) in imagesUrlData" :key="index" class="flex w-1/3 h-[300px] bg-slate-700 border border-gray-500">
-
             <q-img
               :src="imageUrl"
               :key="index"
-              :loading="index>2 ? 'lazy' : undefined"
+              :loading="index>2 ? 'lazy' : 'eager'"
               fit="contain"
               class="h-full"
             >

@@ -16,3 +16,14 @@ export function useFirebaseAdmin() {
   return admin
 
 }
+
+export function getFilePublicUrl(fileName: string) {
+  const firebaseAdmin = useFirebaseAdmin()
+  const bucket = firebaseAdmin.storage().bucket();
+  return `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+}
+
+export function getFirebaseBlogDest(yyyy_mm: string, blogId: string) {
+  const runtimeConfig = useRuntimeConfig()
+  return `${runtimeConfig.firebaseImagesDest}/${yyyy_mm}/${blogId}`
+}

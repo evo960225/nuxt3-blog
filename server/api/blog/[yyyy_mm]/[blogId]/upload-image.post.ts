@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
 
 
   // upload to firebase storage
-  const firebaseDest = `${runtimeConfig.firebaseImagesDest}/${yyyy_mm}/${blogId}/${uploadFileName}`;
+  const firebaseDest = `${getFirebaseBlogDest(yyyy_mm, blogId)}/${uploadFileName}`;
   const firebaseAdmin = useFirebaseAdmin()
   const bucket = firebaseAdmin.storage().bucket();
   await bucket.upload(filePath, {
@@ -80,13 +80,15 @@ export default defineEventHandler(async (event) => {
   const fileUrl = await file
     .makePublic()
     .then(() => {
-      return `https://storage.googleapis.com/${bucket.name}/${file.name}`;
+      return getFilePublicUrl(file.name);
     })
     .catch((error) => {
       console.error("Error making file public:", error);
     });
 
-
+  
+  // delete local file
+  fs.unlinkSync(filePath)
 
   return { newFilename: hashFilename, fileUrl }
 })

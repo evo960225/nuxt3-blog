@@ -1,56 +1,45 @@
-import imagemin from 'imagemin';
+
 import jimp from 'jimp';
 import path from 'path';
 import fs from 'fs';
 
-export async function compressJpgImage(filePath: string, destPath: string , quality: number = 80) { 
 
-  const folderPath = filePath.replace(filePath.split('/').pop() as string, '');
+export async function compressImageToJpg(filePath: string, newfilePath: string = '', quality: number = 80, width: number = -1, height: number = -1) { 
 
-  const files = await imagemin([filePath], {
-    destination: path.join(folderPath, 'saved'),
-    plugins: [
-      imageminMozjpeg({
-        quality: quality, // 調整 JPEG 的壓縮品質 (0-100)
-      }),
-    ]
-  });
+  const _newFilePath = newfilePath || filePath
 
-  files.forEach(file => {
-    let oldPath = file.destinationPath;
-    let newPath = path.join(path.dirname(oldPath), path.basename(oldPath) + '_compressed.jpg');
-    fs.renameSync(oldPath, newPath);
-  });
+  // Check if file exists
+  if (!fs.existsSync(filePath)) {
+    throw new Error('File does not exist')
+  }
 
-  return files
+  // Check if file is an image
+  if (!['.jpg', '.jpeg', '.png'].includes(path.extname(filePath))) {
+    throw new Error('File is not an image')
+  }
 
-}
-
-export async function compressImageToJpg(filePath: string, quality: number = 80, width: number = -1, height: number = -1) { 
-  
   const convertedFilePath = path.format({
-    dir: path.dirname(filePath),
-    name: path.basename(filePath, path.extname(filePath)),
+    dir: path.dirname(_newFilePath),
+    name: path.basename(_newFilePath, path.extname(_newFilePath)),
     ext: '.jpg'
   });
 
-  await jimp
-    .read(filePath)
-    .then((image) => {
-      let editedImage = image
+  // jimp await
+  const imageFile = await jimp.read(filePath)
+  try {
+    let editedImage = imageFile
       if (width !== -1 || height !== -1) {
-        editedImage = image.resize(
+        editedImage = imageFile.resize(
           (width !== -1 ? width : jimp.AUTO), 
           (height !== -1 ? height : jimp.AUTO)
         )
       }
-      editedImage
+      await editedImage
         .quality(quality)
-        .write(convertedFilePath); // save
-    })
-    .catch((err) => {
-      throw err
-    });
+        .writeAsync(convertedFilePath); // save
+  } catch (error) {
+    throw new Error('Error while compressing image')
+  }
 
 
   return convertedFilePath
