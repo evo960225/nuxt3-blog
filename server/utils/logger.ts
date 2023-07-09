@@ -1,13 +1,33 @@
 
 import winston from 'winston';
-const { combine, timestamp, label, json } = winston.format;
+import winstonDailyRotateFile from 'winston-daily-rotate-file';
+const { combine, timestamp, json } = winston.format;
 
 const logsDir = getLogsFullDir()
 
 
+const errorTransport = new winstonDailyRotateFile({
+  level: 'error',
+  dirname: './logs',
+  filename: `${logsDir}/error-%DATE%.log`,
+  datePattern: 'YYYY-MM',
+  maxSize: '20m',
+  maxFiles: '12',
+  zippedArchive: true
+});
+
+const combinedTransport = new winstonDailyRotateFile({
+  dirname: './logs',
+  filename: `${logsDir}/combined-%DATE%.log`,
+  datePattern: 'YYYY-MM',
+  maxSize: '20m',
+  maxFiles: '12',
+  zippedArchive: true
+});
+
 const logger = winston.createLogger({
   level: 'info',
-  format: winston.format.combine(
+  format: combine(
     timestamp({
       format: 'YYYY-MM-DD HH:mm:ss'
     }),
@@ -18,8 +38,8 @@ const logger = winston.createLogger({
   ),
   defaultMeta: { service: 'user-service' },
   transports: [
-    new winston.transports.File({ filename: `${logsDir}/error.log`, level: 'error' }),
-    new winston.transports.File({ filename: `${logsDir}/combined.log` }),
+    errorTransport,
+    combinedTransport,
   ],
 });
 
