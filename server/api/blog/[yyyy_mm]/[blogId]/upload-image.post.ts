@@ -10,12 +10,12 @@ export default defineEventHandler(async (event) => {
       message: 'You don\'t have the rights to access this resource',
     })
   }
-
+  const runtimeConfig = useRuntimeConfig()
   const yyyy_mm = event.context.params?.yyyy_mm || ''
   const blogId = event.context.params?.blogId || ''
 
   // create folder if not exist
-  const storageDir = process.env.STORAGE_DIR || ''
+  const storageDir = runtimeConfig.storageDir || ''
   const fullStorageDir = path.join(process.cwd(), storageDir)
   const imagesfolder = path.join(fullStorageDir, 'images')
   const imagesYMFolder = path.join(imagesfolder, yyyy_mm)
@@ -57,7 +57,6 @@ export default defineEventHandler(async (event) => {
 
 
   // compress image
-  const runtimeConfig = useRuntimeConfig()
   const filePath = await compressImageToJpg(path.join(imagesIdFolder, hashFilename))
   const uploadFileName = path.basename(filePath)
 

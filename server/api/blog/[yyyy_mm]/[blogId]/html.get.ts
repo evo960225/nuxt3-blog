@@ -63,7 +63,8 @@ async function getHtmlContent(dirPath: string, fileName: string) {
 
 export default defineEventHandler(async(event) => {
   
-  const blogDir = process.env.BLOG_DIR
+  const runtimeConfig = useRuntimeConfig()
+  const blogDir = runtimeConfig.blogsContentDir
   const yyyy_mm = event.context.params?.yyyy_mm
   const blogId = event.context.params?.blogId
 

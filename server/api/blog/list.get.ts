@@ -21,15 +21,16 @@ function getMarkdownFiles(dir: string, filelist: string[] = []): string[] {
 }
 
 export default defineEventHandler(async(event) => {
+  const runtimeConfig = useRuntimeConfig()
+  const blogDir = runtimeConfig.blogsContentDir
   
-  
-  if (process.env.BLOG_DIR === undefined) {
+  if (blogDir === undefined) {
     throw createError({
       statusCode: 500,
       statusMessage: 'Prarameters are not valid.'
     })
   }
-  const blogDir = path.join(process.cwd(), process.env.BLOG_DIR)
+
   const files = getMarkdownFiles(blogDir)
 
   const BlogSchema = z.object({

@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const runtimeConfig = useRuntimeConfig()
   const fileDir = event.context.params?.slug
-  const storageDir = process.env.STORAGE_DIR || ''
+  const storageDir = runtimeConfig.storageDir || ''
   const folder = path.join(process.cwd() , storageDir)
   const filePath = `${folder}/images/${fileDir}`
 

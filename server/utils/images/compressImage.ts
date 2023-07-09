@@ -19,7 +19,7 @@ export async function compressImageToJpg(filePath: string, newfilePath: string =
   }
 
   const convertedFilePath = path.format({
-    dir: path.dirname(_newFilePath),
+    dir: path.Dir(_newFilePath),
     name: path.basename(_newFilePath, path.extname(_newFilePath)),
     ext: '.jpg'
   });

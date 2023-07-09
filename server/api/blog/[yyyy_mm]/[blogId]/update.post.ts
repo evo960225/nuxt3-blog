@@ -24,7 +24,8 @@ export default defineEventHandler(async (event) => {
   //     message: 'You don\'t have the rights to access this resource',
   //   })
   // }
-  const blogDir = process.env.BLOG_DIR
+  const runtimeConfig = useRuntimeConfig()
+  const blogDir = runtimeConfig.blogsContentDir
   const body:IBlog = await readBody(event)
 
   const yyyy_mm = event.context.params?.yyyy_mm

@@ -38,7 +38,8 @@ function deleteImage(dirPath:string, fileName: string) {
 export default defineEventHandler(async (event) => {
   
   const { fileName } = await readBody(event)
-  const blogDir = process.env.BLOG_DIR
+  const runtimeConfig = useRuntimeConfig()
+  const blogDir = runtimeConfig.blogsContentDir
   const yyyy_mm = event.context.params?.yyyy_mm || ''
   const blogId = event.context.params?.blogId || ''
 
@@ -49,7 +50,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const storageDir = process.env.STORAGE_DIR || ''
+  const storageDir = runtimeConfig.storageDir || ''
   const fullStorageDir = path.join(process.cwd() , storageDir)
   const imagesfolder = path.join(fullStorageDir, 'images')
   const imagesYMFolder = path.join(imagesfolder , yyyy_mm)

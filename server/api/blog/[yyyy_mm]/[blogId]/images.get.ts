@@ -17,7 +17,8 @@ function getImagesUrlFromDir(dirPath: string, baseUrl?: string) {
 
 export default defineEventHandler(async (event) => {
   
-  const blogDir = process.env.BLOG_DIR
+  const runtimeConfig = useRuntimeConfig()
+  const blogDir = runtimeConfig.blogsContentDir
   const yyyy_mm = event.context.params?.yyyy_mm || ''
   const blogId = event.context.params?.blogId || ''
   
@@ -46,30 +47,5 @@ export default defineEventHandler(async (event) => {
 
   return imagesUrl
 
-  // const storageDir = process.env.STORAGE_DIR || ''
-  // const fullStorageDir = path.join(process.cwd() , storageDir)
-  // const imagesfolder = path.join(fullStorageDir, 'images')
-  // const imagesYMFolder = path.join(imagesfolder , yyyy_mm)
-  // const imagesIdFolder = path.join(imagesYMFolder , blogId)
-  
-  
-  // if (!fs.existsSync(imagesIdFolder)) {
-  //   throw createError({
-  //     statusCode: 400,
-  //     statusMessage: 'Could not find images.'
-  //   })
-  // }
 
-
-  // const baseUrl = `${runtimeConfig.public.imageUrlBase}/${yyyy_mm}/${blogId}`
-  // const imagesUrl = getImagesUrlFromDir(imagesIdFolder, baseUrl);
-
-  // if (!imagesUrl) {
-  //   throw createError({
-  //     statusCode: 400,
-  //     statusMessage: 'Could not find images.'
-  //   })
-  // }
-
-  // return imagesUrl
 })

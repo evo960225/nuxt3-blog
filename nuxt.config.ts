@@ -7,6 +7,9 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
   runtimeConfig: {
+    blogsContentDir: process.env.BLOGS_CONTENT_DIR || '/',
+    storageDir: process.env.STORAGE_DIR || '/',
+    logsDir: process.env.LOGS_DIR || '/',
     jwtSignSecretbackstage: process.env.JWT_SIGN_SECRET_BACKSTAGE,
     recaptchaSecretKey: process.env.RECAPTCHA_SECRET_KEY,
     firebaseImagesDest: process.env.FIREBASE_IMAGES_DEST,
