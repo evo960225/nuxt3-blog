@@ -25,6 +25,8 @@ async function getMarkDownContent(dirPath: string, fileName: string) {
     date: z.string(),
     category: z.string(),
     content: z.string(),
+    ogImage: z.string().optional(),
+    description: z.string().optional(),
   });
   
   type BlogSchema = z.infer<typeof BlogSchema>;
@@ -49,6 +51,7 @@ export default defineEventHandler(async(event) => {
   // }
 
   const runtimeConfig = useRuntimeConfig()
+  const logger = useLogger()
   const blogDir = runtimeConfig.blogsContentDir
   const yyyy_mm = event.context.params?.yyyy_mm
   const blogId = event.context.params?.blogId
@@ -63,9 +66,10 @@ export default defineEventHandler(async(event) => {
 
   
   if (!blogData) {
+    logger.error('Could not find content.')
     throw createError({
       statusCode: 400,
-      statusMessage: 'Could not find product.'
+      statusMessage: 'Could not find content.'
     })
   }
   return blogData

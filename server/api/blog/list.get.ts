@@ -42,25 +42,26 @@ export default defineEventHandler(async(event) => {
   })
   type BlogSchema = z.infer<typeof BlogSchema>
 
-  const blogInfoList = files.map((file) => {
+  const blogInfoList: BlogSchema[] = []
+  files.map((file) => {
     const fileContents = fs.readFileSync(file, 'utf8');
     const { data, content } = matter(fileContents);
 
-
-    const result = BlogSchema.parse({
+    const result = BlogSchema.safeParse({
       id: file.split("\\").slice(-1)[0].replace('.md', ''),
       ...data,
       content,
     })
-    return result
+    
+    if (result.success) {
+      blogInfoList.push(result.data);
+    }
   })
-
-
 
   if (!blogInfoList) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Could not find product.'
+      statusMessage: 'Could not find blog list.'
     })
   }
 

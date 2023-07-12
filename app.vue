@@ -14,7 +14,7 @@ const route = useRoute()
 const title = computed(() => route.meta.title? `${route.meta.title} - ` : '')
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} - Hoshi Home` : 'Hoshi Home';
+    return titleChunk ? `${titleChunk} - 孤獨的邊緣宅` : '孤獨的邊緣宅';
   },
   title: '',
   meta: [

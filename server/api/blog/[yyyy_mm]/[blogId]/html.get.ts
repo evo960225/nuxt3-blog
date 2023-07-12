@@ -6,11 +6,12 @@ import {unified} from 'unified'
 import remarkParse from 'remark-parse'
 import remarkImages from 'remark-images'
 import remarkBreaks from 'remark-breaks'
-import rehypeSanitize from 'rehype-sanitize'
+import rehypeSanitize, {defaultSchema} from 'rehype-sanitize'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
 import remarkGfm from 'remark-gfm';
 import remarkInlineLinks from 'remark-inline-links'
+import rehypeRaw from 'rehype-raw'
 import { z } from 'zod';
 
 
@@ -26,16 +27,27 @@ async function getHtmlContent(dirPath: string, fileName: string) {
   
   if(!fileContents) { return null }
 
+  
+  defaultSchema.tagNames?.push('iframe')
+
   const { data, content } = matter(fileContents);
+
   const processedContent = await unified()
     .use(remarkParse)
-    .use(remarkInlineLinks)
-    .use(remarkGfm)
+    .use(remarkInlineLinks) // hyperlinks
+    .use(remarkGfm)         // GitHub Flavored Markdown
     .use(remarkImages)
-    .use(remarkBreaks)
-    .use(remarkRehype)
-    .use(rehypeSanitize)
-    .use(rehypeStringify)
+    .use(remarkBreaks)      // soft line breaks
+    .use(remarkRehype, {allowDangerousHtml: true})
+    .use(rehypeRaw)
+    .use(rehypeSanitize, {
+      ...defaultSchema,
+      attributes: {
+        ...defaultSchema.attributes,
+        iframe: ['src', 'width', 'height'],
+      },
+    })
+    .use(rehypeStringify, {allowDangerousHtml: true})
     .process(content)
 
 
@@ -46,6 +58,8 @@ async function getHtmlContent(dirPath: string, fileName: string) {
     title: z.string(),
     date: z.string(),
     category: z.string(),
+    ogImage: z.string().optional(),
+    description: z.string().optional(),
     contentHtml: z.string(),
   });
   
@@ -62,25 +76,33 @@ async function getHtmlContent(dirPath: string, fileName: string) {
 }
 
 export default defineEventHandler(async(event) => {
-  
+  // const logger = useLogger()
   const runtimeConfig = useRuntimeConfig()
+  
   const blogDir = runtimeConfig.blogsContentDir
   const yyyy_mm = event.context.params?.yyyy_mm
   const blogId = event.context.params?.blogId
 
+  
   if (!blogDir && !yyyy_mm && !blogId) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Prarameters are not valid.'
     })
   }
-  const blogData = await getHtmlContent(`${blogDir}/${yyyy_mm}/`, `${blogId}.md`)
+
+
+  const encodedId = decodeURIComponent(blogId as string);
+console.log(`${blogDir}/${yyyy_mm}/`, `${encodedId}.md`);
+
+  const blogData = await getHtmlContent(`${blogDir}/${yyyy_mm}/`, `${encodedId}.md`)
 
   
   if (!blogData) {
+    // logger.error('Could not find content.')
     throw createError({
-      statusCode: 400,
-      statusMessage: 'Could not find product.'
+      statusCode: 500,
+      statusMessage: 'Could not find content.'
     })
   }
   return blogData

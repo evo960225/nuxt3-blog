@@ -26,6 +26,9 @@
           <q-td key="date" :props="props">{{ props.row.date }}</q-td>
           <q-td key="category" :props="props">{{ props.row.category }}</q-td>
           <q-td key="button" :props="props">
+            <q-btn color="teal-4" :icon="farTrashCan" text-color="white" size="sm" @click="deleteArticle(props.rowIndex)" />
+          </q-td>
+          <q-td key="button" :props="props">
             <NuxtLink :to="`/backstage/blog/${props.row.date.split('-').slice(0,2).join('-')}/${props.row.id}`">
               <q-btn color="primary" text-color="white" label="編輯" size="sm" />
             </NuxtLink>
@@ -37,6 +40,7 @@
 </template>
 
 <script lang="ts" setup>
+import { farTrashCan } from '@quasar/extras/fontawesome-v6';
 import { QTableColumn } from 'quasar'
 
 
@@ -48,7 +52,7 @@ const prop = defineProps<{
 const emit = defineEmits(['update:selected'])
 const isLoading = ref(false)
 
-const rows = ref<any[]>(prop.rows)
+const rows = ref<IBlogInfo[]>(prop.rows)
 const selected = computed({
   get() {
     return prop.selected
@@ -75,6 +79,12 @@ const columns = ref<QTableColumn[]>([
     sortable: true
   },
   {
+    name: 'button', label: '刪除', field: 'button',
+    align: 'left',
+    sortable: true,
+  },
+
+  {
     name: 'button', label: '按鈕', field: 'button',
     align: 'left',
     sortable: true,
@@ -92,9 +102,9 @@ const pagination = ref({
 // ------------------------------
 // init
 function init() {
-  isLoading.value = true
+  
   loadData()
-  isLoading.value = false
+ 
 }
 init()
 
@@ -113,9 +123,14 @@ async function fetchFromServer(startRow?:any, count?:any, filter?:any, sortBy?:a
 }
 
 async function loadData() {
+  isLoading.value = true
+
   const resultData = await fetchFromServer()
-  rows.value = resultData?.data || []
+  rows.value = resultData?.data || [] 
   pagination.value.rowsNumber = resultData?.total || 0
+
+
+  isLoading.value = false
   return resultData
 }
 
@@ -124,7 +139,6 @@ async function onRequest(props: QTableRequestProps) {
 
   isLoading.value = true
   
-
   // pagination
   pagination.value.page = page
   pagination.value.rowsPerPage = rowsPerPage
@@ -138,6 +152,18 @@ async function onRequest(props: QTableRequestProps) {
   isLoading.value = false
 }
 
+async function deleteArticle (rowIndex: number) {
+  const { date, id } = rows.value[rowIndex]
+  const yyyy_mm = date.split('-').slice(0,2).join('-')
+  const blogId = id
+  console.log('deleteArticle', yyyy_mm, blogId);
+  
+  await useFetch(`/api/blog/${yyyy_mm}/${blogId}`, {
+    key: `delete-blogData-${hashByTime(1)}`,
+    method: 'DELETE',
+  })
+  await loadData()
+}
 
 defineExpose({ pagination })
 </script>

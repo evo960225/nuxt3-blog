@@ -1,6 +1,6 @@
 <template>
   <backstageHeader></backstageHeader>
-  <div class="p-0 flex justify-center">
+  <div class="backstage p-0 flex justify-center">
      
     <slot />
   </div>

@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    '@nuxtjs/tailwindcss',
+    'nuxt-windicss',
     'nuxt-quasar-ui',
     '@nuxtjs/i18n',
     '@pinia/nuxt',
@@ -21,8 +21,6 @@ export default defineNuxtConfig({
   },
   css: [
     '@/assets/styles/main.scss',
-
-    
   ],
   app:{
     pageTransition: { name: 'page', mode: 'out-in' },

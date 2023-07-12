@@ -12,6 +12,8 @@ type IBlogInfo = {
   title: string,
   date: string,
   category: string,
+  ogImage?: string,
+  description?: string,
 };
 
 interface IBlog extends IBlogInfo {

@@ -56,10 +56,16 @@ export default defineEventHandler(async (event) => {
   })
 
 
-  // compress image
-  const filePath = await compressImageToJpg(path.join(imagesIdFolder, hashFilename))
+  // compress image and convert to jpg, if image is jpg ro png
+  let filePath = path.join(imagesIdFolder, hashFilename)
+  if (hashFilename.endsWith('.jpg') 
+    || hashFilename.endsWith('.png')
+    || hashFilename.endsWith('.jpeg')
+  ) {
+    filePath = await compressImageToJpg(filePath)
+  }
   const uploadFileName = path.basename(filePath)
-
+  
 
   // upload to firebase storage
   const firebaseDest = `${getFirebaseBlogDest(yyyy_mm, blogId)}/${uploadFileName}`;

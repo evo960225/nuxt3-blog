@@ -6,7 +6,7 @@
           <div class="text-h6">登入</div>
         </q-card-section>
 
-        <q-card-section class="space-y-2">
+        <q-card-section class="space-y-2" @keydown.enter="login">
           <q-input v-model="email" filled type="email" label="email" bg-color="white" />
           <q-input v-model="password" filled type="password" label="Password" bg-color="white" />
         </q-card-section>
