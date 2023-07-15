@@ -1,12 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    'trpc-nuxt',
     'nuxt-windicss',
     'nuxt-quasar-ui',
     '@nuxtjs/i18n',
     '@pinia/nuxt',
   ],
+  build: {
+    transpile: ['trpc-nuxt']
+  },
   runtimeConfig: {
     blogsContentDir: process.env.BLOGS_CONTENT_DIR || '/',
     storageDir: process.env.STORAGE_DIR || '/',
