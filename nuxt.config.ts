@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    // 'trpc-nuxt',
+    'trpc-nuxt',
     'nuxt-windicss',
     'nuxt-quasar-ui',
     '@nuxtjs/i18n',

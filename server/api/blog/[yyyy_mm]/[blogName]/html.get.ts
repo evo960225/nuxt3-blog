@@ -11,7 +11,7 @@ import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
 import remarkGfm from 'remark-gfm';
 import remarkInlineLinks from 'remark-inline-links'
-// import rehypeRaw from 'rehype-raw'
+import rehypeRaw from 'rehype-raw'
 import { z } from 'zod';
 
 
@@ -39,7 +39,7 @@ async function getHtmlContent(dirPath: string, fileName: string) {
     .use(remarkImages)
     .use(remarkBreaks)      // soft line breaks
     .use(remarkRehype, {allowDangerousHtml: true})
-    //.use(rehypeRaw)
+    .use(rehypeRaw)
     .use(rehypeSanitize, {
       ...defaultSchema,
       attributes: {
