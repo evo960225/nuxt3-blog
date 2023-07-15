@@ -2,7 +2,7 @@ import path from 'path'
 import moment from 'moment'
 const logger = useLogger()
 
-export function getBlogsContentFullDir(fileName?: string) { 
+export function getBlogsContentFullDir(date_yyyy_mm: string, fileName?: string) { 
   
   const { blogsContentDir } = useRuntimeConfig()
 
@@ -16,12 +16,13 @@ export function getBlogsContentFullDir(fileName?: string) {
   }
 
   return (!fileName)
-    ? path.join(process.cwd(), blogsContentDir)
-    : path.join(process.cwd(), blogsContentDir, fileName)
+    ? path.join(process.cwd(), blogsContentDir, date_yyyy_mm)
+    : path.join(process.cwd(), blogsContentDir, date_yyyy_mm, fileName)
 
 }
 
 export function getStorageFullDir(fileName?: string) { 
+  
   const { storageDir } = useRuntimeConfig()
 
   // check storageDir isn't empty

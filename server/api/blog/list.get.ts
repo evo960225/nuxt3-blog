@@ -7,7 +7,6 @@ import { z } from 'zod';
 
 function getMarkdownFiles(dir: string, filelist: string[] = []): string[] {
   const files = fs.readdirSync(dir);
-
   files.forEach(file => {
     const filePath = path.join(dir, file);
     if (fs.statSync(filePath).isDirectory()) {
@@ -32,23 +31,15 @@ export default defineEventHandler(async(event) => {
   }
 
   const files = getMarkdownFiles(blogDir)
+  type IBlogSchema = z.infer<typeof BlogSchema>
 
-  const BlogSchema = z.object({
-    id: z.string(),
-    title: z.string(),
-    date: zodDateStringSchema(),
-    category: z.string(),
-    content: z.string(),
-  })
-  type BlogSchema = z.infer<typeof BlogSchema>
-
-  const blogInfoList: BlogSchema[] = []
+  const blogInfoList: IBlogSchema[] = []
   files.map((file) => {
     const fileContents = fs.readFileSync(file, 'utf8');
     const { data, content } = matter(fileContents);
 
     const result = BlogSchema.safeParse({
-      id: file.split("\\").slice(-1)[0].replace('.md', ''),
+      blogName: path.basename(file).replace('.md', ''),
       ...data,
       content,
     })

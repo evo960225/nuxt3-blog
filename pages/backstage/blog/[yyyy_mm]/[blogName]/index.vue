@@ -27,10 +27,8 @@
           <q-input v-model="mdData.category" color="teal" bg-color="white" dense outlined label="分類" />
           <q-input v-model="mdData.description" color="teal" bg-color="white" dense outlined label="說明" />
           <div class="" >
-            <q-input v-model="mdData.content" rows="20"
-              color="teal" bg-color="white" type="textarea" label="內容"
-              outlined 
-            />
+
+            <div ref="editorRef" class="bg-white"></div>
           </div>
         </div>
 
@@ -62,9 +60,11 @@
           <q-uploader
             :url="`${blogApiUrl}/upload-image`"
             auto-upload
+            multiple
             accept="image/*"
             style="max-width: 300px"
             @uploaded="onUploaded"
+            @failed="(info) => $q.notify('檔案過大')"
           />
         </div>
       </div>
@@ -79,13 +79,57 @@
 </template>
 
 <script setup lang="ts">
+import { decode } from 'jsonwebtoken';
 import { date, useQuasar } from 'quasar'
+import Editor from '@toast-ui/editor';
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import DOMPurify from 'isomorphic-dompurify';
+import Prism from 'prismjs';
+
+
+import 'prismjs/themes/prism.css';
+import '@toast-ui/editor/dist/toastui-editor.css'; 
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import { JSONParser } from 'formidable/parsers';
+
 const $q = useQuasar()
 const route = useRoute()
-const { yyyy_mm, blogId } = route.params
+const { yyyy_mm, blogName } = route.params
+const editorRef = ref<HTMLElement>()
+let editor: Editor
+
+onMounted(() => {
+  if (!editorRef.value) return
+  editor = new Editor({
+    el: editorRef.value,
+    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+    initialEditType: 'markdown',
+    previewStyle: 'vertical',
+    height: '600px',
+    initialValue: mdData.value.content,
+    customHTMLSanitizer: html => {
+      return DOMPurify.sanitize(html, {
+        ALLOWED_TAGS: [
+          'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
+          'blockquote', 'p', 'div', 'code', 'span', 'br', 'hr', 'pre',
+          'table', 'thead', 'tbody', 'tr', 'th', 'td', 'caption',
+          'ul', 'ol', 'li', 'dl', 'dt', 'dd',
+          'em', 'strong', 'b', 'i', 'u', 's', 'del', 'ins', 'a', 'img',
+          'figure', 'figcaption',
+        ],
+      });
+    },
+    events: {
+      change: () => {
+        mdData.value.content = editor.getMarkdown()
+      },
+    },
+  });
+})
+
 const isLoading = ref(false)
 
-const blogApiUrl = `/api/blog/${yyyy_mm}/${blogId}`
+const blogApiUrl = `/api/blog/${yyyy_mm}/${blogName}`
 const ogImageUrl = ref('')
 
 // get data
@@ -181,15 +225,16 @@ async function copyHtmlImageUrl(url: string) {
 async function onUploaded() {
   $q.notify('上傳成功')
   imagesUrlData.value = (await getImages()).value
+  
 }
 
 async function deleteImage(filePath: string) {
-  console.log(filePath);
-  
+  const _filePath = decodeURIComponent(filePath)
+  console.log(_filePath);
   const { data, error } = await useFetch(`${blogApiUrl}/image`, {
     key: `deleteImage-${hashByTime(1)}`,
     method: 'DELETE',
-    body: { fileName: filePath.split('/').pop() },
+    body: { fileName: _filePath.split("?")[0].split('/').pop() },
   })
 
   if (error.value) {

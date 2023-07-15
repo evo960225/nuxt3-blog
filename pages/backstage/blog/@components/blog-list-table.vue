@@ -19,7 +19,7 @@
             <q-checkbox v-model="props.selected" dense size="sm" />
           </q-td>
           <q-td key="title" :props="props">
-            <NuxtLink :to="`/backstage/blog/${props.row.date.split('-').slice(0,2).join('-')}/${props.row.id}`">
+            <NuxtLink :to="`/backstage/blog/${props.row.date.split('-').slice(0,2).join('-')}/${props.row.blogName}`">
               {{ props.row.title }}
             </NuxtLink>
           </q-td>
@@ -29,7 +29,7 @@
             <q-btn color="teal-4" :icon="farTrashCan" text-color="white" size="sm" @click="deleteArticle(props.rowIndex)" />
           </q-td>
           <q-td key="button" :props="props">
-            <NuxtLink :to="`/backstage/blog/${props.row.date.split('-').slice(0,2).join('-')}/${props.row.id}`">
+            <NuxtLink :to="`/backstage/blog/${props.row.date.split('-').slice(0,2).join('-')}/${props.row.blogName}`">
               <q-btn color="primary" text-color="white" label="編輯" size="sm" />
             </NuxtLink>
           </q-td>
@@ -153,12 +153,11 @@ async function onRequest(props: QTableRequestProps) {
 }
 
 async function deleteArticle (rowIndex: number) {
-  const { date, id } = rows.value[rowIndex]
+  const { date, blogName } = rows.value[rowIndex]
   const yyyy_mm = date.split('-').slice(0,2).join('-')
-  const blogId = id
-  console.log('deleteArticle', yyyy_mm, blogId);
+  console.log('deleteArticle', yyyy_mm, blogName);
   
-  await useFetch(`/api/blog/${yyyy_mm}/${blogId}`, {
+  await useFetch(`/api/blog/${yyyy_mm}/${blogName}`, {
     key: `delete-blogData-${hashByTime(1)}`,
     method: 'DELETE',
   })

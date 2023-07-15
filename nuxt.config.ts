@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
+    // 'trpc-nuxt',
     'nuxt-windicss',
     'nuxt-quasar-ui',
     '@nuxtjs/i18n',
@@ -59,5 +60,12 @@ export default defineNuxtConfig({
       ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
     ],
   },
-
+  trpc: {
+    baseURL: '', // Set empty string (default) to make requests by relative address
+    endpoint: '/trpc', // defaults to /trpc
+    installPlugin: true, // defaults to true. Add @trpc/client plugin and composables
+  },
+  typescript: {
+    strict: true // required to make input/output types work
+  }
 })

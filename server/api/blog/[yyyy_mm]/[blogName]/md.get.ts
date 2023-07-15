@@ -2,13 +2,10 @@ import fs from 'fs'
 import util from 'util';
 import path from 'path';
 import matter from 'gray-matter';
-import { z } from 'zod';
 
+async function getMarkDownContent(date_yyyy_mm: string, fileName: string) {
 
-
-async function getMarkDownContent(dirPath: string, fileName: string) {
-  const directory = path.join(process.cwd(), dirPath)
-  const fullPath = path.join(directory, fileName)
+  const fullPath = getBlogsContentFullDir(date_yyyy_mm, fileName)
   const readFile = util.promisify(fs.readFile);
   const fileContents = await readFile(fullPath, 'utf8')
     .catch(e => {
@@ -19,19 +16,7 @@ async function getMarkDownContent(dirPath: string, fileName: string) {
 
   const { data, content } = matter(fileContents);
 
-  
-  const BlogSchema = z.object({
-    title: z.string(),
-    date: z.string(),
-    category: z.string(),
-    content: z.string(),
-    ogImage: z.string().optional(),
-    description: z.string().optional(),
-  });
-  
-  type BlogSchema = z.infer<typeof BlogSchema>;
   const result = BlogSchema.parse({ 
-    id: fileName.replace('.md', ''),
     ...data,
     content,
   })
@@ -54,15 +39,18 @@ export default defineEventHandler(async(event) => {
   const logger = useLogger()
   const blogDir = runtimeConfig.blogsContentDir
   const yyyy_mm = event.context.params?.yyyy_mm
-  const blogId = event.context.params?.blogId
+  const blogName = event.context.params?.blogName
 
-  if (!blogDir && !yyyy_mm && !blogId) {
+  if (!blogDir && !yyyy_mm && !blogName) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Prarameters are not valid.'
     })
   }
-  const blogData = await getMarkDownContent(`${blogDir}/${yyyy_mm}/`, `${blogId}.md`)
+
+  const encodedName = decodeURIComponent(blogName as string);
+  const blogModel = modelBlog()
+  const blogData = await blogModel.get(`${yyyy_mm}`, `${encodedName}.md`)
 
   
   if (!blogData) {

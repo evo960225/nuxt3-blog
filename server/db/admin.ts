@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
 const runtimeConfig = useRuntimeConfig()
 const prisma = new PrismaClient()
 
@@ -11,12 +11,13 @@ interface IPrismaError extends Error {
 class Admin {
 
   async create(nickname: string, email: string, password: string) {
+    const salt = crypto.randomBytes(16).toString('hex');
     const admin = await prisma.admin
       .create({
         data: {
           nickname: nickname,
           email: email,
-          password: bcrypt.hashSync(password, 10),
+          password: createHash(password)
         }
       })
       .catch((error: IPrismaError) => {
@@ -30,10 +31,11 @@ class Admin {
   }
   
   async updatePassword(id: number, password: string) {
+    const salt = crypto.randomBytes(16).toString('hex');
     const updatedadmin = await prisma.admin.update({
       where: { id: id },
       data: {
-        password: bcrypt.hashSync(password, 10),
+        password: createHash(password)
       }
     })
     return updatedadmin
@@ -119,7 +121,7 @@ class Admin {
     }
 
     // compare password
-    if(!bcrypt.compareSync(password, adminData.password)) {
+    if(verifyHash(password, adminData.password)) {
       throw createError({
         statusCode: 400,
         statusMessage: 'email or password error!'

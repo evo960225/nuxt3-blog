@@ -10,6 +10,7 @@ interface IApiPageResult<T> {
 type IBlogInfo = {
   id: string,
   title: string,
+  blogName?: string,
   date: string,
   category: string,
   ogImage?: string,

@@ -2,15 +2,16 @@ import fs from 'fs'
 
 export default defineEventHandler(async (event) => {
   if (!event.context.params) return
-  const {yyyy_mm, blogId} = event.context.params
+  const {yyyy_mm, blogName} = event.context.params
   const runtimeConfig = useRuntimeConfig()
   const logger = useLogger()
 
   // delete md file
-  const blogDir = runtimeConfig.blogsContentDir
-  const blogPath = `${blogDir}/${yyyy_mm}/${blogId}.md`
+  const encodedId = decodeURIComponent(blogName as string);
+  const blogPath = getBlogsContentFullDir(yyyy_mm, `${encodedId}.md`)
 
   if (!fs.existsSync(blogPath)) {
+    logger.http('Could not find blog.' + blogPath)
     throw createError({
       statusCode: 400,
       statusMessage: 'Could not find blog.'
@@ -35,7 +36,7 @@ export default defineEventHandler(async (event) => {
   const bucket = firebaseAdmin.storage().bucket();
 
   const files = (await bucket.getFiles({
-    prefix: getFirebaseBlogDest(yyyy_mm, blogId),
+    prefix: getFirebaseBlogDest(yyyy_mm, blogName),
   }))[0]
 
   if (files.length === 0) {
@@ -44,7 +45,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     await bucket.deleteFiles({
-      prefix: getFirebaseBlogDest(yyyy_mm, blogId),
+      prefix: getFirebaseBlogDest(yyyy_mm, blogName),
     })
   } catch (err) {
     logger.error(err);

@@ -6,13 +6,13 @@
         "@context": "https://schema.org",
         "headline": "{{ blogData?.title }}",
         "@type": "game",
-        "datePublished": "{{ new Date(blogData?.date as string).toISOString()  }}",
-        "dateModified": "{{ new Date(blogData?.date as string).toISOString()  }}",
+        "datePublished": "{{ blogDate.toISOString() }}",
+        "dateModified": "{{ blogDate.toISOString() }}",
       }
     </component>
-    <div class="rounded-xl shadow-lg bg-white px-16 py-10 w-[960px] 
+    <div class="rounded-xl shadow-lg bg-white px-20 py-10 w-[960px] 
       <md:(w-full p-2)">
-      <h1 class="text-3xl font-bold tracking-wider">{{ blogData?.title }}</h1>
+      <h1 class="text-4xl font-bold tracking-wider my-2">{{ blogData?.title }}</h1>
       <div class="my-3">
         <p class="text-gray-500">{{ blogData?.date }}</p>
         <p class="text-gray-500">{{ blogData?.category }}</p>
@@ -25,11 +25,20 @@
 
 <script setup lang="ts">
 const route = useRoute()
-const { yyyy_mm, blogId } = route.params
-const { data: blogData } = await useFetch(`/api/blog/${yyyy_mm}/${blogId}/html`, {
+const { yyyy_mm, blogName } = route.params
+const { data: blogData } = await useFetch(`/api/blog/${yyyy_mm}/${blogName}/html`, {
   key: `blogData-html-${hashByTime(1)}`,
   method: 'GET',
 })
+const blogDate = computed(() => {
+  if (blogData.value?.date) {
+    return new Date(blogData.value?.date)
+  } else {
+    return new Date()
+  }
+})
+
+
 
 useHead({ title: blogData.value?.title })
 useSeoMeta({
@@ -51,18 +60,26 @@ useSeoMeta({
     line-height: 3rem;
   }
   & h2 {
-    @apply text-2xl font-demi-bold tracking-wider mt-8 pl-6 text-gray-600 border-l-3 border-orange-300 ;
+    @apply text-2xl font-demi-bold tracking-widest mt-20 -ml-6 pl-6 text-gray-600;
     line-height: 2.5rem;
+    box-shadow: inset 3px 0 0 0 rgba(253, 186, 116);
   } 
+  & h2:first-child {
+    @apply mt-7
+  }
   & h3 {
     @apply text-xl mt-4;
     line-height: 2.25rem;
   }
   & p {
-    @apply text-lg text-gray-600 px-7 py-2 tracking-[1px];
+    @apply text-lg text-gray-600  mt-8 tracking-[1px] text-justify;
   }
+  & p:first-child {
+    @apply mt-2
+  }
+
   & img {
-    @apply block mx-auto my-2;
+    @apply block mx-auto mt-12;
   }
   & img + figcaption {
     @apply block mx-auto mt-2;
@@ -80,7 +97,13 @@ useSeoMeta({
 
   & [alt='inline'] { @apply inline; }
   & figcaption {
-    @apply text-sm text-gray-500 text-center mb-2;
+    @apply text-sm text-gray-500 text-center mb-4 tracking-widest;
   }
+
+  & iframe {
+    @apply block mx-auto my-6;
+  }
+  
+
 }
 </style>

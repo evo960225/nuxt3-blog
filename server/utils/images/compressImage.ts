@@ -15,7 +15,7 @@ export async function compressImageToJpg(filePath: string, newfilePath: string =
 
   // Check if file is an image
   if (!['.jpg', '.jpeg', '.png'].includes(path.extname(filePath))) {
-    throw new Error('File is not an image')
+    throw new Error('File is not an image, or is not supported')
   }
 
   const convertedFilePath = path.format({
@@ -24,7 +24,7 @@ export async function compressImageToJpg(filePath: string, newfilePath: string =
     ext: '.jpg'
   });
 
-  // jimp await
+  // image resize
   const imageFile = await jimp.read(filePath)
   try {
     let editedImage = imageFile

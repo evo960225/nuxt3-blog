@@ -1,6 +1,8 @@
 import fs from 'fs'
 import path from 'path';
+import util from 'util';
 import formidable from 'formidable';
+import moment from 'moment';
 
 export default defineEventHandler(async (event) => {
   
@@ -11,15 +13,27 @@ export default defineEventHandler(async (event) => {
     })
   }
   const runtimeConfig = useRuntimeConfig()
+  const logger = useLogger()
   const yyyy_mm = event.context.params?.yyyy_mm || ''
-  const blogId = event.context.params?.blogId || ''
+  const blogName = decodeURIComponent(event.context.params?.blogName || '')
+
+  const blogModel = modelBlog()
+  const blogMd = await blogModel.get(yyyy_mm, `${blogName}`)
+  if (!blogMd) {
+    logger.error('Could not find blog.')
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Could not find blog.'
+    })
+  }
+  const blogId = blogMd?.id
 
   // create folder if not exist
   const storageDir = runtimeConfig.storageDir || ''
   const fullStorageDir = path.join(process.cwd(), storageDir)
   const imagesfolder = path.join(fullStorageDir, 'images')
   const imagesYMFolder = path.join(imagesfolder, yyyy_mm)
-  const imagesIdFolder = path.join(imagesYMFolder, blogId)
+  const imagesIdFolder = path.join(imagesYMFolder, blogName)
   
   if (!fs.existsSync(imagesfolder)) {
    fs.mkdirSync(imagesfolder);
@@ -35,19 +49,30 @@ export default defineEventHandler(async (event) => {
   const form = formidable({
     uploadDir: imagesIdFolder,
     keepExtensions: true,
-    maxFileSize: 10 * 1024 * 1024, // 10 MB
+    maxFileSize: 20 * 1024 * 1024, // 20 MB
     filename: (name, ext, part, form) => {
-      return `${blogId}-${generateHash(name, 8)}${ext}`
+      return `${moment().format('YYYYMMDD')}${generateHash(name, 8)}${ext}`
     }
   })
 
   form.on('error', (err) => {
-    console.error('An error has occurred with the upload: ', err);
+    logger.error('An error has occurred with the upload: ', err);
+    createError({
+      statusCode: 500,
+      statusMessage: 'An error has occurred with the upload.'
+    })
   });
 
   const hashFilename: string = await new Promise((resolve, reject) => {
     form.parse(event.node.req, (err, fields, files) => {
-      if (err) {
+      if(err) {
+        if (err.code ===  formidable.errors.biggerThanMaxFileSize) {
+          logger.error('maxFileSize exceeded')
+          return reject(createError({
+            statusCode: 413,
+            statusMessage: 'maxFileSize exceeded'
+          }))
+        }
         reject(err);
       }
       const oldName = Object.keys(files)[0]
@@ -55,8 +80,7 @@ export default defineEventHandler(async (event) => {
     })
   })
 
-
-  // compress image and convert to jpg, if image is jpg ro png
+  // compress image and convert it to jpg, if image is jpg ro png
   let filePath = path.join(imagesIdFolder, hashFilename)
   if (hashFilename.endsWith('.jpg') 
     || hashFilename.endsWith('.png')
@@ -64,11 +88,11 @@ export default defineEventHandler(async (event) => {
   ) {
     filePath = await compressImageToJpg(filePath)
   }
-  const uploadFileName = path.basename(filePath)
+
   
 
   // upload to firebase storage
-  const firebaseDest = `${getFirebaseBlogDest(yyyy_mm, blogId)}/${uploadFileName}`;
+  const firebaseDest = `${getFirebaseBlogDest(yyyy_mm, blogId)}/${hashFilename}`;
   const firebaseAdmin = useFirebaseAdmin()
   const bucket = firebaseAdmin.storage().bucket();
   await bucket.upload(filePath, {
@@ -78,7 +102,7 @@ export default defineEventHandler(async (event) => {
       cacheControl: 'public, max-age=31536000',
     },
   }).catch((err) => {
-    console.log('err', err)
+    logger.error('err', err)
   });
 
   const file = bucket.file(firebaseDest);

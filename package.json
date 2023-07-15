@@ -14,6 +14,7 @@
     "@types/formidable": "^2.0.6",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/mime-types": "^2.1.1",
+    "@types/prismjs": "^1.26.0",
     "formidable": "^2.1.1",
     "google-auth-library": "^8.7.0",
     "gray-matter": "^4.0.3",
@@ -40,17 +41,20 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.10",
     "@quasar/extras": "^1.15.11",
-    "@types/bcryptjs": "^2.4.2",
-    "bcryptjs": "^2.4.3",
+    "@toast-ui/editor": "^3.2.2",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
+    "crypto-js": "^4.1.1",
     "firebase": "^9.23.0",
     "firebase-admin": "^11.9.0",
     "gsap": "^3.12.2",
+    "isomorphic-dompurify": "^1.8.0",
     "jimp": "^0.22.8",
     "mime-types": "^2.1.35",
     "moment": "^2.29.4",
+    "p-queue": "^7.3.4",
     "pinia": "^2.0.36",
+    "prismjs": "^1.29.0",
     "quasar": "^2.11.7",
-    "rehype-raw": "^6.1.1",
     "vue-recaptcha-v3": "^2.0.1",
     "winston": "^3.9.0",
     "winston-daily-rotate-file": "^4.7.1",
@@ -58,5 +62,9 @@
   },
   "overrides": {
     "vue": "latest"
-  }
+  },
+  "browserslist": [
+    ">0.5%",
+    "last 3 versions"
+  ]
 }
