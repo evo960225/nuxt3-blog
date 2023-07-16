@@ -3,10 +3,11 @@ import moment from 'moment'
 const logger = useLogger()
 
 // LogsFullDir in logger.ts, because logger uses `LogsFullDir` that isn't initialized yet.
-export function getBlogsContentFullDir(fileName?: string) { 
+
+export function getBlogsContentFullDir(date_yyyy_mm: string, fileName?: string) { 
   
   const { blogsContentDir } = useRuntimeConfig()
-
+  
   // check blogsContentDir isn't empty
   if (!blogsContentDir) {
     logger.error('Could not find blogs content dir.')
@@ -16,12 +17,14 @@ export function getBlogsContentFullDir(fileName?: string) {
     })
   }
 
-  return (!fileName)
-    ? path.join(process.cwd(), blogsContentDir)
-    : path.join(process.cwd(), blogsContentDir, fileName)
+  if (fileName) {
+    // check fileName with ext
+    const fileNameWithExt = path.extname(fileName) === '.md' ? fileName : `${fileName}.md`
+    return path.join(process.cwd(), blogsContentDir, date_yyyy_mm, fileNameWithExt)
+  }
+  return path.join(process.cwd(), blogsContentDir, date_yyyy_mm)
 
 }
-
 
 export function getStorageFullDir(fileName?: string) { 
   

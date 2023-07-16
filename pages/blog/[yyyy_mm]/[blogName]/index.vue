@@ -13,11 +13,11 @@
     <div class="rounded-xl shadow-lg bg-white px-20 py-10 w-[960px] 
       <md:(w-full p-2)">
       <h1 class="text-4xl font-bold tracking-wider my-2">{{ blogData?.title }}</h1>
-      <div class="my-3">
-        <p class="text-gray-500">{{ blogData?.date }}</p>
+      <div class="my-3 mt-6">
+        <p class="text-gray-500">建立日期： {{ blogData?.date }}</p>
         <p class="text-gray-500">{{ blogData?.category }}</p>
       </div>
-      <hr class="my-2 border-b border-gray-300">
+      <hr class="my-2 border-t-1 border-gray-200 -mx-20">
       <div v-html="blogData?.contentHtml" class="blog-content"></div>
     </div>
   </div>
@@ -60,7 +60,8 @@ useSeoMeta({
     line-height: 3rem;
   }
   & h2 {
-    @apply text-2xl font-demi-bold tracking-widest mt-20 -ml-6 pl-6 text-gray-600;
+    @apply font-demi-bold tracking-widest mt-20 -ml-6 pl-6 text-gray-600;
+    font-size: 1.35rem;
     line-height: 2.5rem;
     box-shadow: inset 3px 0 0 0 rgba(253, 186, 116);
   } 
@@ -72,7 +73,9 @@ useSeoMeta({
     line-height: 2.25rem;
   }
   & p {
-    @apply text-lg text-gray-600  mt-8 tracking-[1px] text-justify;
+    @apply  text-gray-600  mt-8 tracking-[2px] text-justify;
+    font-size: 1.15rem;
+    line-height: 2.4rem;
   }
   & p:first-child {
     @apply mt-2

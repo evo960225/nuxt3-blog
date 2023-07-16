@@ -2,7 +2,7 @@ import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3';
 import { useNuxtApp } from '#app';
 
 const runtimeConfig = useRuntimeConfig()
-export const useVueRecaptcha = async () => {
+export const useVueRecaptcha = () => {
   const { vueApp } = useNuxtApp();
   
   vueApp.use(VueReCaptcha, {
@@ -12,11 +12,13 @@ export const useVueRecaptcha = async () => {
     },
   });
 
-  
   const { executeRecaptcha, recaptchaLoaded } = useReCaptcha() || {};
   if (!recaptchaLoaded || !executeRecaptcha) {
     throw new Error('recaptcha not loaded');
   }
-  await recaptchaLoaded();
-  return await executeRecaptcha('login');
+  
+  return async (action: string) => {
+    await recaptchaLoaded();
+    return await executeRecaptcha(action);
+  };
 };
