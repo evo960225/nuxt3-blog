@@ -69,5 +69,8 @@ export default defineNuxtConfig({
   },
   typescript: {
     strict: true // required to make input/output types work
+  },
+  robots: {
+    /* module options */
   }
 })

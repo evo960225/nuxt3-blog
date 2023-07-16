@@ -1,7 +1,24 @@
-
+import path from 'path';
 import winston from 'winston';
 import winstonDailyRotateFile from 'winston-daily-rotate-file';
 const { combine, timestamp, json } = winston.format;
+
+function getLogsFullDir(fileName?: string) { 
+  const { logsDir } = useRuntimeConfig()
+
+  // check logsDir isn't empty
+  if (!logsDir) {
+    logger.error('Could not find logsDir dir.')
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'server setting error.'
+    })
+  }
+
+  return (!fileName)
+      ? path.join(process.cwd(), logsDir)
+      : path.join(process.cwd(), logsDir, fileName)
+}
 
 const logsDir = getLogsFullDir()
 
@@ -25,6 +42,7 @@ const combinedTransport = new winstonDailyRotateFile({
   zippedArchive: true
 });
 
+
 const logger = winston.createLogger({
   level: 'info',
   format: combine(
@@ -42,7 +60,6 @@ const logger = winston.createLogger({
     combinedTransport,
   ],
 });
-
 
 export function useLogger() { 
   return logger

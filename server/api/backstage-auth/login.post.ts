@@ -7,13 +7,14 @@ const runtimeConfig = useRuntimeConfig()
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const { recaptchaSecretKey } = runtimeConfig
+  const logger = useLogger()
 
   // 驗證 recaptcha
   const recaptchaResult = await $fetch(
     `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${body.recaptchaToken}`
   );
 
-  console.log('recaptchaResult', recaptchaResult);
+  logger.info('recaptchaResult', recaptchaResult);
   
   if (!(<any>recaptchaResult).success) throw createError({
     statusCode: 400,
@@ -24,6 +25,7 @@ export default defineEventHandler(async (event) => {
   const adminData = await admin.login(body.email, body.password)
 
   if (!adminData || !adminData.loginToken) {
+    logger.http('not found admin data!');
     throw createError({
       statusCode: 400,
       statusMessage: 'not found admin data!'

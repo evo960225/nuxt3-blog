@@ -1,15 +1,17 @@
 import { PrismaClient } from '@prisma/client'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+
 const runtimeConfig = useRuntimeConfig()
 const prisma = new PrismaClient()
+const logger = useLogger()
 
 interface IPrismaError extends Error {
   message: string
 }
 
 class Admin {
-
+  
   async create(nickname: string, email: string, password: string) {
     const salt = crypto.randomBytes(16).toString('hex');
     const admin = await prisma.admin
@@ -21,6 +23,7 @@ class Admin {
         }
       })
       .catch((error: IPrismaError) => {
+        logger.error(error)
         throw createError({
           statusCode: 500,
           statusMessage: `can't create new ${this.constructor.name}!`,
@@ -50,6 +53,7 @@ class Admin {
         }
       })
       .catch((error: Error) => {
+        logger.error(error)
         throw createError({
           statusCode: 500,
           statusMessage: `Could not find ${this.constructor.name}! Please try again later.`
@@ -78,7 +82,7 @@ class Admin {
         }
       })
       .catch((error: Error) => {
-        console.error(error)
+        logger.error(error)
         throw createError({
           statusCode: 500,
           statusMessage: `Could not find ${this.constructor.name}! Please try again later.`
@@ -94,7 +98,7 @@ class Admin {
         where: { id: id }
       })
       .catch((error: Error) => {
-        console.error(error)
+        logger.error(error)
         throw createError({
           statusCode: 500,
           statusMessage: 'Could not find user. Please try again later.'
@@ -114,14 +118,19 @@ class Admin {
   async verifyPassword(email: string, password: string) {
     const adminData = await this.findByEmail({ email });
     if (!adminData || !adminData.password) {
+      logger.http('not found user!')
       throw createError({
         statusCode: 400,
-        statusMessage: 'email or password error!'
+        statusMessage: 'not found user!'
       })
     }
 
     // compare password
-    if(verifyHash(password, adminData.password)) {
+    console.log('====================================');
+    console.log('hash', password, adminData.password);
+    console.log('====================================');
+    if(!verifyHash(password, adminData.password)) {
+      logger.http('email or password error!')
       throw createError({
         statusCode: 400,
         statusMessage: 'email or password error!'
@@ -132,6 +141,8 @@ class Admin {
   }
 
   async login(email: string, password: string) {
+
+    logger.info(`login:${email}:${password}`)
     const { adminData } = await this.verifyPassword(email, password)
 
     const maxAge = 60 * 60 * 24 * 7
@@ -153,7 +164,7 @@ class Admin {
       },
     })
     .catch((error: Error) => {
-      console.error(error)
+      logger.error(error)
       throw createError({
         statusCode: 500,
         statusMessage: 'unknown error'
@@ -181,9 +192,7 @@ class Admin {
       })
     })
   }
-
 }
-
 
 
 const admin = new Admin()

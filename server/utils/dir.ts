@@ -2,7 +2,8 @@ import path from 'path'
 import moment from 'moment'
 const logger = useLogger()
 
-export function getBlogsContentFullDir(date_yyyy_mm: string, fileName?: string) { 
+// LogsFullDir in logger.ts, because logger uses `LogsFullDir` that isn't initialized yet.
+export function getBlogsContentFullDir(fileName?: string) { 
   
   const { blogsContentDir } = useRuntimeConfig()
 
@@ -16,10 +17,11 @@ export function getBlogsContentFullDir(date_yyyy_mm: string, fileName?: string) 
   }
 
   return (!fileName)
-    ? path.join(process.cwd(), blogsContentDir, date_yyyy_mm)
-    : path.join(process.cwd(), blogsContentDir, date_yyyy_mm, fileName)
+    ? path.join(process.cwd(), blogsContentDir)
+    : path.join(process.cwd(), blogsContentDir, fileName)
 
 }
+
 
 export function getStorageFullDir(fileName?: string) { 
   
@@ -39,22 +41,6 @@ export function getStorageFullDir(fileName?: string) {
     : path.join(process.cwd(), storageDir, fileName)
 }
 
-export function getLogsFullDir(fileName?: string) { 
-  const { logsDir } = useRuntimeConfig()
-
-  // check logsDir isn't empty
-  if (!logsDir) {
-    logger.error('Could not find logsDir dir.')
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'server setting error.'
-    })
-  }
-
-  return (!fileName)
-      ? path.join(process.cwd(), logsDir)
-      : path.join(process.cwd(), logsDir, fileName)
-}
 
 export function makeBlogContentPath(fileName: string) {
   const { blogsContentDir } = useRuntimeConfig()
