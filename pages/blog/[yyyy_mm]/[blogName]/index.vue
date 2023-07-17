@@ -36,8 +36,6 @@ const blogDate = computed(() => {
   }
 })
 
-
-
 useHead({ title: blogData.value?.title })
 useSeoMeta({
   ogTitle: blogData.value?.title,
@@ -48,14 +46,29 @@ useSeoMeta({
   twitterDescription: blogData.value?.description,
   twitterCard: 'summary_large_image',
 })
+
 useHead({
   script: [
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
         "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": route.path,
+        },
         "headline": `${blogData.value?.title}`,
-        "@type": "game",
+        "image": blogData.value?.ogImage,
+        "author": {
+          "@type": "Person",
+          "name": "孤獨的邊緣宅"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "孤獨的邊緣宅",
+          "image": `${window.location.hostname}/favicon.ico`
+        },
         "datePublished":`${blogDate.value.toISOString()}`,
         "dateModified": `${blogDate.value.toISOString()}`,
       }),
