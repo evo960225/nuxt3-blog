@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path';
 import matter from 'gray-matter';
+import {unified} from 'unified'
 import pQueue from 'p-queue';
 
 const queue = new pQueue({concurrency: 1});
@@ -38,15 +39,15 @@ export default defineEventHandler(async (event) => {
   const blogContent = body.content || ''
   delete body.content
 
-  const decodeId = decodeURIComponent(blogName)
-  const urlName = body.title
+  const paramBlogName = decodeURIComponent(blogName)
+  const titleConvertName = body.title
     .replace(/\s+/g, '-')   // 將所有的空格替換成破折號
     .replace(/[^\w\s一-龥]/g, '-') // 移除所有非字母、非數字、非中文和非破折號的字符
     .replace(/-+/g, '-')    // 將多個連續的破折號替換成一個
     .replace(/^-|-$/g, ''); // 移除開頭和結尾的破折號
 
-  const oldFilePath = getBlogsContentFullDir(yyyy_mm, `${decodeId}.md`)
-  const filePath = getBlogsContentFullDir(yyyy_mm, `${urlName}.md`)
+  const oldFilePath = getBlogsContentFullDir(yyyy_mm, `${paramBlogName}.md`)
+  const filePath = getBlogsContentFullDir(yyyy_mm, `${titleConvertName}.md`)
 
   
 
@@ -74,17 +75,29 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  // get html content
   const blogModel = modelBlog()
-  const blogMd = await blogModel.get(yyyy_mm, blogName)
-  
-  if (blogMd) {
-    createError({
+  const blogMd = await blogModel.get(yyyy_mm, titleConvertName)
+  if (!blogMd) {
+    logger.error('Could not find blog.')
+    throw createError({
       statusCode: 500,
-      statusMessage: 'Blog already exists.'
+      statusMessage: 'Could not find blog.'
     })
   }
+
+
+  const htmlContent = blogModel.saveToHtml(yyyy_mm, titleConvertName)
+  if (!htmlContent) {
+    logger.error('Convert to html failed.')
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Convert to html failed.'
+    })
+  }
+
   return {
-    blogName: urlName,
+    blogName: titleConvertName,
     ...blogMd
   } 
 

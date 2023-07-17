@@ -1,6 +1,13 @@
 
 export default defineEventHandler(async (event) => {
   
+  if (!event.context.authBackstage) {
+    return createError({
+      statusCode: 401,
+      message: 'You don\'t have the rights to access this resource',
+    })
+  }
+
   // check params
   if (!event.context.params) return
   const {yyyy_mm, blogName} = event.context.params

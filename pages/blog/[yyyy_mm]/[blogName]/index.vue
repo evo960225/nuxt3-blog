@@ -26,7 +26,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const { yyyy_mm, blogName } = route.params
-const { data: blogData } = await useFetch(`/api/blog/${yyyy_mm}/${blogName}/html`, {
+const { data: blogData } = await useFetch(`/api/blog/${yyyy_mm}/${blogName}`, {
   key: `blogData-html-${hashByTime(1)}`,
   method: 'GET',
 })

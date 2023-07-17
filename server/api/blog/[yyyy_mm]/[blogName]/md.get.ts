@@ -28,12 +28,12 @@ async function getMarkDownContent(date_yyyy_mm: string, fileName: string) {
 
 export default defineEventHandler(async(event) => {
   
-  // if (!event.context.authBackstage) {
-  //   return createError({
-  //     statusCode: 401,
-  //     message: 'You don\'t have the rights to access this resource',
-  //   })
-  // }
+  if (!event.context.authBackstage) {
+    return createError({
+      statusCode: 401,
+      message: 'You don\'t have the rights to access this resource',
+    })
+  }
 
   const runtimeConfig = useRuntimeConfig()
   const logger = useLogger()

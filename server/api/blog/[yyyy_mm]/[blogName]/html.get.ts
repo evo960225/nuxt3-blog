@@ -15,7 +15,6 @@ import rehypeRaw from 'rehype-raw'
 import { z } from 'zod';
 
 
-
 async function getHtmlContent(dirPath: string, fileName: string) {
   const directory = path.join(process.cwd(), dirPath)
   const fullPath = path.join(directory, fileName)
