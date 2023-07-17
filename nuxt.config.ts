@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     recaptchaSecretKey: process.env.RECAPTCHA_SECRET_KEY,
     firebaseImagesDest: process.env.FIREBASE_IMAGES_DEST,
     public: {
+      host: process.env.HOST || 'localhost',
       imageUrlBase: '/api/image',
       loginCookieMaxAge: 60 * 60 * 24 * 7,
       recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY 

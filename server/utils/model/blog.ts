@@ -110,7 +110,7 @@ category: none
       .use(rehypeStringify, {allowDangerousHtml: true})
       .process(blog.content)
 
-
+    // parse blogHtml
     const contentHtml = processedContent.toString();
     const blogHtml = BlogHtmlSchema.parse({
       ...blog,
