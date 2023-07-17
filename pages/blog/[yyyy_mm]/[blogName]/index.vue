@@ -2,22 +2,19 @@
   <div class="flex justify-center text-gray-700 m-4">
     <!-- @todo: change @type -->
     <component :is="'script'" type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "headline": "{{ blogData?.title }}",
-        "@type": "game",
-        "datePublished": "{{ blogDate.toISOString() }}",
-        "dateModified": "{{ blogDate.toISOString() }}",
-      }
+      
     </component>
     <div class="rounded-xl shadow-lg bg-white px-20 py-10 w-[960px] 
-      <md:(w-full p-2)">
-      <h1 class="text-4xl font-bold tracking-wider my-2">{{ blogData?.title }}</h1>
-      <div class="my-3 mt-6">
-        <p class="text-gray-500">建立日期： {{ blogData?.date }}</p>
-        <p class="text-gray-500">{{ blogData?.category }}</p>
+      <md:(w-full p-2)"
+    >
+      <div class="py-3">
+        <h1 class="text-4xl font-bold tracking-wider mb-2">{{ blogData?.title }}</h1>
+        <div class="my-3 mt-6">
+          <p class="text-gray-500">建立日期： {{ blogData?.date }}</p>
+          <p class="text-gray-500">{{ blogData?.category }}</p>
+        </div>
       </div>
-      <hr class="my-2 border-t-1 border-gray-200 -mx-20">
+      <hr class="my-2 border-t-1 border-gray-200 -mx-20 mt-4">
       <div v-html="blogData?.contentHtml" class="blog-content"></div>
     </div>
   </div>
@@ -26,10 +23,11 @@
 <script setup lang="ts">
 const route = useRoute()
 const { yyyy_mm, blogName } = route.params
-const { data: blogData } = await useFetch(`/api/blog/${yyyy_mm}/${blogName}`, {
-  key: `blogData-html-${hashByTime(1)}`,
-  method: 'GET',
-})
+const { data: blogData, refresh } = await useAsyncData('getData', 
+  () => $fetch(`/api/blog/${yyyy_mm}/${blogName}`, {
+    method: 'GET',
+  })
+)
 const blogDate = computed(() => {
   if (blogData.value?.date) {
     return new Date(blogData.value?.date)
@@ -49,6 +47,20 @@ useSeoMeta({
   twitterImage: blogData.value?.ogImage,
   twitterDescription: blogData.value?.description,
   twitterCard: 'summary_large_image',
+})
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "headline": `${blogData.value?.title}`,
+        "@type": "game",
+        "datePublished":`${blogDate.value.toISOString()}`,
+        "dateModified": `${blogDate.value.toISOString()}`,
+      }),
+    },
+  ],
 })
 
 </script>
