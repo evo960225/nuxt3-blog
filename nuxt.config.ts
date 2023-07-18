@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@pinia/nuxt',
     'nuxt-simple-sitemap',
+    'nuxt-security'
   ],
 
   build: {
@@ -28,6 +29,30 @@ export default defineNuxtConfig({
     }
   },
 
+  security: {
+    csrf: false,
+    corsHandler: {
+      origin: process.env.HOST || 'localhost',
+      methods: '*',
+    },
+    headers: {
+      crossOriginEmbedderPolicy: false,
+      contentSecurityPolicy: {
+        'base-uri': ["'self'"],
+        'font-src': ["'self'", 'https:', 'data:'],
+        'form-action': ["'self'"],
+        'frame-ancestors': ["'self'"],
+        'img-src': ["'self'", 'data:', 'https://storage.googleapis.com/'],
+        'connect-src': ["'self'"],
+        'object-src': ["'none'"],
+        'script-src-attr': ["'none'"],
+        'style-src': ["'self'", 'https:', "'unsafe-inline'"],
+        'upgrade-insecure-requests': true
+      }
+    }
+  },
+  
+
   css: [
     '@/assets/styles/main.scss',
   ],
@@ -48,6 +73,7 @@ export default defineNuxtConfig({
       { label: 'Priority', select: 'sitemap:priority', width: '12.5%' },
       { label: 'Change Frequency', select: 'sitemap:changefreq', width: '12.5%' },
     ], 
+    
   },
 
   quasar: {
