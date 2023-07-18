@@ -46,6 +46,9 @@
     "vue3-google-login": "^2.0.15"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
     "@pinia/nuxt": "^0.4.10",
     "@quasar/extras": "^1.15.11",
     "@toast-ui/editor": "^3.2.2",

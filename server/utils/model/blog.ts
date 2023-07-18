@@ -38,7 +38,7 @@ class BlogModel {
     const now = moment()
     const yyyy_mm = now.format('YYYY-MM')
     const yyyy_mm_dd = now.format('YYYY-MM-DD')
-    const hashName = generateHash(new Date().toISOString(), 12)
+    const hashName = generateHash(new Date().toISOString(), 16)
     const content = `---
 id: '${hashName}'
 title: '${hashName}'

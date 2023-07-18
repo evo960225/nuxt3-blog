@@ -4,14 +4,17 @@
     <component :is="'script'" type="application/ld+json">
       
     </component>
-    <div class="rounded-xl shadow-lg bg-white px-20 py-10 w-[960px] 
+    <div class="rounded-xl shadow-lg bg-white px-20 py-6 w-[960px] 
       <md:(w-full p-2)"
     >
       <div class="py-3">
+        <p class="gener inline-block  px-4 py-1 mb-5 tracking-widest text-white bg-yellow-500 rounded-lg cursor-default">
+          {{ blogData?.category }}
+        </p>
         <h1 class="text-4xl font-bold tracking-wider mb-2">{{ blogData?.title }}</h1>
-        <div class="my-3 mt-6">
+        <div class="my-3 mt-4">
           <p class="text-gray-500">建立日期： {{ blogData?.date }}</p>
-          <p class="text-gray-500">{{ blogData?.category }}</p>
+          
         </div>
       </div>
       <hr class="my-2 border-t-1 border-gray-200 -mx-20 mt-4">
@@ -86,6 +89,10 @@ useHead({
 </script>
 
 <style lang="scss">
+.gener {
+  font-size: 1rem;
+  line-height: 1.8rem;
+}
 .blog-content {
   & h1 {
     @apply text-[1.5rem] font-bold tracking-wider;

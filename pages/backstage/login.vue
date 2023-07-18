@@ -44,7 +44,7 @@ async function login() {
 
   const token = await recaptcha('login')
 
-  const { data, error } = await useCsrfFetch(`/api/backstage-auth/login`, {
+  const { data, error } = await useFetch(`/api/backstage-auth/login`, {
     key: 'login' + Date.now().toString(),
     method: 'POST',
     body: {

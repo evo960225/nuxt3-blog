@@ -8,15 +8,22 @@
         </NuxtLink>
       </div>
       
-      <div class="flex justify-end col-span-4">
+      <div class="flex justify-end items-center col-span-4">
         <ul class="flex justify-center gap-x-12 text-white">
           <NuxtLink to="/"><li>Home</li></NuxtLink>
           <NuxtLink to="/blog"><li>Blog</li></NuxtLink>
           <NuxtLink to="/about"><li>About</li></NuxtLink>
         </ul>
       </div>
-      <div class="flex justify-end col-span-1">
-        @
+      <div class="flex justify-end items-center col-span-1">
+        <a href="https://www.facebook.com/lonely.fei.zhai" 
+          target="_blank" rel="noopener noreferrer"
+          title="Facebook"
+        >
+          <font-awesome-icon :icon="['fab', 'facebook']"  
+            class="text-white text-lg"
+          />
+        </a>
       </div>
     </div>
   </div>
