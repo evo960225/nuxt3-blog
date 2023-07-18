@@ -5,10 +5,14 @@ export default defineNuxtConfig({
     'nuxt-quasar-ui',
     '@nuxtjs/i18n',
     '@pinia/nuxt',
+    'nuxt-simple-sitemap',
   ],
+
   build: {
     transpile: ['trpc-nuxt']
   },
+
+
   runtimeConfig: {
     blogsContentDir: process.env.BLOGS_CONTENT_DIR || '/',
     storageDir: process.env.STORAGE_DIR || '/',
@@ -23,15 +27,27 @@ export default defineNuxtConfig({
       recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY 
     }
   },
+
   css: [
     '@/assets/styles/main.scss',
   ],
+  
   app:{
     pageTransition: { name: 'page', mode: 'out-in' },
   },
+
   routeRules:{
     '/**': { },
     '/backstage/**': { ssr: false },
+  },
+
+  sitemap: {
+    xslColumns: [
+      { label: 'URL', width: '50%' },
+      { label: 'Last Modified', select: 'lastmod', width: '25%' },
+      { label: 'Priority', select: 'sitemap:priority', width: '12.5%' },
+      { label: 'Change Frequency', select: 'sitemap:changefreq', width: '12.5%' },
+    ], 
   },
 
   quasar: {
@@ -56,6 +72,7 @@ export default defineNuxtConfig({
     },
     iconSet: 'material-icons',
   },
+
   pinia: {
     autoImports: [
       // automatically imports `defineStore`
@@ -63,15 +80,14 @@ export default defineNuxtConfig({
       ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
     ],
   },
+
   trpc: {
     baseURL: '', // Set empty string (default) to make requests by relative address
     endpoint: '/trpc', // defaults to /trpc
     installPlugin: true, // defaults to true. Add @trpc/client plugin and composables
   },
+
   typescript: {
     strict: true // required to make input/output types work
   },
-  robots: {
-    /* module options */
-  }
 })

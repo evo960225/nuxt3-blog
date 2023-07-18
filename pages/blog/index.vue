@@ -29,6 +29,8 @@
 
 <script setup lang="ts">
 import { gsap } from 'gsap';
+const route = useRoute()
+const { host } = useRuntimeConfig().public
 
 const { data: blogTableData } = await useFetch(`/api/blog/list`, {
   key: `blog-list-${hashByTime(10)}`,
@@ -56,6 +58,43 @@ const startAnimation = (index: number) => {
 const reverseAnimation = (index: number) => {
   timelines[index].reverse();
 }
+
+
+useHead({
+  title: '邊緣宅部落',
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `${host}${route.path}`,
+        },
+        "headline": "邊緣宅部落",
+        "description": "孤獨的邊緣宅",
+        "image": `${host}/favicon.ico`,
+        "author": {
+          "@type": "Person",
+          "name": "孤獨的邊緣宅"
+        },
+        "blogPost": [ 
+          blogListData.value?.map((blog) => {
+            return {
+              "@type": "BlogPosting",
+              "headline": blog.title,
+              "datePublished": blog.date,
+              "articleBody": blog.description,
+            }
+          })
+        ]
+      }),
+    },
+  ],
+})
+
+
 </script>
 
 <style>

@@ -38,7 +38,7 @@ const blogDate = computed(() => {
   }
 })
 
-useHead({ title: blogData.value?.title })
+
 useSeoMeta({
   ogTitle: blogData.value?.title,
   description: blogData.value?.description, 
@@ -50,6 +50,7 @@ useSeoMeta({
 })
 
 useHead({
+  title: blogData.value?.title,
   script: [
     {
       type: 'application/ld+json',
@@ -61,6 +62,7 @@ useHead({
           "@id": `${host}${route.path}`,
         },
         "headline": `${blogData.value?.title}`,
+        "description": `${blogData.value?.description}`,
         "image": blogData.value?.ogImage,
         "author": {
           "@type": "Person",
@@ -71,8 +73,11 @@ useHead({
           "name": "孤獨的邊緣宅",
           "image": `${host}/favicon.ico`
         },
+        "genre": `Gaming`,
+        "url": `${host}${route.path}`,
         "datePublished":`${blogDate.value.toISOString()}`,
         "dateModified": `${blogDate.value.toISOString()}`,
+        
       }),
     },
   ],
