@@ -6,7 +6,8 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@pinia/nuxt',
     'nuxt-simple-sitemap',
-    'nuxt-security'
+    'nuxt-security',
+    '@nuxtjs/algolia'
   ],
 
   build: {
@@ -21,11 +22,14 @@ export default defineNuxtConfig({
     jwtSignSecretbackstage: process.env.JWT_SIGN_SECRET_BACKSTAGE,
     recaptchaSecretKey: process.env.RECAPTCHA_SECRET_KEY,
     firebaseImagesDest: process.env.FIREBASE_IMAGES_DEST,
+    algoliaSecertKey: process.env.ALGOLIA_SECRET_KEY,
     public: {
       host: process.env.HOST || 'localhost',
       imageUrlBase: '/api/image',
       loginCookieMaxAge: 60 * 60 * 24 * 7,
-      recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY 
+      recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY ,
+      algoliaId: process.env.ALGOLIA_ID,
+      algoliaSearchKey: process.env.ALGOLIA_SEARCH_KEY,
     }
   },
 
@@ -43,7 +47,7 @@ export default defineNuxtConfig({
         'form-action': ["'self'"],
         'frame-ancestors': ["'self'"],
         'img-src': ["'self'", 'data:', 'https://storage.googleapis.com/'],
-        'connect-src': ["'self'"],
+        'connect-src': ["'self'", 'https://*.algolia.net', 'https://*.algolianet.com', 'https://*.algolia.io', process.dev ? 'ws://127.0.0.1' : ''],
         'object-src': ["'none'"],
         'script-src-attr': ["'none'"],
         'style-src': ["'self'", 'https:', "'unsafe-inline'"],

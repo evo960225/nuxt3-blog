@@ -189,8 +189,6 @@ category: none
 
 }
 
-
-export function modelBlog() {
-  return new BlogModel()
-} 
+const blog = new BlogModel()
+export default blog
 

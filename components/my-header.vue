@@ -1,21 +1,22 @@
 <template>
   <div class="flex justify-center items-center w-full bg-[#bbb] h-12">
-    <div class="grid grid-cols-6 max-w-[1280px] w-full">
+    <div class="flex grid-cols-6 max-w-[1280px] w-full flex-1">
 
-      <div class="grid col-span-1 text-lg text-white tracking-widest">
+      <div class="flex flex-1 items-center text-lg text-white tracking-widest">
         <NuxtLink to="/">
           孤獨的邊緣宅
         </NuxtLink>
       </div>
       
-      <div class="flex justify-end items-center col-span-4">
-        <ul class="flex justify-center gap-x-12 text-white">
+      <div class="flex justify-end items-center w-[960px]">
+        <ul class="flex justify-center items-center gap-x-12 text-white">
           <NuxtLink to="/"><li>Home</li></NuxtLink>
           <NuxtLink to="/blog"><li>Blog</li></NuxtLink>
           <NuxtLink to="/about"><li>About</li></NuxtLink>
+          <div id="autocomplete" class="w-64"></div>
         </ul>
       </div>
-      <div class="flex justify-end items-center col-span-1">
+      <div class="flex flex-1 justify-end items-center col-span-1 space-x-3">
         <a href="https://www.facebook.com/lonely.fei.zhai" 
           target="_blank" rel="noopener noreferrer"
           title="Facebook"
@@ -24,17 +25,104 @@
             class="text-white text-lg"
           />
         </a>
+        <a href="https://medium.com/@evo960225" 
+          target="_blank" rel="noopener noreferrer"
+          title="Medium"
+        >
+          <font-awesome-icon :icon="['fab', 'medium']"  
+            class="text-white text-lg"
+          />
+        </a>
+        
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
+import docsearch from '@docsearch/js';
+import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
+import '@algolia/autocomplete-theme-classic';
+import algoliasearch from 'algoliasearch/lite';
+const { result, search } = useAlgoliaSearch('dev_blog')
 
+const runtimeConfig = useRuntimeConfig()
+const algoliaId = runtimeConfig.public.algoliaId
+const algoliaSearchKey = runtimeConfig.public.algoliaSearchKey
+import { h, Fragment, render } from 'vue';
+import moment from 'moment';
+const searchClient = algoliasearch(algoliaId, algoliaSearchKey)
+
+onMounted(() => {
+  autocomplete({
+    container: '#autocomplete',
+    openOnFocus: true,
+    panelPlacement: 'end',
+    getSources({ query }: { query: any }) {
+      return [
+        {
+          sourceId: 'links',
+          getItems() {
+            return getAlgoliaResults({
+              searchClient,
+              queries: [
+                {
+                  indexName: 'dev_blog',
+                  query,
+                  params: {
+                    hitsPerPage: 5,
+                    attributesToSnippet: ['title:15', 'description:35'],
+                    snippetEllipsisText: '…',
+                  },
+                },
+              ],
+            });
+          },
+          templates: {
+            item({ item, components, html }: { item: any; components: any; html: any}) {
+              return html`<div class="aa-ItemWrapper">
+              <a ref="#"
+               onclick="${() => navigateTo(`/blog/${moment(item.date||'').format('YYYY-MM')}/${item.blogName}`)}"
+              >
+                <div class="aa-ItemContent">
+                  <div class="aa-ItemContentBody">
+                    <div class="aa-ItemContentTitle">
+                      ${components.Highlight({
+                        hit: item,
+                        attribute: 'title',
+                      })}
+                    </div>
+                    <div class="aa-ItemContentDescription !text-gray-400">
+                      ${components.Snippet({
+                        hit: item,
+                        attribute: 'description',
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>`;
+            }
+          }
+        },
+        
+      ];
+    },
+    renderer: { createElement: h, Fragment, render },
+  });
+});
 
 </script>
 
 <style>
+:root {
+  --aa-search-input-height: 36px;
+}
+.aa-Item {
+  @apply p-3 border-b border-light-400 hover:bg-light-600 text-gray-600
+}
+
+
 .topbar { 
   background: 
     linear-gradient(to bottom right,transparent 50%,#3d5820 0) right bottom/24px 24px no-repeat,
