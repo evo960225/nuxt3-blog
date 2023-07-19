@@ -8,10 +8,10 @@
       <md:(w-full p-2)"
     >
       <div class="py-3">
-        <p class="gener inline-block  px-4 py-1 mb-5 tracking-widest text-white bg-yellow-500 rounded-lg cursor-default">
+        <p class="gener inline-block -ml-0.5 px-3.5 py-2 tracking-widest text-white bg-yellow-500 rounded-md cursor-default">
           {{ blogData?.category }}
         </p>
-        <h1 class="text-4xl font-bold tracking-wider mb-2">{{ blogData?.title }}</h1>
+        <h1 class="blog-title mt-3">{{ blogData?.title }}</h1>
         <div class="my-3 mt-2">
           <p class="text-gray-500 font-normal">建立日期： {{ blogData?.date }}</p>
           
@@ -91,7 +91,11 @@ useHead({
 <style lang="scss">
 .gener {
   font-size: 1rem;
-  line-height: 1.8rem;
+  line-height: 1rem;
+}
+.blog-title {
+  font-family:  "Nunito", "Microsoft YaHei", sans-serif;
+  @apply tracking-[4px] text-3xl;
 }
 .blog-content {
   & h1 {
@@ -102,19 +106,19 @@ useHead({
   & h2 {
     @apply font-extrabold tracking-[3px] mt-20 -ml-6 pl-6 text-gray-600;
     font-family:  "Nunito", "Microsoft YaHei", sans-serif;
-    font-size: 1.5rem;
-    line-height: 2.5rem;
-    box-shadow: inset 3px 0 0 0 rgba(253, 186, 116);
+    font-size: 1.4rem;
+    line-height: 2.3rem;
+    box-shadow: inset 5px 0 0 0 rgba(253, 186, 116);
   } 
   & h2:first-child {
-    @apply mt-7
+    @apply mt-9
   }
   & h3 {
     @apply text-xl mt-4;
     line-height: 2.25rem;
   }
   & p {
-    @apply  text-teal-600  mt-8 tracking-[2px] text-justify;
+    @apply  text-cool-gray-600  mt-8 tracking-[2px] text-justify;
     font-size: 1.2rem;
     line-height: 2.4rem;
   }
@@ -145,7 +149,7 @@ useHead({
   }
 
   & iframe {
-    @apply block mx-auto my-6;
+    @apply block mx-auto mt-8;
   }
   
 

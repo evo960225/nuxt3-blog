@@ -10,7 +10,7 @@
           <NuxtLink :to="`/blog/${blog.date.split('-').slice(0,2).join('-')}/${blog.blogName}`">
             <div class="rounded-xl shadow-lg bg-white overflow-hidden">
               <div class="p-3">
-                <p class="text-lg">{{ blog.title }}</p>
+                <h2 class="text-xl min-h-[3.5rem]">{{ blog.title }}</h2>
                 <div class="py-1">
                   <p class="text-gray-400">{{ blog.date }}</p>
                   <p class="text-gray-400">{{ blog.category }}</p>
