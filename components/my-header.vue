@@ -8,7 +8,7 @@
         </NuxtLink>
       </div>
       
-      <div class="flex justify-end items-center w-[960px]">
+      <div class="flex justify-end items-center max-w-[960px] w-full">
         <ul class="flex justify-center items-center gap-x-12 text-white">
           <NuxtLink to="/"><li>Home</li></NuxtLink>
           <NuxtLink to="/blog"><li>Blog</li></NuxtLink>

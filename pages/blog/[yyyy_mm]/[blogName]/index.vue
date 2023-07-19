@@ -12,8 +12,8 @@
           {{ blogData?.category }}
         </p>
         <h1 class="text-4xl font-bold tracking-wider mb-2">{{ blogData?.title }}</h1>
-        <div class="my-3 mt-4">
-          <p class="text-gray-500">建立日期： {{ blogData?.date }}</p>
+        <div class="my-3 mt-2">
+          <p class="text-gray-500 font-normal">建立日期： {{ blogData?.date }}</p>
           
         </div>
       </div>
@@ -95,12 +95,14 @@ useHead({
 }
 .blog-content {
   & h1 {
-    @apply text-[1.5rem] font-bold tracking-wider;
+    @apply text-[1.5rem] font-extrabold tracking-wider;
+    font-family:  "Nunito", "Microsoft YaHei", sans-serif;
     line-height: 3rem;
   }
   & h2 {
-    @apply font-demi-bold tracking-widest mt-20 -ml-6 pl-6 text-gray-600;
-    font-size: 1.35rem;
+    @apply font-extrabold tracking-[3px] mt-20 -ml-6 pl-6 text-gray-600;
+    font-family:  "Nunito", "Microsoft YaHei", sans-serif;
+    font-size: 1.5rem;
     line-height: 2.5rem;
     box-shadow: inset 3px 0 0 0 rgba(253, 186, 116);
   } 
@@ -112,8 +114,8 @@ useHead({
     line-height: 2.25rem;
   }
   & p {
-    @apply  text-gray-600  mt-8 tracking-[2px] text-justify;
-    font-size: 1.15rem;
+    @apply  text-teal-600  mt-8 tracking-[2px] text-justify;
+    font-size: 1.2rem;
     line-height: 2.4rem;
   }
   & p:first-child {

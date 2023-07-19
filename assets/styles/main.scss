@@ -1,14 +1,15 @@
-@font-face {
-  font-family: 'Noto Sans TC'; 
-  src: url('/assets/font/NotoSansTC-Regular.otf') format("opentype");
-}
+/* @font-face {
+   font-family: 'Noto Sans TC'; 
+   src: url('/assets/font/NotoSansTC-Regular.otf') format("opentype");
+}*/
 @font-face {
     font-family: 'Nunito'; 
     src: url('/assets/font/Nunito-Regular.ttf') format("truetype");
 }
 
 * {
-  font-family: 'Noto Sans TC', "Nunito", sans-serif;
+  font-family: Noto sans-serif, "Nunito", sans-serif;
+  font-weight: 600;
 }
 body {
   width: 100%;

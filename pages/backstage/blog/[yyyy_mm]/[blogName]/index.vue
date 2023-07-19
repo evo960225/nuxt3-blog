@@ -90,7 +90,7 @@ import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
 import '@toast-ui/editor/dist/toastui-editor.css'; 
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
-import { JSONParser } from 'formidable/parsers';
+
 
 const $q = useQuasar()
 const route = useRoute()
