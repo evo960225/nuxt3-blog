@@ -30,6 +30,7 @@ export default defineNuxtConfig({
       recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY ,
       algoliaId: process.env.ALGOLIA_ID,
       algoliaSearchKey: process.env.ALGOLIA_SEARCH_KEY,
+      googleTagId: process.env.GOOGLE_TAG_ID,
     }
   },
 
@@ -64,17 +65,6 @@ export default defineNuxtConfig({
   
   app:{
     pageTransition: { name: 'page', mode: 'out-in' },
-    head: {
-      script: [
-        {
-          src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_TAG_ID}`,
-          async: true,
-        },
-        {
-          src: "/js/gtag.js",
-        },
-      ]
-    },
   },
   
 
