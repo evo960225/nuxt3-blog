@@ -1,8 +1,9 @@
 <template>
   <div>
     <div id="header" 
-      class="show-header flex justify-center items-center w-full bg-[#000c] h-15
-      shadow shadow-lg filter drop-shadow-lg shadow-light-900 border-b-6 border-orange-400
+      class="show-header flex justify-center items-center w-full h-15 
+        bg-[#000000d3] border-b-6 border-orange-400 z-30
+        filter backdrop-filter backdrop-blur-[3px] drop-shadow-xl 
     ">
       <div class="flex grid-cols-6 max-w-[1280px] w-full flex-1">
         <!-- blog name -->
@@ -128,7 +129,7 @@ onMounted(() => {
   if (process.client) {
     window.addEventListener("scroll", function(){
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      if (scrollTop > lastScrollTop && scrollTop > 60){
+      if (scrollTop > lastScrollTop && scrollTop > 100){
           // Downscroll, hide header
           document.getElementById("header")?.classList.remove('show-header');
       } else {
@@ -144,9 +145,10 @@ onMounted(() => {
 <style >
 
 #header {
-  transition: top 0.3s;
+  transition: top 0.5s;
   position: fixed;
   top: -100px;  /* Assume header height is 100px */
+  --tw-drop-shadow: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.04)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 
 #header.show-header {
@@ -220,13 +222,14 @@ onMounted(() => {
 
 
 .tracking-in-expand {
-	-webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
-	        animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+	-webkit-animation: tracking-in-expand 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+	        animation: tracking-in-expand 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+          animation-delay: 0.3s;
 }
 
  @-webkit-keyframes tracking-in-expand {
   0% {
-    letter-spacing: -0.5em;
+    letter-spacing: -0.6em;
     opacity: 0;
   }
   40% {
@@ -238,7 +241,7 @@ onMounted(() => {
 }
 @keyframes tracking-in-expand {
   0% {
-    letter-spacing: -0.5em;
+    letter-spacing: -0.6em;
     opacity: 0;
   }
   40% {
