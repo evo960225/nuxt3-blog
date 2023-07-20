@@ -126,17 +126,19 @@ onMounted(() => {
 let lastScrollTop = 0;
 onMounted(() => {
   if (!document) return
-  window.addEventListener("scroll", function(){
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop > lastScrollTop && scrollTop > 60){
-        // Downscroll, hide header
-        document.getElementById("header")?.classList.remove('show-header');
-    } else {
-        // Upscroll, show header
-        document.getElementById("header")?.classList.add('show-header');
-    }
-    lastScrollTop = scrollTop;
-  })
+  if (process.client) {
+    window.addEventListener("scroll", function(){
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop && scrollTop > 60){
+          // Downscroll, hide header
+          document.getElementById("header")?.classList.remove('show-header');
+      } else {
+          // Upscroll, show header
+          document.getElementById("header")?.classList.add('show-header');
+      }
+      lastScrollTop = scrollTop;
+    })
+  }
 })
 </script>
 
