@@ -1,41 +1,49 @@
 <template>
-  <div class="flex justify-center items-center w-full bg-[#bbb] h-12">
-    <div class="flex grid-cols-6 max-w-[1280px] w-full flex-1">
-
-      <div class="flex flex-1 items-center text-lg text-white tracking-widest">
-        <NuxtLink to="/">
-          孤獨的邊緣宅
-        </NuxtLink>
-      </div>
-      
-      <div class="flex justify-end items-center max-w-[960px] w-full">
-        <ul class="flex justify-center items-center gap-x-12 text-white">
-          <NuxtLink to="/"><li>Home</li></NuxtLink>
-          <NuxtLink to="/blog"><li>Blog</li></NuxtLink>
-          <NuxtLink to="/about"><li>About</li></NuxtLink>
-          <div id="autocomplete" class="w-64"></div>
-        </ul>
-      </div>
-      <div class="flex flex-1 justify-end items-center col-span-1 space-x-3">
-        <a href="https://www.facebook.com/lonely.fei.zhai" 
-          target="_blank" rel="noopener noreferrer"
-          title="Facebook"
-        >
-          <font-awesome-icon :icon="['fab', 'facebook']"  
-            class="text-white text-lg"
-          />
-        </a>
-        <a href="https://medium.com/@evo960225" 
-          target="_blank" rel="noopener noreferrer"
-          title="Medium"
-        >
-          <font-awesome-icon :icon="['fab', 'medium']"  
-            class="text-white text-lg"
-          />
-        </a>
+  <div>
+    <div id="header" class="show-header flex justify-center items-center w-full bg-[#000c] h-15
+      shadow shadow-lg filter drop-shadow-lg shadow-light-900 border-b-6 border-orange-400
+    ">
+      <div class="flex grid-cols-6 max-w-[1280px] w-full flex-1">
+        <!-- blog name -->
+        <div class="flex flex-1 items-center  text-white tracking-widest">
+          <NuxtLink to="/" class="tracking-in-expand text-xl">
+            孤獨的邊緣宅
+          </NuxtLink>
+        </div>
         
+        <!-- menu -->
+        <div class="flex justify-end items-center max-w-[960px] w-full">
+          <ul class="flex justify-center items-center gap-x-12 text-white">
+            <NuxtLink to="/"><li>Home</li></NuxtLink>
+            <NuxtLink to="/blog"><li>Blog</li></NuxtLink>
+            <NuxtLink to="/about"><li>About</li></NuxtLink>
+            <div id="autocomplete" class="w-64"></div>
+          </ul>
+        </div>
+
+        <!-- social media -->
+        <div class="flex flex-1 justify-end items-center col-span-1 space-x-3">
+          <a href="https://www.facebook.com/lonely.fei.zhai" 
+            target="_blank" rel="noopener noreferrer"
+            title="Facebook"
+          ><div>
+            <font-awesome-icon :icon="['fab', 'facebook']"  
+              class="text-white text-lg"
+            /></div>
+          </a>
+          <a href="https://medium.com/@evo960225" 
+            target="_blank" rel="noopener noreferrer"
+            title="Medium"
+          >
+            <font-awesome-icon :icon="['fab', 'medium']"  
+              class="text-white text-lg"
+            />
+          </a>
+          
+        </div>
       </div>
     </div>
+    <div class="h-15"></div>
   </div>
 </template>
 
@@ -54,67 +62,95 @@ import moment from 'moment';
 const searchClient = algoliasearch(algoliaId, algoliaSearchKey)
 
 onMounted(() => {
-  autocomplete({
-    container: '#autocomplete',
-    openOnFocus: true,
-    panelPlacement: 'end',
-    getSources({ query }: { query: any }) {
-      return [
-        {
-          sourceId: 'links',
-          getItems() {
-            return getAlgoliaResults({
-              searchClient,
-              queries: [
-                {
-                  indexName: 'dev_blog',
-                  query,
-                  params: {
-                    hitsPerPage: 5,
-                    attributesToSnippet: ['title:15', 'description:35'],
-                    snippetEllipsisText: '…',
+  if (true) {
+    autocomplete({
+      container: '#autocomplete',
+      openOnFocus: true,
+      panelPlacement: 'end',
+      getSources({ query }: { query: any }) {
+        return [
+          {
+            sourceId: 'links',
+            getItems() {
+              return getAlgoliaResults({
+                searchClient,
+                queries: [
+                  {
+                    indexName: 'dev_blog',
+                    query,
+                    params: {
+                      hitsPerPage: 5,
+                      attributesToSnippet: ['title:15', 'description:35'],
+                      snippetEllipsisText: '…',
+                    },
                   },
-                },
-              ],
-            });
-          },
-          templates: {
-            item({ item, components, html }: { item: any; components: any; html: any}) {
-              return html`<div class="aa-ItemWrapper">
-              <a ref="#"
-               onclick="${() => navigateTo(`/blog/${moment(item.date||'').format('YYYY-MM')}/${item.blogName}`)}"
-              >
-                <div class="aa-ItemContent">
-                  <div class="aa-ItemContentBody">
-                    <div class="aa-ItemContentTitle">
-                      ${components.Highlight({
-                        hit: item,
-                        attribute: 'title',
-                      })}
-                    </div>
-                    <div class="aa-ItemContentDescription !text-gray-400">
-                      ${components.Snippet({
-                        hit: item,
-                        attribute: 'description',
-                      })}
+                ],
+              });
+            },
+            templates: {
+              item({ item, components, html }: { item: any; components: any; html: any}) {
+                return html`<div class="aa-ItemWrapper">
+                <a ref="#"
+                onclick="${() => navigateTo(`/blog/${moment(item.date||'').format('YYYY-MM')}/${item.blogName}`)}"
+                >
+                  <div class="aa-ItemContent">
+                    <div class="aa-ItemContentBody">
+                      <div class="aa-ItemContentTitle">
+                        ${components.Highlight({
+                          hit: item,
+                          attribute: 'title',
+                        })}
+                      </div>
+                      <div class="aa-ItemContentDescription !text-gray-400">
+                        ${components.Snippet({
+                          hit: item,
+                          attribute: 'description',
+                        })}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
-            </div>`;
+                </a>
+              </div>`;
+              }
             }
-          }
-        },
-        
-      ];
-    },
-    renderer: { createElement: h, Fragment, render },
-  });
+          },
+          
+        ];
+      },
+      renderer: { createElement: h, Fragment, render },
+    });
+  }
 });
 
+let lastScrollTop = 0;
+onMounted(() => {
+  if (!document) return
+  window.addEventListener("scroll", function(){
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop > lastScrollTop && scrollTop > 60){
+        // Downscroll, hide header
+        document.getElementById("header")?.classList.remove('show-header');
+    } else {
+        // Upscroll, show header
+        document.getElementById("header")?.classList.add('show-header');
+    }
+    lastScrollTop = scrollTop;
+  })
+})
 </script>
 
-<style>
+<style >
+
+#header {
+  transition: top 0.3s;
+  position: fixed;
+  top: -100px;  /* Assume header height is 100px */
+}
+
+#header.show-header {
+  top: 0;
+}
+
 :root {
   --aa-search-input-height: 36px;
 }
@@ -179,4 +215,36 @@ onMounted(() => {
     mask-position: 100% 0; 
   }
 }
+
+
+.tracking-in-expand {
+	-webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+	        animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+}
+
+ @-webkit-keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 </style>

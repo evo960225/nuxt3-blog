@@ -9,9 +9,18 @@ export default defineNuxtConfig({
     'nuxt-security',
     '@nuxtjs/algolia'
   ],
-
+  plugins: [
+    
+  ],
   build: {
-    transpile: ['trpc-nuxt']
+    transpile: [
+      'trpc-nuxt',
+      '@fortawesome/vue-fontawesome',
+      '@fortawesome/fontawesome-svg-core',
+      '@fortawesome/free-solid-svg-icons',
+      '@fortawesome/free-regular-svg-icons',
+      '@fortawesome/free-brands-svg-icons'
+    ]
   },
 
 
@@ -65,6 +74,14 @@ export default defineNuxtConfig({
   
   app:{
     pageTransition: { name: 'page', mode: 'out-in' },
+    head:{
+      script: [
+        {
+          src: 'https://lonely-fei-zhai.disqus.com/embed.js',
+          "data-timestamp": + new Date(),
+        },
+      ]
+    }
   },
   
 

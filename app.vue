@@ -1,4 +1,5 @@
 <template>
+  <div id="disqus_thread"></div>
   <NuxtLayout>
     <NuxtLoadingIndicator />
     <NuxtPage/>

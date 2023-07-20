@@ -17,7 +17,10 @@
                 </div>
               </div>
               <div class="relative pt-[60%] w-full">
-                <img :src="blog.ogImage" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover">
+                <img :src="blog.ogImage" 
+                  class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover"
+                  :alt="blog.title"
+                >
               </div>
             </div>
           </NuxtLink>
