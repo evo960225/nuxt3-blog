@@ -8,11 +8,7 @@
     <my-footer />
   </div>
 </template>
-<script lang="ts">
-useHead({
-  
-});
-</script>
+
 
 <style scoped>
 
