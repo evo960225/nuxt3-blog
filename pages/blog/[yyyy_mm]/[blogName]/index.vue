@@ -1,9 +1,5 @@
 <template>
-  <div class="flex justify-center text-gray-700 m-4">
-    <!-- @todo: change @type -->
-    <component :is="'script'" type="application/ld+json">
-      
-    </component>
+  <div class="flex flex-col items-center justify-center text-gray-700 m-4">
     <div class="rounded-xl shadow-lg bg-white px-20 py-6 w-[960px] 
       <md:(w-full p-2)"
     >
@@ -19,6 +15,9 @@
       </div>
       <hr class="my-2 border-t-1 border-gray-200 -mx-20 mt-4">
       <div v-html="blogData?.contentHtml" class="blog-content"></div>
+    </div>
+    <div class="flex justify-center">
+      <div class="likeco-btn" data-name="lonelyfeizhai"></div>
     </div>
   </div>
 </template>

@@ -90,7 +90,7 @@ export default defineNuxtConfig({
             gtag('js', new Date());
             gtag('config', '${process.env.GOOGLE_TAG_ID}');
           `
-        }
+        },
         // {
         //   src: 'https://lonely-fei-zhai.disqus.com/embed.js',
         //   "data-timestamp": + new Date(),
