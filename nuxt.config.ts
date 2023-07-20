@@ -15,11 +15,11 @@ export default defineNuxtConfig({
   build: {
     transpile: [
       'trpc-nuxt',
-      // '@fortawesome/vue-fontawesome',
-      // '@fortawesome/fontawesome-svg-core',
-      // '@fortawesome/free-solid-svg-icons',
-      // '@fortawesome/free-regular-svg-icons',
-      // '@fortawesome/free-brands-svg-icons'
+      '@fortawesome/vue-fontawesome',
+      '@fortawesome/fontawesome-svg-core',
+      '@fortawesome/free-solid-svg-icons',
+      '@fortawesome/free-regular-svg-icons',
+      '@fortawesome/free-brands-svg-icons'
     ]
   },
 
@@ -79,10 +79,10 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     head:{
       script: [
-        // {
-        //   src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_TAG_ID}`,
-        //   async: true,
-        // },
+        {
+          src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_TAG_ID}`,
+          async: true,
+        },
 
         // {
         //   src: 'https://lonely-fei-zhai.disqus.com/embed.js',
