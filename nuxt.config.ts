@@ -76,10 +76,10 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     head:{
       script: [
-        {
-          src: 'https://lonely-fei-zhai.disqus.com/embed.js',
-          "data-timestamp": + new Date(),
-        },
+        // {
+        //   src: 'https://lonely-fei-zhai.disqus.com/embed.js',
+        //   "data-timestamp": + new Date(),
+        // },
       ]
     }
   },
