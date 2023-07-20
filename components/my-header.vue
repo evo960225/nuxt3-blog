@@ -2,8 +2,8 @@
   <div>
     <div id="header" 
       class="show-header flex justify-center items-center w-full h-15 
-        bg-[#000000d3] border-b-6 border-orange-400 z-30
-        filter backdrop-filter backdrop-blur-[3px] drop-shadow-xl 
+        bg-[#000000c8] border-b-6 border-orange-400 z-30
+        filter backdrop-filter backdrop-blur-[5px] drop-shadow-xl 
     ">
       <div class="flex grid-cols-6 max-w-[1280px] w-full flex-1">
         <!-- blog name -->

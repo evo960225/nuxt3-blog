@@ -83,7 +83,14 @@ export default defineNuxtConfig({
           src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_TAG_ID}`,
           async: true,
         },
-
+        {
+          children:`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.GOOGLE_TAG_ID}');
+          `
+        },
         // {
         //   src: 'https://lonely-fei-zhai.disqus.com/embed.js',
         //   "data-timestamp": + new Date(),

@@ -27,17 +27,6 @@ useHead({
       content: 'utf-8',
     }
   ],
-  script: [
-    { src: 'https://noobtw.github.io/likeco-btn/likeco-btn.js' },
-    {
-      children:`
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '${process.env.GOOGLE_TAG_ID}');
-      `
-    }
-  ],
 })
 
 </script>

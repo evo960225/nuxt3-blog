@@ -41,6 +41,14 @@ const blogDate = computed(() => {
 })
 
 
+onMounted(() => {
+  if (process.client) {
+    let recaptchaScript = document.createElement('script')
+    recaptchaScript.setAttribute('src', 'https://noobtw.github.io/likeco-btn/likeco-btn.js')
+    document.head.appendChild(recaptchaScript)
+  }
+})
+
 useSeoMeta({
   ogTitle: blogData.value?.title,
   description: blogData.value?.description, 
@@ -81,16 +89,8 @@ useHead({
         "dateModified": `${blogDate.value.toISOString()}`,
         
       }),
+      
     },
-    // { src: 'https://noobtw.github.io/likeco-btn/likeco-btn.js' },
-    // {
-    //   children:`
-    //   window.dataLayer = window.dataLayer || [];
-    //   function gtag(){dataLayer.push(arguments);}
-    //   gtag('js', new Date());
-    //   gtag('config', '${process.env.GOOGLE_TAG_ID}');
-    //   `
-    // }
   ],
 })
 
