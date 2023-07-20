@@ -48,7 +48,6 @@
   "dependencies": {
     "@algolia/autocomplete-js": "^1.10.0",
     "@algolia/autocomplete-theme-classic": "^1.10.0",
-    "@docsearch/js": "^3.5.1",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
