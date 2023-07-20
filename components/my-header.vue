@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div id="header" class="show-header flex justify-center items-center w-full bg-[#000c] h-15
+    <div id="header" 
+      class="show-header flex justify-center items-center w-full bg-[#000c] h-15
       shadow shadow-lg filter drop-shadow-lg shadow-light-900 border-b-6 border-orange-400
     ">
       <div class="flex grid-cols-6 max-w-[1280px] w-full flex-1">
@@ -62,7 +63,7 @@ import moment from 'moment';
 const searchClient = algoliasearch(algoliaId, algoliaSearchKey)
 
 onMounted(() => {
-  if (true) {
+  if (process.client) {
     autocomplete({
       container: '#autocomplete',
       openOnFocus: true,

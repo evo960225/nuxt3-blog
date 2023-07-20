@@ -56,10 +56,13 @@ export default defineNuxtConfig({
         'font-src': ["'self'", 'https:', 'data:'],
         'form-action': ["'self'"],
         'frame-ancestors': ["'self'"],
-        'img-src': ["'self'", 'data:', 'https://storage.googleapis.com/'],
-        'connect-src': ["'self'", 'https://*.algolia.net', 'https://*.algolianet.com', 'https://*.algolia.io', process.dev ? 'ws://127.0.0.1' : ''],
+        'img-src': ["'self'", 'data:', 'https://storage.googleapis.com/', 'https://*.google-analytics.com', 'https://*.googletagmanager.com',],
+        'connect-src': [
+          "'self'", 'https://*.algolia.net', 'https://*.algolianet.com', 'https://*.algolia.io', 
+          'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com',
+          process.dev ? 'ws://127.0.0.1' : ''],
         'object-src': ["'none'"],
-        'script-src-attr': ["'none'"],
+        'script-src-attr': ['https://*.googletagmanager.com'],
         'style-src': ["'self'", 'https:', "'unsafe-inline'"],
         'upgrade-insecure-requests': true
       }
@@ -76,6 +79,18 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     head:{
       script: [
+        {
+          src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_TAG_ID}`,
+          async: true,
+        },
+        {
+          innerHTML: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.GOOGLE_TAG_ID}');
+          `
+        }
         // {
         //   src: 'https://lonely-fei-zhai.disqus.com/embed.js',
         //   "data-timestamp": + new Date(),

@@ -72,7 +72,6 @@
     "prismjs": "^1.29.0",
     "quasar": "^2.11.7",
     "trpc-nuxt": "^0.10.6",
-    "vue-gtag": "^2.0.1",
     "vue-recaptcha-v3": "^2.0.1",
     "winston": "^3.9.0",
     "winston-daily-rotate-file": "^4.7.1",
