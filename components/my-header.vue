@@ -49,96 +49,96 @@
 </template>
 
 <script setup lang="tsx">
-// import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
-// import '@algolia/autocomplete-theme-classic';
-// import algoliasearch from 'algoliasearch/lite';
-// const { result, search } = useAlgoliaSearch('dev_blog')
+import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
+import '@algolia/autocomplete-theme-classic';
+import algoliasearch from 'algoliasearch/lite';
+const { result, search } = useAlgoliaSearch('dev_blog')
 
-// const runtimeConfig = useRuntimeConfig()
-// const algoliaId = runtimeConfig.public.algoliaId
-// const algoliaSearchKey = runtimeConfig.public.algoliaSearchKey
-// import { h, Fragment, render } from 'vue';
-// import moment from 'moment';
-// const searchClient = algoliasearch(algoliaId, algoliaSearchKey)
+const runtimeConfig = useRuntimeConfig()
+const algoliaId = runtimeConfig.public.algoliaId
+const algoliaSearchKey = runtimeConfig.public.algoliaSearchKey
+import { h, Fragment, render } from 'vue';
+import moment from 'moment';
+const searchClient = algoliasearch(algoliaId, algoliaSearchKey)
 
-// onMounted(() => {
-//   if (process.client) {
-//     autocomplete({
-//       container: '#autocomplete',
-//       openOnFocus: true,
-//       panelPlacement: 'end',
-//       getSources({ query }: { query: any }) {
-//         return [
-//           {
-//             sourceId: 'links',
-//             getItems() {
-//               return getAlgoliaResults({
-//                 searchClient,
-//                 queries: [
-//                   {
-//                     indexName: 'dev_blog',
-//                     query,
-//                     params: {
-//                       hitsPerPage: 5,
-//                       attributesToSnippet: ['title:15', 'description:35'],
-//                       snippetEllipsisText: '…',
-//                     },
-//                   },
-//                 ],
-//               });
-//             },
-//             templates: {
-//               item({ item, components, html }: { item: any; components: any; html: any}) {
-//                 return html`<div class="aa-ItemWrapper">
-//                 <a ref="#"
-//                 onclick="${() => navigateTo(`/blog/${moment(item.date||'').format('YYYY-MM')}/${item.blogName}`)}"
-//                 >
-//                   <div class="aa-ItemContent">
-//                     <div class="aa-ItemContentBody">
-//                       <div class="aa-ItemContentTitle">
-//                         ${components.Highlight({
-//                           hit: item,
-//                           attribute: 'title',
-//                         })}
-//                       </div>
-//                       <div class="aa-ItemContentDescription !text-gray-400">
-//                         ${components.Snippet({
-//                           hit: item,
-//                           attribute: 'description',
-//                         })}
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </a>
-//               </div>`;
-//               }
-//             }
-//           },
+onMounted(() => {
+  if (process.client) {
+    autocomplete({
+      container: '#autocomplete',
+      openOnFocus: true,
+      panelPlacement: 'end',
+      getSources({ query }: { query: any }) {
+        return [
+          {
+            sourceId: 'links',
+            getItems() {
+              return getAlgoliaResults({
+                searchClient,
+                queries: [
+                  {
+                    indexName: 'dev_blog',
+                    query,
+                    params: {
+                      hitsPerPage: 5,
+                      attributesToSnippet: ['title:15', 'description:35'],
+                      snippetEllipsisText: '…',
+                    },
+                  },
+                ],
+              });
+            },
+            templates: {
+              item({ item, components, html }: { item: any; components: any; html: any}) {
+                return html`<div class="aa-ItemWrapper">
+                <a ref="#"
+                onclick="${() => navigateTo(`/blog/${moment(item.date||'').format('YYYY-MM')}/${item.blogName}`)}"
+                >
+                  <div class="aa-ItemContent">
+                    <div class="aa-ItemContentBody">
+                      <div class="aa-ItemContentTitle">
+                        ${components.Highlight({
+                          hit: item,
+                          attribute: 'title',
+                        })}
+                      </div>
+                      <div class="aa-ItemContentDescription !text-gray-400">
+                        ${components.Snippet({
+                          hit: item,
+                          attribute: 'description',
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>`;
+              }
+            }
+          },
           
-//         ];
-//       },
-//       renderer: { createElement: h, Fragment, render },
-//     });
-//   }
-// });
+        ];
+      },
+      renderer: { createElement: h, Fragment, render },
+    });
+  }
+});
 
-// let lastScrollTop = 0;
-// onMounted(() => {
-//   if (!document) return
-//   if (process.client) {
-//     window.addEventListener("scroll", function(){
-//       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-//       if (scrollTop > lastScrollTop && scrollTop > 60){
-//           // Downscroll, hide header
-//           document.getElementById("header")?.classList.remove('show-header');
-//       } else {
-//           // Upscroll, show header
-//           document.getElementById("header")?.classList.add('show-header');
-//       }
-//       lastScrollTop = scrollTop;
-//     })
-//   }
-// })
+let lastScrollTop = 0;
+onMounted(() => {
+  if (!document) return
+  if (process.client) {
+    window.addEventListener("scroll", function(){
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop && scrollTop > 60){
+          // Downscroll, hide header
+          document.getElementById("header")?.classList.remove('show-header');
+      } else {
+          // Upscroll, show header
+          document.getElementById("header")?.classList.add('show-header');
+      }
+      lastScrollTop = scrollTop;
+    })
+  }
+})
 </script>
 
 <style >
