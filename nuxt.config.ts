@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'nuxt-simple-sitemap',
     'nuxt-security',
-    '@nuxtjs/algolia'
+    '@nuxtjs/algolia',
+    'nuxt-jsonld'
   ],
   plugins: [
     

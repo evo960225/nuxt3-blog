@@ -32,6 +32,8 @@
 
 <script setup lang="ts">
 import { gsap } from 'gsap';
+import { useJsonldStore } from '@/stores/jsonld'
+import { ItemList, ListItem } from 'schema-dts';
 const route = useRoute()
 const { host } = useRuntimeConfig().public
 
@@ -63,6 +65,24 @@ const reverseAnimation = (index: number) => {
 }
 
 
+const itemList: ItemList = {
+  "@type": "ItemList",
+  "description": "孤獨的邊緣宅",
+  "image": `${host}/favicon.ico`,
+  "itemListElement": [ 
+    blogListData.value?.map((blog, index) => {
+      return {
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `${host}/blog/${blog.date.split('-').slice(0,2).join('-')}/${blog.blogName}`
+      } as ListItem
+    })
+  ]
+}
+
+const jsonldStore = useJsonldStore() 
+jsonldStore.setThings([itemList])
+
 useHead({
   title: '邊緣宅部落',
   script: [
@@ -70,28 +90,7 @@ useHead({
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `${host}${route.path}`,
-        },
-        "headline": "邊緣宅部落",
-        "description": "孤獨的邊緣宅",
-        "image": `${host}/favicon.ico`,
-        "author": {
-          "@type": "Person",
-          "name": "孤獨的邊緣宅"
-        },
-        "blogPost": [ 
-          blogListData.value?.map((blog) => {
-            return {
-              "@type": "BlogPosting",
-              "headline": blog.title,
-              "datePublished": blog.date,
-              "articleBody": blog.description,
-            }
-          })
-        ]
+        
       }),
     },
   ],

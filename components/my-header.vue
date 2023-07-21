@@ -14,17 +14,17 @@
         </div>
         
         <!-- menu -->
-        <div class="flex justify-end items-center max-w-[960px] w-full">
+        <nav class="flex justify-end items-center max-w-[960px] w-full">
           <ul class="flex justify-center items-center gap-x-12 text-white">
-            <NuxtLink to="/"><li>Home</li></NuxtLink>
-            <NuxtLink to="/blog"><li>Blog</li></NuxtLink>
-            <NuxtLink to="/about"><li>About</li></NuxtLink>
+            <li><NuxtLink to="/">Home</NuxtLink></li>
+            <li><NuxtLink to="/blog">Blog</NuxtLink></li>
+            <li><NuxtLink to="/about">About</NuxtLink></li>
             <div id="autocomplete" class="w-64"></div>
           </ul>
-        </div>
+        </nav>
 
         <!-- social media -->
-        <div class="flex flex-1 justify-end items-center col-span-1 space-x-3">
+        <div class="flex flex-1 justify-end items-center gap-x-4">
           <a href="https://www.facebook.com/lonely.fei.zhai" 
             target="_blank" rel="noopener noreferrer"
             title="Facebook"

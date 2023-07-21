@@ -23,6 +23,8 @@
 </template>
 
 <script setup lang="ts">
+import { BlogPosting } from 'schema-dts';
+import { useJsonldStore } from '@/stores/jsonld'
 const runtimeConfig = useRuntimeConfig()
 const host = runtimeConfig.public.host
 const route = useRoute()
@@ -59,40 +61,34 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
-useHead({
-  title: blogData.value?.title,
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `${host}${route.path}`,
-        },
-        "headline": `${blogData.value?.title}`,
-        "description": `${blogData.value?.description}`,
-        "image": blogData.value?.ogImage,
-        "author": {
-          "@type": "Person",
-          "name": "孤獨的邊緣宅"
-        },
-        "publisher": {
-          "@type": "Person",
-          "name": "孤獨的邊緣宅",
-          "image": `${host}/favicon.ico`
-        },
-        "genre": `Gaming`,
-        "url": `${host}${route.path}`,
-        "datePublished":`${blogDate.value.toISOString()}`,
-        "dateModified": `${blogDate.value.toISOString()}`,
-        
-      }),
-      
-    },
-  ],
-})
+
+const blogPosting: BlogPosting = {
+  '@type': 'BlogPosting',
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `${host}${route.path}`,
+  },
+  "headline": `${blogData.value?.title}`,
+  "description": `${blogData.value?.description}`,
+  "image": blogData.value?.ogImage,
+  "author": {
+    "@type": "Person",
+    "name": "孤獨的邊緣宅"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "孤獨的邊緣宅",
+    "image": `${host}/favicon.ico`
+  },
+  "genre": `Gaming`,
+  "url": `${host}${route.path}`,
+  "datePublished":`${blogDate.value.toISOString()}`,
+  "dateModified": `${blogDate.value.toISOString()}`,
+}
+
+const jsonldStore = useJsonldStore() 
+jsonldStore.setThings([blogPosting])
+
 
 </script>
 

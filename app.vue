@@ -6,13 +6,19 @@
 </template>
 
 <script setup lang="ts">
+import { Graph } from 'schema-dts';
 import { useAdminStore } from '@/stores/admin' 
+import { useJsonldStore } from '@/stores/jsonld'
 const adminStore = useAdminStore()
+const jsonldStore = useJsonldStore()
 const route = useRoute()
 
 
 const title = computed(() => route.meta.title? `${route.meta.title} - ` : '')
 useHead({
+  templateParams: {
+      
+  },
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} - 孤獨的邊緣宅` : '孤獨的邊緣宅';
   },
@@ -28,6 +34,10 @@ useHead({
     }
   ],
 })
+ 
+onMounted(() =>
+  useJsonld(() => jsonldStore.jsonld)
+)
 
 </script>
 

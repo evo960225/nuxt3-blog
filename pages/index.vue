@@ -38,9 +38,7 @@ const { data: blogTableData } = await useFetch(`/api/blog/list`, {
   method: 'GET',
 })
 
-
 const blogListData = ref(blogTableData.value?.data || [])
-
 
 
 const cardsRef = ref<HTMLElement[]>([]);
@@ -49,8 +47,9 @@ const timelines: gsap.core.Timeline[] = [];
 onMounted(() => {
   cardsRef.value.forEach((htmlElement, index) => {
     timelines[index] = gsap.timeline({ paused: true });
-    timelines[index].to(htmlElement, { scale: 1.05, duration: 0.3 });
+    timelines[index].to(htmlElement, { scale: 1.03, duration: 0.3 });
   });
+
 });
 
 const startAnimation = (index: number) => {
@@ -59,6 +58,8 @@ const startAnimation = (index: number) => {
 const reverseAnimation = (index: number) => {
   timelines[index].reverse();
 }
+
+
 </script>
 
 <style>
