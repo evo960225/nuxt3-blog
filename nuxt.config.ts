@@ -1,7 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+  sourcemap: false,
+
   modules: [
-    'nuxt-windicss',
+    // 'nuxt-windicss',
+    '@unocss/nuxt',
     'nuxt-quasar-ui',
     '@nuxtjs/i18n',
     '@pinia/nuxt',
@@ -23,7 +27,6 @@ export default defineNuxtConfig({
       '@fortawesome/free-brands-svg-icons'
     ]
   },
-
 
   runtimeConfig: {
     blogsContentDir: process.env.BLOGS_CONTENT_DIR || '/',
@@ -74,6 +77,7 @@ export default defineNuxtConfig({
   css: [
     '@fortawesome/fontawesome-svg-core/styles.css',
     '@/assets/styles/main.scss',
+    '@unocss/reset/tailwind.css'
   ],
   
   app:{

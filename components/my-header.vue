@@ -7,8 +7,8 @@
     ">
       <div class="flex grid-cols-6 max-w-[1280px] w-full flex-1">
         <!-- blog name -->
-        <div class="flex flex-1 items-center  text-white tracking-widest">
-          <NuxtLink to="/" class="tracking-in-expand text-xl">
+        <div class="flex flex-1 items-center   tracking-widest">
+          <NuxtLink to="/" class="tracking-in-expand text-xl text-white">
             孤獨的邊緣宅
           </NuxtLink>
         </div>
