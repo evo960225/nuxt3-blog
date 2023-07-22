@@ -4,13 +4,12 @@ export default defineNuxtConfig({
   sourcemap: false,
 
   modules: [
-    // 'nuxt-windicss',
     '@unocss/nuxt',
     'nuxt-quasar-ui',
     '@nuxtjs/i18n',
     '@pinia/nuxt',
     'nuxt-simple-sitemap',
-    'nuxt-security',
+    // 'nuxt-security', // image upload will fail
     '@nuxtjs/algolia',
     'nuxt-jsonld'
   ],
@@ -60,7 +59,9 @@ export default defineNuxtConfig({
         'font-src': ["'self'", 'https:', 'data:'],
         'form-action': ["'self'"],
         'frame-ancestors': ["'self'"],
-        'img-src': ["'self'", 'data:', 'https://storage.googleapis.com/', 'https://*.google-analytics.com', 'https://*.googletagmanager.com',],
+        'img-src': ["'self'", 'data:', 'blob:', 
+          'https://storage.googleapis.com/', 'https://*.google-analytics.com', 'https://*.googletagmanager.com',
+        ],
         'connect-src': [
           "'self'", 'https://*.algolia.net', 'https://*.algolianet.com', 'https://*.algolia.io', 
           'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com',

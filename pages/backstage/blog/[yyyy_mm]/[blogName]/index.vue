@@ -60,8 +60,6 @@
           <q-uploader
             :url="`${blogApiUrl}/upload-image`"
             auto-upload
-            multiple
-            accept="image/*"
             style="max-width: 300px"
             @uploaded="onUploaded"
             @failed="(info) => $q.notify('檔案過大')"
@@ -86,7 +84,6 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import DOMPurify from 'isomorphic-dompurify';
 import Prism from 'prismjs';
 
-
 import 'prismjs/themes/prism.css';
 import '@toast-ui/editor/dist/toastui-editor.css'; 
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
@@ -97,6 +94,7 @@ const route = useRoute()
 const { yyyy_mm, blogName } = route.params
 const editorRef = ref<HTMLElement>()
 let editor: Editor
+
 
 onMounted(() => {
   if (!editorRef.value) return
@@ -132,6 +130,25 @@ const isLoading = ref(false)
 const blogApiUrl = `/api/blog/${yyyy_mm}/${blogName}`
 const ogImageUrl = ref('')
 
+const {data:aaa} = useFetch(`${blogApiUrl}/a`, {
+  key: `blogDataa-${hashByTime(1)}`,
+  method: 'POST',
+})
+
+function sendData(file) {
+  console.log('====================================');
+  console.log(JSON.stringify(file));
+  console.log('====================================');
+  const formData = new FormData()
+  formData.append('file', file);
+  const a= useFetch(`${blogApiUrl}/upload-image`, {
+    method: 'POST',
+    body: formData,
+  });
+}
+
+ 
+
 // get data
 const getMd = async() => {
   const { data: mdData } = await useFetch<IBlog>(`${blogApiUrl}/md`, {
@@ -165,6 +182,7 @@ const getImages = async() => {
   })
   return imagesUrlData
 }
+
 const [mdData, imagesUrlData] = (await Promise.all([getMd(), getImages()]))
 
 

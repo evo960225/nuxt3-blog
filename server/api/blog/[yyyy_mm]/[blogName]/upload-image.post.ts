@@ -7,11 +7,13 @@ import moment from 'moment';
 export default defineEventHandler(async (event) => {
   
   if (!event.context.authBackstage) {
-    return createError({
+    throw createError({
       statusCode: 401,
       message: 'You don\'t have the rights to access this resource',
     })
   }
+
+
   const runtimeConfig = useRuntimeConfig()
   const logger = useLogger()
   const yyyy_mm = event.context.params?.yyyy_mm || ''
@@ -57,7 +59,7 @@ export default defineEventHandler(async (event) => {
 
   form.on('error', (err) => {
     logger.error('An error has occurred with the upload: ', err);
-    createError({
+    throw createError({
       statusCode: 500,
       statusMessage: 'An error has occurred with the upload.'
     })
@@ -68,10 +70,10 @@ export default defineEventHandler(async (event) => {
       if(err) {
         if (err.code ===  formidable.errors.biggerThanMaxFileSize) {
           logger.error('maxFileSize exceeded')
-          return reject(createError({
+          throw createError({
             statusCode: 413,
             statusMessage: 'maxFileSize exceeded'
-          }))
+          })
         }
         reject(err);
       }

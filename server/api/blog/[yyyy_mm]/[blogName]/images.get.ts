@@ -26,19 +26,20 @@ export default defineEventHandler(async (event) => {
   const blogMd = await blogModel.get(yyyy_mm, `${decodeURIComponent(blogName)}.md`)
  
   if (!blogDir && !yyyy_mm && !blogName) {
+    logger.http('Prarameters are not valid.')
     throw createError({
       statusCode: 400,
       statusMessage: 'Prarameters are not valid.'
     })
   }
   if (blogMd === null) {
+    logger.http('Could not find blog.')
     throw createError({
       statusCode: 400,
       statusMessage: 'Could not find blog.'
     })
   }
   const blogId = blogMd.id
-
   const firebaseAdmin = useFirebaseAdmin()
   const bucket = firebaseAdmin.storage().bucket();
   const [urlResponse] = await bucket.getFiles({
