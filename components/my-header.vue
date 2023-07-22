@@ -5,16 +5,20 @@
         bg-[#000000c8] border-b-6 border-orange-400 z-30
         filter backdrop-filter backdrop-blur-[5px] drop-shadow-xl 
     ">
-      <div class="flex grid-cols-6 max-w-[1280px] w-full flex-1">
+      <div class="flex max-w-[1280px] w-full flex-1 p-2
+        <2xl:max-w-[960px]
+      ">
         <!-- blog name -->
-        <div class="flex flex-1 items-center   tracking-widest">
+        <div class="flex flex-1 items-center  tracking-widest min-w-[140px]">
           <NuxtLink to="/" class="tracking-in-expand text-xl text-white">
             孤獨的邊緣宅
           </NuxtLink>
         </div>
         
         <!-- menu -->
-        <nav class="flex justify-end items-center max-w-[960px] w-full">
+        <nav class="flex justify-end items-center max-w-[960px] w-full 
+          <2xl:(w-auto flex-grow-[2]) <sm:(hidden)
+        ">
           <ul class="flex justify-center items-center gap-x-12 text-white">
             <li><NuxtLink to="/">Home</NuxtLink></li>
             <li><NuxtLink to="/blog">Blog</NuxtLink></li>
@@ -24,7 +28,9 @@
         </nav>
 
         <!-- social media -->
-        <div class="flex flex-1 justify-end items-center gap-x-4">
+        <div class="flex flex-1 justify-end items-center gap-x-4
+          <lg:(hidden)
+        ">
           <a href="https://www.facebook.com/lonely.fei.zhai" 
             target="_blank" rel="noopener noreferrer"
             title="Facebook"

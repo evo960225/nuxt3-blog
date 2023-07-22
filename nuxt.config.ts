@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@pinia/nuxt',
     'nuxt-simple-sitemap',
-    // 'nuxt-security', // image upload will fail
+    'nuxt-security', 
     '@nuxtjs/algolia',
     'nuxt-jsonld'
   ],
@@ -45,6 +45,7 @@ export default defineNuxtConfig({
       googleTagId: process.env.GOOGLE_TAG_ID,
     }
   },
+
 
   security: {
     csrf: false,
@@ -108,7 +109,12 @@ export default defineNuxtConfig({
 
   routeRules:{
     '/**': { },
-    '/backstage/**': { ssr: false },
+    '/backstage/**': { 
+      ssr: false, 
+      security: {
+        xssValidator: false,
+      }
+    },
   },
 
   sitemap: {

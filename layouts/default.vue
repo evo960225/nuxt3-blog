@@ -2,7 +2,7 @@
 <template>
   <div id="app" class="flex justify-center flex-col w-full">
     <my-header />
-    <div class="min-h-[calc(100vh-108px)] bg-white">
+    <div class="min-h-[calc(100vh-108px)] w-full bg-white">
       <slot />
     </div>
     <my-footer />

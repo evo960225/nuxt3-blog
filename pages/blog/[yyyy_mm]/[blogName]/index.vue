@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col items-center justify-center text-gray-700 m-4">
+  <div class="flex flex-col items-center justify-center text-gray-700 m-4 <lg:(m-0)">
     <div class="rounded-xl shadow-lg bg-white px-20 pt-6 pb-20 w-[960px] 
-      <md:(w-full p-2)"
+      <lg:(w-full p-3)"
     >
       <div class="py-3">
         <p class="gener inline-block -ml-0.5 px-3.5 py-2 tracking-widest text-white bg-yellow-500 rounded-md cursor-default">
@@ -103,12 +103,12 @@ jsonldStore.setThings([blogPosting])
 }
 .blog-content {
   & h1 {
-    @apply text-[1.5rem] font-extrabold tracking-wider;
+    @apply text-[1.5rem] font-extrabold tracking-wider text-justify;
     font-family:  "Nunito", "Microsoft YaHei", sans-serif;
     line-height: 3rem;
   }
   & h2 {
-    @apply font-extrabold tracking-[3px] mt-20 -ml-6 pl-6 text-gray-600;
+    @apply font-extrabold tracking-[3px] mt-20 -ml-6 pl-6 text-gray-600 <lg:(ml-0 );
     font-family:  "Nunito", "Microsoft YaHei", sans-serif;
     font-size: 1.4rem;
     line-height: 2.3rem;
@@ -153,7 +153,7 @@ jsonldStore.setThings([blogPosting])
   }
 
   & iframe {
-    @apply block mx-auto mt-8;
+    @apply block mx-auto mt-8 <lg:(w-full);
   }
   
 
