@@ -17,7 +17,7 @@
         
         <!-- menu -->
         <nav class="flex justify-end items-center max-w-[960px] w-full 
-          <2xl:(w-auto flex-grow-[2]) <sm:(hidden)
+          <2xl:(w-auto flex-grow-[2]) <sm:(!hidden)
         ">
           <ul class="flex justify-center items-center gap-x-12 text-white">
             <li><NuxtLink to="/">Home</NuxtLink></li>
