@@ -7,11 +7,11 @@ export default defineEventHandler(async () => {
   ])
 
   return [
-    { loc: `/`, lastmod: (new Date()).toISOString(), changefreq: 'weekly',  priority: 1.0},
+    { loc: `${host}/`, lastmod: (new Date()).toISOString(), changefreq: 'weekly',  priority: 1.0},
     ...
     (blogPage.data.map((blog) => {
       return { 
-        loc: `/blog/${blog.blogName}`, 
+        loc: `${host}/blog/${blog.blogName}`, 
         lastmod: (new Date(blog.date)).toISOString(), 
         changefreq: 'weekly',
         priority: 0.8, 

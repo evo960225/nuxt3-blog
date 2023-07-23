@@ -29,7 +29,7 @@
 
         <!-- social media -->
         <div class="flex flex-1 justify-end items-center gap-x-4
-          <lg:(hidden)
+          <lg:(!hidden)
         ">
           <a href="https://www.facebook.com/lonely.fei.zhai" 
             target="_blank" rel="noopener noreferrer"

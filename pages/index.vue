@@ -62,7 +62,7 @@
 
       <!-- 熱門 -->
       <div class="mt-24 max-w-[1280px] w-full">
-        <h2 class="p-3  text-3xl tracking-widest text-center"> ---- 最新內容 ---- </h2>
+        <h2 class="p-3  text-3xl tracking-widest text-center"> ---- 熱門內容 ---- </h2>
         <div ref="container" class="columns-3 gap-4 my-12 w-full max-w-[1280px] <lg:columns-1
           " >
 

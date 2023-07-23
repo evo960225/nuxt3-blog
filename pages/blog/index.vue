@@ -86,13 +86,7 @@ jsonldStore.setThings([itemList])
 useHead({
   title: '邊緣宅部落',
   script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        
-      }),
-    },
+
   ],
 })
 

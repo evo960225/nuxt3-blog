@@ -13,7 +13,7 @@
           
         </div>
       </div>
-      <hr class="my-2 border-t-1 border-gray-200 -mx-20 mt-4">
+      <hr class="my-2 border-t-1 border-gray-200 -mx-20 mt-4 <lg:(-mx-2 mt-2) ">
       <div v-html="blogData?.contentHtml" class="blog-content"></div>
     </div>
     <div class="flex justify-center mt-5">
@@ -99,16 +99,18 @@ jsonldStore.setThings([blogPosting])
 }
 .blog-title {
   font-family:  "Nunito", "Microsoft YaHei", sans-serif;
-  @apply tracking-[4px] text-3xl;
+  @apply tracking-[4px] text-3xl <sm:(text-2xl tracking-[1px]));
 }
 .blog-content {
   & h1 {
-    @apply text-[1.5rem] font-extrabold tracking-wider text-justify;
-    font-family:  "Nunito", "Microsoft YaHei", sans-serif;
+    @apply text-[1.5rem] font-extrabold tracking-wider text-justify 
+           <sm:(text-[1.2rem] tracking-normal);
+    font-family: "Nunito", "Microsoft YaHei", sans-serif;
     line-height: 3rem;
   }
   & h2 {
-    @apply font-extrabold tracking-[3px] mt-20 -ml-6 pl-6 text-gray-600 <lg:(ml-0 );
+    @apply font-extrabold tracking-[3px] mt-20 -ml-6 pl-6 text-gray-600 <lg:(ml-0) 
+           <sm:(mt-14 pl-3 text-[1.25rem] leading-8 tracking-wide);
     font-family:  "Nunito", "Microsoft YaHei", sans-serif;
     font-size: 1.4rem;
     line-height: 2.3rem;
@@ -122,16 +124,16 @@ jsonldStore.setThings([blogPosting])
     line-height: 2.25rem;
   }
   & p {
-    @apply  text-cool-gray-600  mt-8 tracking-[2px] text-justify;
-    font-size: 1.2rem;
-    line-height: 2.4rem;
+    @apply  text-cool-gray-600 mt-8 tracking-[2px] text-justify text-[1.2rem] leading-[2.4rem]
+            <sm:(mt-6 text-[1rem] leading-7 tracking-wider);
+
   }
   & p:first-child {
     @apply mt-2
   }
 
   & img {
-    @apply block mx-auto mt-12;
+    @apply block mx-auto mt-12 <sm:(mt-6);
   }
   & img + figcaption {
     @apply block mx-auto mt-2;

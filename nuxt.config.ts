@@ -1,8 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 
-  sourcemap: false,
-
   modules: [
     '@unocss/nuxt',
     'nuxt-quasar-ui',
@@ -36,7 +34,8 @@ export default defineNuxtConfig({
     firebaseImagesDest: process.env.FIREBASE_IMAGES_DEST,
     algoliaSecertKey: process.env.ALGOLIA_SECRET_KEY,
     public: {
-      host: process.env.HOST || 'localhost',
+      host: process.env.APP_HOST || 'localhost',
+      siteUrl: process.env.APP_HOST || 'localhost',
       imageUrlBase: '/api/image',
       loginCookieMaxAge: 60 * 60 * 24 * 7,
       recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY ,
@@ -50,7 +49,7 @@ export default defineNuxtConfig({
   security: {
     csrf: false,
     corsHandler: {
-      origin: process.env.HOST || 'localhost',
+      origin: process.env.APP_HOST || 'localhost',
       methods: '*',
     },
     headers: {
@@ -113,7 +112,8 @@ export default defineNuxtConfig({
       ssr: false, 
       security: {
         xssValidator: false,
-      }
+      },
+      index: false, // sitemap
     },
   },
 
