@@ -22,7 +22,7 @@ export default defineNuxtConfig({
       '@fortawesome/free-solid-svg-icons',
       '@fortawesome/free-regular-svg-icons',
       '@fortawesome/free-brands-svg-icons'
-    ]
+    ],
   },
 
   runtimeConfig: {
@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     }
   },
 
-
+  
   security: {
     csrf: false,
     corsHandler: {

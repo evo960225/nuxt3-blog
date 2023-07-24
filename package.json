@@ -6,7 +6,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "build-server": "cd .output && git init && git add .  && git commit -m 'init' && git remote add server hoshi@hoshi:/var/www/html/blog/repo2 && git push --set-upstream server master -f",
+    "deploy-server": "cd .output && git init && git add .  && git commit -m 'init' && git remote add server hoshi@hoshi:/var/www/html/blog/repo2 && git push --set-upstream server master -f",
     "push-server": "cd .output && git push --set-upstream server master -f"
   },
   "devDependencies": {

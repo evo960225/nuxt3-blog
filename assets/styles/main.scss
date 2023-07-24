@@ -71,59 +71,11 @@ body {                /* body - or any parent wrapper */
   min-height: 100vh;
 }
 
-.menu-icon{
-  --close-color: #fff;
-  --color: #fff;
-  --duration: 600ms;
-  --line-height: 3px;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  margin-left: 5px;
-  z-index: 1;
-  
-  &_three-line{
-    width: 100%;
-    height: var(--line-height);
-    background: var(--color);
-    position: relative;
-    border-radius: var(--line-height);
-    transition: all var(--duration);
-    
-    &:before, &:after{
-      position: absolute;
-      content: '';
-      width: 100%;
-      height: var(--line-height);
-      background:var(--color);
-      border-radius: 5px;
-      transition: all var(--duration);
-      
-    }
-    &:before{
-      transform: translateY(-8px);
-    }
-    &:after{
-      transform: translateY(8px);
-    }
-  }
-  
-  &.open{
-    .menu-icon_three-line{
-      background: transparent;
-      &:before{
-        transform: rotate(45deg);
-        background: var(--close-color);
-      }
-      &:after{
-        transform: rotate(-45deg);
-        background: var(--close-color);
-      }
-    }
-  }
+.tw-block {
+  display: block;
+}
+.tw-hidden {
+  display: none;
 }
 
 .backstage textarea {

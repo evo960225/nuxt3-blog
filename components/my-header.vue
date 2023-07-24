@@ -55,38 +55,40 @@
           :class="{open:isMenuDrawerActive}" 
           @click="isMenuDrawerActive=!isMenuDrawerActive"
         >
-          <div class="menu-icon_three-line hidden <sm:(!block)"></div>
+          <div class="menu-icon_three-line tw-hidden"></div>
         </div>
 
         <!-- <md: click icon after drawer -->
-        <nav id="drawer" class="drawer p-3 
+        <div id="drawer" class="drawer p-3 
           fixed top-0 -left-[250px] z-50
           w-[250px] h-screen bg-gray-600 
           transition-all duration-500 ease-in-out text-white "
-          :class="{ 'left-0': isMenuDrawerActive }"
+          :class="{ 'left-0': isMenuDrawerActive }" 
         >
-          <ul class="tracking-wide">
-              <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/">Home</NuxtLink></li>
-              <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/blog">Blog</NuxtLink></li>
-              <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/about">About</NuxtLink></li>
-          </ul>
-          <div class="flex mt-24 px-1 py-3 justify-end space-x-4 border-t-1 border-white border-dashed">
-            <a href="https://www.facebook.com/lonely.fei.zhai" 
-            target="_blank" rel="noopener noreferrer" title="Facebook">
-              <div>
-                <font-awesome-icon :icon="['fab', 'facebook']" class="text-white text-2xl" />
-              </div>
-            </a>
-            <a href="https://medium.com/@evo960225" 
-              target="_blank" rel="noopener noreferrer"
-              title="Medium"
-            >
-              <font-awesome-icon :icon="['fab', 'medium']" class="text-white text-2xl -my-1" />
-            </a>
-          </div>
-        </nav>
-        <div id="overlay" class="hidden fixed w-full h-screen top-0 left-0 bg-dark-50/20 z-40" 
-          :class="{ '!block': isMenuDrawerActive }"
+          <nav @click="isMenuDrawerActive=false">
+            <ul class="tracking-wide" >
+                <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/">Home</NuxtLink></li>
+                <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/blog">Blog</NuxtLink></li>
+                <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/about">About</NuxtLink></li>
+            </ul>
+            <div class="flex mt-24 px-1 py-3 justify-end space-x-4 border-t-1 border-white border-dashed">
+              <a href="https://www.facebook.com/lonely.fei.zhai" 
+              target="_blank" rel="noopener noreferrer" title="Facebook">
+                <div>
+                  <font-awesome-icon :icon="['fab', 'facebook']" class="text-white text-2xl" />
+                </div>
+              </a>
+              <a href="https://medium.com/@evo960225" 
+                target="_blank" rel="noopener noreferrer"
+                title="Medium"
+              >
+                <font-awesome-icon :icon="['fab', 'medium']" class="text-white text-2xl -my-1" />
+              </a>
+            </div>
+          </nav>
+        </div>
+        <div id="overlay" class="fixed w-full h-screen top-0 left-0 bg-dark-50/20 z-40" 
+          :class="{ 'tw-block': isMenuDrawerActive, 'tw-hidden': !isMenuDrawerActive }"
           @click="isMenuDrawerActive=false">
         </div>
 
@@ -313,6 +315,7 @@ onMounted(() => {
   z-index: 1;
   
   &_three-line {
+    @apply <sm:block;
     will-change: auto;
     width: 100%;
     height: var(--line-height);
@@ -341,6 +344,7 @@ onMounted(() => {
   
   &.open{
     .menu-icon_three-line {
+      @apply <sm:(block);
       will-change: transform;
       background: transparent;
       &:before {
@@ -354,4 +358,5 @@ onMounted(() => {
     }
   }
 }
+
 </style>
