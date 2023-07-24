@@ -12,16 +12,16 @@ env rename to .env and populate the .env file
 
 Start the development server on http://localhost:3000
 
-# firebase
+# Set Firebase Config
 create `_private` folder and generate firebase_admin.json to  `_private`
 
 
-# generate database
+# Generate Database
 ```bash
 npx prisma generate
 ```
 
-# start the development server 
+# Start the Development Server 
 ```bash
 npm run dev
 ```
