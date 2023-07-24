@@ -16,7 +16,7 @@
       <hr class="my-2 border-t-1 border-gray-200 -mx-20 mt-4 <lg:(-mx-2 mt-2) ">
       <div v-html="blogData?.contentHtml" class="blog-content"></div>
     </div>
-    <div class="flex justify-center mt-5">
+    <div class="flex justify-center mt-8">
       <div class="likeco-btn" data-name="lonelyfeizhai"></div>
     </div>
   </div>
@@ -109,8 +109,8 @@ jsonldStore.setThings([blogPosting])
     line-height: 3rem;
   }
   & h2 {
-    @apply font-extrabold tracking-[3px] mt-20 -ml-6 pl-6 text-gray-600 <lg:(ml-0) 
-           <sm:(mt-14 pl-3 text-[1.25rem] leading-8 tracking-wide);
+    @apply font-extrabold tracking-[3px] mt-20 -ml-6 pl-6 text-gray-600 <lg:(-ml-1) 
+           <sm:(mt-14 pl-4 text-[1.25rem] leading-8 tracking-wider);
     font-family:  "Nunito", "Microsoft YaHei", sans-serif;
     font-size: 1.4rem;
     line-height: 2.3rem;
@@ -125,7 +125,7 @@ jsonldStore.setThings([blogPosting])
   }
   & p {
     @apply  text-cool-gray-600 mt-8 tracking-[2px] text-justify text-[1.2rem] leading-[2.4rem]
-            <sm:(mt-6 text-[1rem] leading-7 tracking-wider);
+            <sm:(mt-6 text-[1rem] leading-7 tracking-wide);
 
   }
   & p:first-child {

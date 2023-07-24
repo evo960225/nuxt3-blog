@@ -10,3 +10,4 @@ content
 .env.prod
 dist
 .DS_Store
+_private

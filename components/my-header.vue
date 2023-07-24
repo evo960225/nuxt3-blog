@@ -9,7 +9,7 @@
         <2xl:max-w-[960px]
       ">
         <!-- blog name -->
-        <div class="flex flex-1 items-center  tracking-widest min-w-[140px]">
+        <div class="flex flex-1 items-center  tracking-widest min-w-[140px] <md:ml-3">
           <NuxtLink to="/" class="tracking-in-expand text-xl text-white">
             孤獨的邊緣宅
           </NuxtLink>
@@ -23,8 +23,8 @@
             <li><NuxtLink to="/">Home</NuxtLink></li>
             <li><NuxtLink to="/blog">Blog</NuxtLink></li>
             <li><NuxtLink to="/about">About</NuxtLink></li>
-            <div id="autocomplete" class="w-64"></div>
           </ul>
+          <div id="autocomplete" class="w-64 ml-12 <md:hidden"></div>
         </nav>
 
         <!-- social media -->
@@ -49,6 +49,48 @@
           </a>
           
         </div>
+        
+        <!-- <md: show menu icon -->
+        <div class="flex justify-center items-center menu-icon mr-3" 
+          :class="{open:isMenuDrawerActive}" 
+          @click="isMenuDrawerActive=!isMenuDrawerActive"
+        >
+          <div class="menu-icon_three-line hidden <sm:(!block)"></div>
+        </div>
+
+        <!-- <md: click icon after drawer -->
+        <nav id="drawer" class="drawer p-3 
+          fixed top-0 -left-[250px] z-50
+          w-[250px] h-screen bg-gray-600 
+          transition-all duration-500 ease-in-out text-white "
+          :class="{ 'left-0': isMenuDrawerActive }"
+        >
+          <ul class="tracking-wide">
+              <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/">Home</NuxtLink></li>
+              <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/blog">Blog</NuxtLink></li>
+              <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/about">About</NuxtLink></li>
+          </ul>
+          <div class="flex mt-24 px-1 py-3 justify-end space-x-4 border-t-1 border-white border-dashed">
+            <a href="https://www.facebook.com/lonely.fei.zhai" 
+            target="_blank" rel="noopener noreferrer" title="Facebook">
+              <div>
+                <font-awesome-icon :icon="['fab', 'facebook']" class="text-white text-2xl" />
+              </div>
+            </a>
+            <a href="https://medium.com/@evo960225" 
+              target="_blank" rel="noopener noreferrer"
+              title="Medium"
+            >
+              <font-awesome-icon :icon="['fab', 'medium']" class="text-white text-2xl -my-1" />
+            </a>
+          </div>
+        </nav>
+        <div id="overlay" class="hidden fixed w-full h-screen top-0 left-0 bg-dark-50/20 z-40" 
+          :class="{ '!block': isMenuDrawerActive }"
+          @click="isMenuDrawerActive=false">
+        </div>
+
+
       </div>
     </div>
     <div class="h-15"></div>
@@ -66,8 +108,11 @@ const algoliaId = runtimeConfig.public.algoliaId
 const algoliaSearchKey = runtimeConfig.public.algoliaSearchKey
 import { h, Fragment, render } from 'vue';
 import moment from 'moment';
-const searchClient = algoliasearch(algoliaId, algoliaSearchKey)
+const isMenuDrawerActive = ref(false)
 
+
+const searchClient = algoliasearch(algoliaId, algoliaSearchKey)
+// autocomplete
 onMounted(() => {
   if (process.client) {
     autocomplete({
@@ -129,12 +174,13 @@ onMounted(() => {
   }
 });
 
+// hide header
 let lastScrollTop = 0;
 onMounted(() => {
   if (!document) return
   if (process.client) {
     window.addEventListener("scroll", function(){
-      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      let scrollTop = document.documentElement.scrollTop;
       if (scrollTop > lastScrollTop && scrollTop > 100){
           // Downscroll, hide header
           document.getElementById("header")?.classList.remove('show-header');
@@ -148,7 +194,13 @@ onMounted(() => {
 })
 </script>
 
-<style >
+<style>
+:root {
+  --aa-search-input-height: 36px;
+}
+</style>
+
+<style lang="scss" scoped>
 
 #header {
   transition: top 0.5s;
@@ -161,10 +213,7 @@ onMounted(() => {
   top: 0;
 }
 
-:root {
-  --aa-search-input-height: 36px;
-}
-.aa-Item {
+::deep(.aa-Item) {
   @apply p-3 border-b border-light-400 hover:bg-light-600 text-gray-600
 }
 
@@ -178,19 +227,7 @@ onMounted(() => {
   overflow: hidden;
 }
 :root {
-  --topbar-transition-sec: 0.5s;
-}
-.drawer{
-  transition: visibility var(--topbar-transition-sec);
-}
-.drawer__nav {
-  transition: transform var(--topbar-transition-sec) ease;
-}
-.drawer__nav--open {
-  transform: translateY(0%);
-}
-.drawer__nav--close {
-  transform: translateY(-100%);
+  --topbar-transition-sec: 0.6s;
 }
 
 .menu-hover-animate:hover::after  {
@@ -211,6 +248,7 @@ onMounted(() => {
   content: "";
   z-index: -1;
 }
+
 @keyframes menu-animate {
   0% {
     mask-position: 0% 0; 
@@ -258,4 +296,62 @@ onMounted(() => {
   }
 }
 
+
+.menu-icon {
+  
+  --close-color: #fff;
+  --color: #fff;
+  --duration: 600ms;
+  --line-height: 3px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 5px;
+  z-index: 1;
+  
+  &_three-line {
+    will-change: auto;
+    width: 100%;
+    height: var(--line-height);
+    background: var(--color);
+    position: relative;
+    border-radius: var(--line-height);
+    transition: all var(--duration);
+    
+    &::before, &::after {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: var(--line-height);
+      background:var(--color);
+      border-radius: 5px;
+      transition: all var(--duration);
+      
+    }
+    &::before{
+      transform: translateY(-8px);
+    }
+    &::after{
+      transform: translateY(8px);
+    }
+  }
+  
+  &.open{
+    .menu-icon_three-line {
+      will-change: transform;
+      background: transparent;
+      &:before {
+        transform: rotate(45deg);
+        background: var(--close-color);
+      }
+      &:after {
+        transform: rotate(-45deg);
+        background: var(--close-color);
+      }
+    }
+  }
+}
 </style>

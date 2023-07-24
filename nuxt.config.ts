@@ -65,7 +65,7 @@ export default defineNuxtConfig({
         'connect-src': [
           "'self'", 'https://*.algolia.net', 'https://*.algolianet.com', 'https://*.algolia.io', 
           'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com',
-          process.dev ? 'ws://127.0.0.1' : ''],
+          process.env.NODE_ENV === 'development' ? 'ws://127.0.0.1:24678' : ''],
         'object-src': ["'none'"],
         'script-src-attr': ['https://*.googletagmanager.com'],
         'style-src': ["'self'", 'https:', "'unsafe-inline'"],
