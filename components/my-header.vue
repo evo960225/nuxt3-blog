@@ -4,29 +4,43 @@
       class="show-header flex justify-center items-center w-full h-15 
         bg-[#000000c8] border-b-6 border-orange-400 z-30
         filter backdrop-filter backdrop-blur-[5px] drop-shadow-xl 
+        <sm:(backdrop-filter-none bg-[#282828])
     ">
-      <div class="flex max-w-[1280px] w-full flex-1 p-2
+      <div class="flex max-w-[1280px] w-full flex-1 p-2 items-center
         <2xl:max-w-[960px]
       ">
         <!-- blog name -->
-        <div class="flex flex-1 items-center  tracking-widest min-w-[140px] <md:ml-3">
+        <div class="flex flex-1 items-center  tracking-widest min-w-[140px] <lg:ml-3">
           <NuxtLink to="/" class="tracking-in-expand text-xl text-white">
             孤獨的邊緣宅
           </NuxtLink>
         </div>
         
         <!-- menu -->
-        <nav class="flex justify-end items-center max-w-[960px] w-full 
-          <2xl:(w-auto flex-grow-[2]) <sm:(!hidden)
-        ">
-          <ul class="flex justify-center items-center gap-x-12 text-white">
-            <li><NuxtLink to="/">Home</NuxtLink></li>
-            <li><NuxtLink to="/blog">Blog</NuxtLink></li>
-            <li><NuxtLink to="/about">About</NuxtLink></li>
-          </ul>
-          <div id="autocomplete" class="w-64 ml-12 <md:hidden"></div>
-        </nav>
+        <div class="flex justify-end items-center max-w-[960px] w-full 
+            <2xl:(w-auto flex-grow-[2]) 
+          ">
+          <nav class="<md:(!hidden)">
+            <ul class="flex justify-center items-center gap-x-12 text-white">
+              <li><NuxtLink to="/">Home</NuxtLink></li>
+              <li><NuxtLink to="/blog">Blog</NuxtLink></li>
+              <li><NuxtLink to="/about">About</NuxtLink></li>
+            </ul>
+            
+          </nav>
 
+          <div ref="autocompleteRef" 
+            class="w-64 h-[32px] ml-12 bg-[#282828] rounded-md my-auto 
+            <2xl:(w-48) 
+            <sm:(mx-4 w-29)"
+          >
+            <span v-if="isPageLoading" 
+              class="ml-5 h-full leading-[32px] text-gray-300">
+              loading...
+            </span>
+          </div>
+
+        </div>
         <!-- social media -->
         <div class="flex flex-1 justify-end items-center gap-x-4
           <lg:(!hidden)
@@ -62,7 +76,7 @@
         <div id="drawer" class="drawer p-3 
           fixed top-0 -left-[250px] z-50
           w-[250px] h-screen bg-gray-600 
-          transition-all duration-500 ease-in-out text-white "
+          transition-all duration-500 ease-in-out text-white"
           :class="{ 'left-0': isMenuDrawerActive }" 
         >
           <nav @click="isMenuDrawerActive=false">
@@ -111,14 +125,18 @@ const algoliaSearchKey = runtimeConfig.public.algoliaSearchKey
 import { h, Fragment, render } from 'vue';
 import moment from 'moment';
 const isMenuDrawerActive = ref(false)
+const isPageLoading = ref(true)
+const autocompleteRef = ref<HTMLElement>()
 
 
 const searchClient = algoliasearch(algoliaId, algoliaSearchKey)
 // autocomplete
 onMounted(() => {
+  // event click autocomplete
+  isPageLoading.value = false;
   if (process.client) {
     autocomplete({
-      container: '#autocomplete',
+      container: autocompleteRef.value as HTMLElement,
       openOnFocus: true,
       panelPlacement: 'end',
       getSources({ query }: { query: any }) {
@@ -143,13 +161,12 @@ onMounted(() => {
             },
             templates: {
               item({ item, components, html }: { item: any; components: any; html: any}) {
-                return html`<div class="aa-ItemWrapper">
-                <a ref="#"
-                onclick="${() => navigateTo(`/blog/${moment(item.date||'').format('YYYY-MM')}/${item.blogName}`)}"
-                >
+ 
+                return process.client && html `<div class="aa-ItemWrapper">
+                  <a onclick="${() => navigateTo(`/blog/${moment(item.date||'').format('YYYY-MM')}/${item.blogName}`)}">
                   <div class="aa-ItemContent">
                     <div class="aa-ItemContentBody">
-                      <div class="aa-ItemContentTitle">
+                      <div class="aa-ItemContentTitle !text-gray-600">
                         ${components.Highlight({
                           hit: item,
                           attribute: 'title',
@@ -178,45 +195,67 @@ onMounted(() => {
 
 // hide header
 let lastScrollTop = 0;
+let scrolling = false;
 onMounted(() => {
   if (!document) return
-  if (process.client) {
-    window.addEventListener("scroll", function(){
-      let scrollTop = document.documentElement.scrollTop;
-      if (scrollTop > lastScrollTop && scrollTop > 100){
-          // Downscroll, hide header
-          document.getElementById("header")?.classList.remove('show-header');
-      } else {
-          // Upscroll, show header
-          document.getElementById("header")?.classList.add('show-header');
-      }
-      lastScrollTop = scrollTop;
-    })
-  }
+  window.addEventListener('scroll', function() {
+    if (process.client && !scrolling) {
+      scrolling = true;
+
+      setTimeout(function() {
+        let scrollTop = document.documentElement.scrollTop;
+        if (scrollTop > lastScrollTop && scrollTop > 80){
+            // Downscroll, hide header
+            document.getElementById("header")?.classList.remove('show-header');
+        } else {
+            // Upscroll, show header
+            document.getElementById("header")?.classList.add('show-header');
+        }
+        lastScrollTop = scrollTop;
+        scrolling = false;
+      }, 100)
+    }
+  }, false);
 })
 </script>
 
-<style>
+<style lang="scss">
 :root {
-  --aa-search-input-height: 36px;
+  --aa-search-input-height: 32px;
+  --aa-input-background-color-rgb: rgb(40, 40, 40);
+  --aa-primary-color-rgb: 212,212,212 !important;
+  --aa-text-color-rgb: 212,212,212;
+}
+.aa-Autocomplete {
+  background: rgb(40, 40, 40);
+}
+.aa-Item {
+  @apply p-3 border-b border-light-400 hover:bg-light-600 text-gray-600;
+}
+.aa-DetachedFormContainer {
+  @apply bg-[#282828]
+  color: #fff;
+  & button {
+    @apply text-orange-500;
+  }
+}
+.aa-SubmitButton {
+  @apply px-2.5;
 }
 </style>
 
 <style lang="scss" scoped>
 
 #header {
-  transition: top 0.5s;
+  transition: top 0.3s;
   position: fixed;
   top: -100px;  /* Assume header height is 100px */
   --tw-drop-shadow: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.04)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+  @apply <sm:(drop-shadow-none);
 }
 
 #header.show-header {
   top: 0;
-}
-
-::deep(.aa-Item) {
-  @apply p-3 border-b border-light-400 hover:bg-light-600 text-gray-600
 }
 
 
@@ -232,39 +271,6 @@ onMounted(() => {
   --topbar-transition-sec: 0.6s;
 }
 
-.menu-hover-animate:hover::after  {
-  animation-name: menu-animate;
-  animation-duration: 0.65s;
-}
-.menu-hover-animate::after {
-  position: absolute;
-  bottom: 6px;
-  left: 0px;
-  width: 100%;
-  height: 30%;
-  background: repeating-linear-gradient(45deg, #0000 0px, #0000 7px, #666 7px, #666 18px);
-  mask-image: linear-gradient(to right, transparent 0%, transparent 33%, #fff 33%, #fff 66%, transparent 66%, transparent 100%);
-  mask-size: 320% 100%;
-  mask-position: 0% 0; 
-  opacity: 0.8;
-  content: "";
-  z-index: -1;
-}
-
-@keyframes menu-animate {
-  0% {
-    mask-position: 0% 0; 
-  }
-  37% {
-    mask-position: 50% 0; 
-  }
-  62% {
-    mask-position: 50% 0; 
-  }
-  100% {
-    mask-position: 100% 0; 
-  }
-}
 
 
 .tracking-in-expand {

@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center ">
-    <div class="grid grid-cols-3 gap-5 m-4 w-[1280px]" ref="container">
+    <div class="grid grid-cols-3 gap-5 m-4 w-[1280px] <lg:grid-cols-2 <sm:(grid-cols-1 m-4)" ref="container">
       <div v-for="(blog, index) in blogListData" :key="blog.id"
         ref="cardsRef"
         @mouseenter="startAnimation(index)"
@@ -8,7 +8,7 @@
       >
         <div>
           <NuxtLink :to="`/blog/${blog.date.split('-').slice(0,2).join('-')}/${blog.blogName}`">
-            <div class="rounded-xl shadow-lg bg-white overflow-hidden">
+            <div class="rounded-xl shadow-lg bg-white overflow-hidden <sm:(border-1 border-gray-200)">
               <div class="p-3">
                 <h2 class="text-xl min-h-[3.5rem]">{{ blog.title }}</h2>
                 <div class="py-1">

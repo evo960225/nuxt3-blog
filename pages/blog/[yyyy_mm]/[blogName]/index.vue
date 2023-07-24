@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center justify-center text-gray-700 m-4 <lg:(m-0)">
     <div class="rounded-xl shadow-lg bg-white px-20 pt-6 pb-20 w-[960px] 
-      <lg:(w-full p-3)"
+      <lg:(w-full pt-3 px-3 pb-12)"
     >
       <div class="py-3">
         <p class="gener inline-block -ml-0.5 px-3.5 py-2 tracking-widest text-white bg-yellow-500 rounded-md cursor-default">
@@ -10,7 +10,6 @@
         <h1 class="blog-title mt-3">{{ blogData?.title }}</h1>
         <div class="my-3 mt-2">
           <p class="text-gray-500 font-normal">建立日期： {{ blogData?.date }}</p>
-          
         </div>
       </div>
       <hr class="my-2 border-t-1 border-gray-200 -mx-20 mt-4 <lg:(-mx-2 mt-2) ">

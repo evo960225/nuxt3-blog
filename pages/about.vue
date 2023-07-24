@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full justify-center">
-    <div class="w-[960px] text-center text-lg tracking-widest">
+    <div class="w-[960px] text-center text-lg tracking-widest <sm:(w-full px-3 py-2)">
       <div class="mt-12">
         <h2 class="text-3xl tracking-[3px] text-gray-500">關於宅</h2>
         <div class="mt-4">
