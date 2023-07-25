@@ -26,13 +26,13 @@
               <li><NuxtLink to="/blog">Blog</NuxtLink></li>
               <li><NuxtLink to="/about">About</NuxtLink></li>
             </ul>
-            
           </nav>
 
-          <div ref="autocompleteRef" 
+          <!-- autocomplete -->
+          <div id="autocomplete" ref="autocompleteRef" 
             class="w-64 h-[32px] ml-12 bg-[#282828] rounded-md my-auto 
             <2xl:(w-48) 
-            <sm:(mx-4 w-29)"
+            <md:(mx-4) <sm:w-29"
           >
             <span v-if="isPageLoading" 
               class="ml-5 h-full leading-[32px] text-gray-300">
@@ -41,25 +41,22 @@
           </div>
 
         </div>
+
         <!-- social media -->
         <div class="flex flex-1 justify-end items-center gap-x-4
           <lg:(!hidden)
         ">
           <a href="https://www.facebook.com/lonely.fei.zhai" 
             target="_blank" rel="noopener noreferrer"
-            title="Facebook"
-          ><div>
-            <font-awesome-icon :icon="['fab', 'facebook']"  
-              class="text-white text-lg"
-            /></div>
+            title="Facebook" class="flex"
+          >
+              <Icon name="simple-icons:facebook" color="white" size="20px" />
           </a>
           <a href="https://medium.com/@evo960225" 
             target="_blank" rel="noopener noreferrer"
-            title="Medium"
+            title="Medium" class="flex"
           >
-            <font-awesome-icon :icon="['fab', 'medium']"  
-              class="text-white text-lg"
-            />
+            <Icon name="simple-icons:medium" color="white" size="20px" />
           </a>
           
         </div>
@@ -85,18 +82,20 @@
                 <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/blog">Blog</NuxtLink></li>
                 <li class="p-2 mt-3 text-lg font-normal"><NuxtLink to="/about">About</NuxtLink></li>
             </ul>
-            <div class="flex mt-24 px-1 py-3 justify-end space-x-4 border-t-1 border-white border-dashed">
+            <div class="flex mt-24 px-1 py-3 justify-end items-center space-x-4 border-t-1 border-white border-dashed">
               <a href="https://www.facebook.com/lonely.fei.zhai" 
-              target="_blank" rel="noopener noreferrer" title="Facebook">
+                target="_blank" rel="noopener noreferrer" 
+                title="Facebook" 
+              >
                 <div>
-                  <font-awesome-icon :icon="['fab', 'facebook']" class="text-white text-2xl" />
+                  <Icon name="simple-icons:facebook" color="white" size="24px" />
                 </div>
               </a>
               <a href="https://medium.com/@evo960225" 
                 target="_blank" rel="noopener noreferrer"
-                title="Medium"
+                title="Medium" 
               >
-                <font-awesome-icon :icon="['fab', 'medium']" class="text-white text-2xl -my-1" />
+                <Icon name="simple-icons:medium" color="white" size="24px"  />
               </a>
             </div>
           </nav>
@@ -321,7 +320,7 @@ onMounted(() => {
   z-index: 1;
   
   &_three-line {
-    @apply <sm:block;
+    @apply <md:block;
     will-change: auto;
     width: 100%;
     height: var(--line-height);
@@ -350,7 +349,6 @@ onMounted(() => {
   
   &.open{
     .menu-icon_three-line {
-      @apply <sm:(block);
       will-change: transform;
       background: transparent;
       &:before {

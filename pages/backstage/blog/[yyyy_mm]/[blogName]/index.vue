@@ -130,15 +130,8 @@ const isLoading = ref(false)
 const blogApiUrl = `/api/blog/${yyyy_mm}/${blogName}`
 const ogImageUrl = ref('')
 
-const {data:aaa} = useFetch(`${blogApiUrl}/a`, {
-  key: `blogDataa-${hashByTime(1)}`,
-  method: 'POST',
-})
 
-function sendData(file) {
-  console.log('====================================');
-  console.log(JSON.stringify(file));
-  console.log('====================================');
+function sendData(file: any) {
   const formData = new FormData()
   formData.append('file', file);
   const a= useFetch(`${blogApiUrl}/upload-image`, {

@@ -1,9 +1,10 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-export default defineNuxtConfig({
+import { visualizer } from 'rollup-plugin-visualizer';
 
+export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
     'nuxt-quasar-ui',
+    'nuxt-icon',
     '@nuxtjs/i18n',
     '@pinia/nuxt',
     'nuxt-simple-sitemap',
@@ -17,14 +18,10 @@ export default defineNuxtConfig({
   build: {
     transpile: [
       'trpc-nuxt',
-      '@fortawesome/vue-fontawesome',
-      '@fortawesome/fontawesome-svg-core',
-      '@fortawesome/free-solid-svg-icons',
-      '@fortawesome/free-regular-svg-icons',
-      '@fortawesome/free-brands-svg-icons'
+      'nuxt-icon',
     ],
   },
-
+  
   runtimeConfig: {
     blogsContentDir: process.env.BLOGS_CONTENT_DIR || '/',
     storageDir: process.env.STORAGE_DIR || '/',
@@ -76,7 +73,6 @@ export default defineNuxtConfig({
   
 
   css: [
-    '@fortawesome/fontawesome-svg-core/styles.css',
     '@/assets/styles/main.scss',
     '@unocss/reset/tailwind.css'
   ],
@@ -140,11 +136,9 @@ export default defineNuxtConfig({
     extras: {
       fontIcons: [
         'material-icons',
-        'fontawesome-v6'
       ],
       svgIcons: [
         'material-icons',
-        'fontawesome-v6'
       ]
     },
     iconSet: 'material-icons',
@@ -167,4 +161,21 @@ export default defineNuxtConfig({
   typescript: {
     strict: true // required to make input/output types work
   },
+
+  vite: {
+    build: {
+      rollupOptions: {
+        plugins: [
+          visualizer(),
+        ]
+      },
+    },
+  },
+  nitro: {
+    compressPublicAssets: { gzip:false, brotli: true },
+    publicAssets: [{
+      maxAge: 60 * 60 * 24 * 7
+    }]
+  }
+
 })
