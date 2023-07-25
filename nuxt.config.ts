@@ -56,7 +56,7 @@ export default defineNuxtConfig({
         'font-src': ["'self'", 'https:', 'data:'],
         'form-action': ["'self'"],
         'frame-ancestors': ["'self'"],
-        'img-src': ["'self'", 'data:', 'blob:', 
+        'img-src': ["'self'", "data:", "blob:", 
           'https://storage.googleapis.com/', 'https://*.google-analytics.com', 'https://*.googletagmanager.com',
         ],
         'connect-src': [
@@ -65,7 +65,11 @@ export default defineNuxtConfig({
           process.env.NODE_ENV === 'development' ? 'ws://127.0.0.1:24678' : ''],
         'object-src': ["'none'"],
         'script-src-attr': ['https://*.googletagmanager.com'],
-        'script-src': ["'self'", 'https:', "'unsafe-inline'", "'unsafe-eval'", 'https://*.googletagmanager.com'],
+        'script-src': ["'self'", "'unsafe-inline'", 
+          'https://*.algolia.net', 'https://*.algolianet.com', 'https://*.algolia.io', 
+          'https://storage.googleapis.com/','https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com',
+          'https://noobtw.github.io/likeco-btn/likeco-btn.js'
+        ],
         'style-src': ["'self'", 'https:', "'unsafe-inline'"],
         'upgrade-insecure-requests': true
       }
@@ -105,12 +109,17 @@ export default defineNuxtConfig({
 
   routeRules:{
     '/**': { },
-    '/backstage/**': { 
+    '/backstage/blog/**': { 
       ssr: false, 
       security: {
         xssValidator: false,
       },
       index: false, // sitemap
+    },
+    '/api/blog/**': { 
+      security: {
+        xssValidator: false,
+      },
     },
   },
 

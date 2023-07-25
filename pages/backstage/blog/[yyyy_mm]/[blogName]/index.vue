@@ -183,7 +183,7 @@ async function updateContent() {
   isLoading.value = true
 
   const { data, error } = await useFetch(`${blogApiUrl}/update`, {
-    key: `mdData.post-${hashByTime(60*10)}`,
+    key: `mdData.post-${hashByTime(1)}`,
     method: 'POST',
     body: mdData.value || {},
   })

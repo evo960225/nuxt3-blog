@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path';
 import matter from 'gray-matter';
-import {unified} from 'unified'
+import { unified } from 'unified'
 import pQueue from 'p-queue';
 
-const queue = new pQueue({concurrency: 1});
+const queue = new pQueue({ concurrency: 1 });
 
 async function modifyMarkDownContent(filePath: string, field: IBlogInfo, content: string) {
   const newContent = matter.stringify(content, field);
@@ -17,14 +17,14 @@ async function modifyMarkDownContent(filePath: string, field: IBlogInfo, content
 export default defineEventHandler(async (event) => {
   
   if (!event.context.authBackstage) {
-    return createError({
+    throw createError({
       statusCode: 401,
       message: 'You don\'t have the rights to access this resource',
     })
   }
 
   if (!event.context.params) {
-    return createError({
+    throw createError({
       statusCode: 400,
       message: 'Invalid request',
     })
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
     .replace(/[^\w\s一-龥]/g, '-') // 移除所有非字母、非數字、非中文和非破折號的字符
     .replace(/-+/g, '-')    // 將多個連續的破折號替換成一個
     .replace(/^-|-$/g, ''); // 移除開頭和結尾的破折號
-
+    
   const oldFilePath = getBlogsContentFullDir(yyyy_mm, `${paramBlogName}.md`)
   const filePath = getBlogsContentFullDir(yyyy_mm, `${titleConvertName}.md`)
 

@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   const filePath = `${folder}/images/${fileDir}`
 
   if (!mime.lookup(filePath)) {
-    return createError({
+    throw createError({
       statusCode: 404,
       message: 'File not found',
     })
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     const files = fs.readFileSync(filePath);
     return files
   } catch (e) {
-    return createError({
+    throw createError({
       statusCode: 404,
       message: 'File not found',
     })
