@@ -68,8 +68,10 @@ export default defineNuxtConfig({
         'script-src': ["'self'", "'unsafe-inline'", 
           'https://*.algolia.net', 'https://*.algolianet.com', 'https://*.algolia.io', 
           'https://storage.googleapis.com/','https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com',
-          'https://noobtw.github.io/likeco-btn/likeco-btn.js'
+          'https://noobtw.github.io/likeco-btn/likeco-btn.js',
+          'https://www.google.com/recaptcha/api.js','https://www.gstatic.com/recaptcha/'
         ],
+        'frame-src': ["'self'", 'https://button.like.co/in/embed/lonelyfeizhai/', 'https://www.google.com/recaptcha/', 'https://store.steampowered.com/widget/'],
         'style-src': ["'self'", 'https:', "'unsafe-inline'"],
         'upgrade-insecure-requests': true
       }
