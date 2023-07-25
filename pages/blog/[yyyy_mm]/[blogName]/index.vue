@@ -132,7 +132,7 @@ jsonldStore.setThings([blogPosting])
   }
 
   & img {
-    @apply block mx-auto mt-12 <sm:(mt-6);
+    @apply block mx-auto mt-12 w-full <sm:(mt-6);
   }
   & img + figcaption {
     @apply block mx-auto mt-2;

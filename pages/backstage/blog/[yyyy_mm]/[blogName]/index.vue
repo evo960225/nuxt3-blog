@@ -220,9 +220,22 @@ async function copyMdImageUrl(url: string) {
   }
 }
 async function copyHtmlImageUrl(url: string) {
+
+  const image = await (async(url: string)
+    :Promise<HTMLImageElement> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = url;
+   })
+  })(url)
+
+
+
   try {
     const mdImage = `<figure>
-  <img src="${url}" alt="w-100%">
+  <img width="${image.width}" height="${image.height}" src="${url}" alt="w-100%">
   <figcaption></figcaption>
 </figure>
 `
@@ -279,5 +292,9 @@ async function deleteImage(filePath: string) {
 
 </script>
 
-<style>
+<style scoped>
+:deep(.toastui-editor-defaultUI .ProseMirror *) {
+  text-align: left;
+}
+
 </style>
