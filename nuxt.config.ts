@@ -65,6 +65,7 @@ export default defineNuxtConfig({
           process.env.NODE_ENV === 'development' ? 'ws://127.0.0.1:24678' : ''],
         'object-src': ["'none'"],
         'script-src-attr': ['https://*.googletagmanager.com'],
+        'script-src': ["'self'", 'https:', "'unsafe-inline'", "'unsafe-eval'", 'https://*.googletagmanager.com'],
         'style-src': ["'self'", 'https:', "'unsafe-inline'"],
         'upgrade-insecure-requests': true
       }
