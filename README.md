@@ -2,20 +2,24 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-## Setup
-
-Make sure to install the dependencies:
-
-# npm
+## npm
+```bash
 npm install
+```
 
-# env
-env rename to .env
+## env
+`env` rename to `.env` and populate the `.env` file
 
-## Development Server
+## Set Firebase Config
+create `_private` folder and generate `firebase_admin.json` to  `_private`
 
-Start the development server on http://localhost:3000
+## Generate Database
+```bash
+npx prisma generate
+```
 
+## Start the Development Server 
 ```bash
 npm run dev
 ```
+Start the development server on http://localhost:3000
