@@ -3,14 +3,12 @@
     <div class="max-w-[1280px] w-full">
       <!-- 最新內容 -->
       <div class="mt-24 <lg:mt-10 <sm:mt-5">
-        <h2 class="p-3 text-3xl tracking-widest text-center <sm:text-xl"> ---- 最新內容 ---- </h2>
-        <div ref="container" class="columns-3 gap-4 my-12 w-full max-w-[1280px] 
-          <lg:(columns-2 my-6) <md:(columns-1)
-        ">
+        <h2 class="p-3 text-3xl tracking-widest text-center <md:text-2xl <sm:text-xl"> ---- 最新內容 ---- </h2>
+        <div ref="container" class="flex flex-wrap my-12 w-full max-w-[1280px] ">
 
           <!-- card -->
           <div v-for="(blog, index) in blogListData" :key="blog.id"
-            ref="cardsRef" 
+            ref="cardsRef"  class="w-1/3 <lg:(w-1/2 ) <md:(w-full)"
           >
             <div class="p-3 <lg:(mx-5) <sm:(p-2)">
               <NuxtLink :to="`/blog/${blog.date.split('-').slice(0,2).join('-')}/${blog.blogName}`">
@@ -33,8 +31,8 @@
                   <div class="
                     absolute bottom-0 z-1 flex items-end
                     px-4 py-3 w-full min-h-[80px]
-                    text-justify  rounded-xl overflow-hidden
-                    bg-gradient-to-t from-cool-gray-900/80 from-40% via-cool-gray-900/70 to-gray-500/0  backdrop-blur-[1px]
+                    text-justify  rounded-xl overflow-hidden card
+                    backdrop-blur-[1px]
                   ">
                     <p class="text-xl tracking-widest text-white <sm:text-lg">{{ blog.title }}</p>
                     <p class="p-0 text-transparent text-left italic
@@ -66,22 +64,20 @@
       <!-- 熱門 -->
       <div class="mt-24 max-w-[1280px] w-full <lg:mt-10 <sm:mt-5">
         <h2 class="p-3  text-3xl tracking-widest text-center <sm:text-xl"> ---- 熱門內容 ---- </h2>
-        <div ref="container" class="columns-3 gap-4 my-12 w-full max-w-[1280px] 
-          <lg:(columns-2 my-6) <md:(columns-1)
-        ">
+        <div ref="container" class="flex flex-wrap my-12 w-full max-w-[1280px] ">
 
-          <!-- card -->
-          <div v-for="(blog, index) in blogListData" :key="blog?.id"
-            ref="cardsRef" 
-          >
+        <!-- card -->
+        <div v-for="(blog, index) in blogListData" :key="blog.id"
+          ref="cardsRef"  class="w-1/3 <lg:(w-1/2 ) <md:(w-full)"
+        >
           <div class="p-3 <lg:(mx-5) <sm:(p-2)">
-              <NuxtLink :to="`/blog/${blog.date.split('-').slice(0,2).join('-')}/${blog.blogName}`">
-                <div class="
-                  group
-                  relative rounded-xl shadow-lg 
-                  bg-orange-500 
-                  border-box
-                ">
+            <NuxtLink :to="`/blog/${blog.date.split('-').slice(0,2).join('-')}/${blog.blogName}`">
+              <div class="
+                group
+                relative rounded-xl shadow-lg 
+                bg-orange-500 
+                border-box
+              ">
                   <div class="absolute z-1 
                     px-4 py-1.5
                     shadow-[0px, 5px, 1px, #000] drop-shadow-lg
@@ -160,7 +156,14 @@ useSeoMeta({
 
 </script>
 
-<style>
-
+<style scoped>
+.card {
+  background: linear-gradient(
+    to top, 
+    rgba(17, 24, 39, 0.8) 40%, 
+    rgba(17, 24, 39, 0.7), 
+    rgba(107, 114, 128, 0)
+  )
+}
 
 </style>
