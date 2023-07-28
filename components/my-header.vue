@@ -10,8 +10,8 @@
         <2xl:max-w-[960px]
       ">
         <!-- blog name -->
-        <div class="flex flex-1 items-center  tracking-widest min-w-[140px] <lg:ml-3">
-          <NuxtLink to="/" class="tracking-in-expand text-xl text-white">
+        <div class="flex flex-1 items-center  tracking-widest min-w-[160px] <lg:ml-3">
+          <NuxtLink to="/" class="tracking-in-expand min-w-[160px] text-xl text-white">
             孤獨的邊緣宅
           </NuxtLink>
         </div>
