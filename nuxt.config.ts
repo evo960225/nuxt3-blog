@@ -112,13 +112,12 @@ export default defineNuxtConfig({
   routeRules:{
     '/': { swr: 10 },
     '/blog': { swr: 10 },
-    '/**': { },
+    '/**': { index: false },
     '/backstage/blog/**': { 
       ssr: false, 
       security: {
         xssValidator: false,
       },
-      index: false, // sitemap
     },
     '/api/blog/**': { 
       security: {
