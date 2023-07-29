@@ -12,4 +12,4 @@ dist
 .DS_Store
 _private
 stats.html
-cypress/videos
+cypress/videos**

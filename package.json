@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "nuxt build --dotenv .env.prod",
     "dev": "npx nuxi dev",
     "generate": "nuxt generate",
     "test": "npx nuxi test",
