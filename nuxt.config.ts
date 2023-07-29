@@ -7,10 +7,11 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@nuxtjs/i18n',
     '@pinia/nuxt',
+    '@vueuse/nuxt',
     'nuxt-simple-sitemap',
     'nuxt-security', 
     '@nuxtjs/algolia',
-    'nuxt-jsonld'
+    'nuxt-jsonld',
   ],
   plugins: [
     
