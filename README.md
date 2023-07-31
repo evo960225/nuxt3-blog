@@ -23,19 +23,19 @@ RECAPTCHA_SITE_KEY=""               # RECAPTCHA的網站鑰匙
 RECAPTCHA_SECRET_KEY=""             # RECAPTCHA的密鑰
 FIREBASE_IMAGES_DEST="blog/images"  # 指定blog存入firebase storage的目錄
 
-PERCY_TOKEN=                        # percy token
+PERCY_TOKEN=                        # percy token，如果沒有要E2E測試不用填入
 ```
 
-### firebase設定
+### Firebase設定
 create `_private` folder and generate `firebase_admin.json` to  `_private`
 
-## Generate Database
+### Generate Database
 如果沒有自己得資料庫，建議設定sqlite，[link](https://www.prisma.io/docs/concepts/database-connectors/sqlite)
 ```bash
 npx prisma generate
 ```
 
-## Start the Development Server 
+### Start the Development Server 
 ```bash
 npm run dev
 ```
