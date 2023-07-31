@@ -10,7 +10,7 @@ npm install
 ### 設定env
 將`env`重新命名為 `.env`，並設定內容
 ```bash
-HOST="https://blog.hoshiko.live/" # 伺服器位置
+HOST="https://blog.hoshiko.live/" # 伺服器網址
 
 BLOGS_CONTENT_DIR="./content"       # blog檔案存放位置(.md/html)
 STORAGE_DIR="./storage"             # 後端檔案儲存位置
