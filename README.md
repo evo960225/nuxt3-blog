@@ -30,7 +30,7 @@ PERCY_TOKEN=                        # percy token，如果沒有要E2E測試不�
 create `_private` folder and generate `firebase_admin.json` to  `_private`
 
 ### Generate Database
-如果沒有自己得資料庫，建議設定sqlite，[link](https://www.prisma.io/docs/concepts/database-connectors/sqlite)
+如果沒有自己的資料庫，建議設定sqlite，[link](https://www.prisma.io/docs/concepts/database-connectors/sqlite)
 ```bash
 npx prisma generate
 ```
