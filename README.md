@@ -29,7 +29,7 @@ PERCY_TOKEN=                        # percy token，如果沒有要E2E測試不�
 ### Firebase設定
 - 在firebase裡建立專案後，在專案總覽點選新增應用程式(在專案名稱下方，我常找不到🙃
 - 選擇網站應用程式，按照流程完成後會取得像這樣的程式碼
-```
+``` javascript
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
